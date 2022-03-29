@@ -33,11 +33,10 @@ class MemberTest {
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .PhoneNumber("010-1234-1234")
-                .Birth(LocalDate.of(2000,1,1))
                 .loginTypeEnum(LoginType.EMAIL)
                 .build();
-        Member qmember = memberRepository.save(member);
-        memberRepository.flush();
+
+
     }
 
     @Test
@@ -49,7 +48,6 @@ class MemberTest {
                         .Password("1234")
                         .accountTypeEnum(AccountType.ADMISTRATOR)
                         .PhoneNumber("010-1234-1234")
-                        .Birth(LocalDate.of(2000,1,1))
                         .loginTypeEnum(LoginType.EMAIL)
                         .ReportCount(0).build())
                 .member_Receiver(Member.builder().NickName("cba")
@@ -57,7 +55,6 @@ class MemberTest {
                         .Password("1234")
                         .accountTypeEnum(AccountType.ADMISTRATOR)
                         .PhoneNumber("010-1234-1234")
-                        .Birth(LocalDate.of(2000,1,1))
                         .loginTypeEnum(LoginType.EMAIL)
                         .ReportCount(0).build())
                 .title("hi")

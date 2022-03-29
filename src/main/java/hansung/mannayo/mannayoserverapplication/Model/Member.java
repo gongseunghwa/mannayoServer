@@ -7,7 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -19,6 +19,7 @@ import java.time.LocalDate;
 public class Member {
 
     @Id
+    @Column(nullable = false, unique = true)
     private String NickName;
 
     @NotNull
@@ -31,18 +32,18 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private AccountType accountTypeEnum;
 
-    @NotNull
+
     private String PhoneNumber;
 
     @NotNull
-    private LocalDate Birth;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date Birth = new Date();
 
     @Enumerated(EnumType.STRING)
     private LoginType loginTypeEnum;
 
     private String ImageAddress;
 
-    @NotNull()
     @ColumnDefault("0")
     private Integer ReportCount;
 
