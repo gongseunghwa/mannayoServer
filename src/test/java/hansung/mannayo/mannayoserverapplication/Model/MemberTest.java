@@ -22,6 +22,8 @@ class MemberTest {
 
     @Autowired
     EntityManager entityManager;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     public void setMemberInfo(){
@@ -33,10 +35,9 @@ class MemberTest {
                 .PhoneNumber("010-1234-1234")
                 .Birth(LocalDate.of(2000,1,1))
                 .loginTypeEnum(LoginType.EMAIL)
-                .ReportCount(0)
                 .build();
-
-        assertEquals(0, member.getReportCount());
+        Member qmember = memberRepository.save(member);
+        memberRepository.flush();
     }
 
     @Test

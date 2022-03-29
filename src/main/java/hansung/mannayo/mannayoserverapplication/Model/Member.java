@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 public class Member {
 
     @Id
@@ -42,12 +45,14 @@ public class Member {
     private String ImageAddress;
 
     @NotNull()
-    @Column(columnDefinition = "integer default 0")
+    @ColumnDefault("0")
     private Integer ReportCount;
+
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviewList;
+
 }
 
 //CREATE TABLE Member (
