@@ -1,5 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Member {
     private String Email;
 
     @NotNull
+    @JsonIgnore
     private String Password;
 
     @Enumerated(EnumType.STRING)
@@ -43,3 +45,15 @@ public class Member {
 
 
 }
+
+//CREATE TABLE Member (
+//  NICKNAME VARCHAR(20)  NOT NULL   AUTO_INCREMENT,
+//  Email VARCHAR(255)  NOT NULL  ,
+//  Password_2 VARCHAR(255)  NOT NULL  ,
+//  AccountType ENUM  NOT NULL  ,
+//  PhoneNumber VARCHAR(20)  NOT NULL  ,
+//  Birth DATE  NOT NULL  ,
+//  LoginType ENUM  NOT NULL  ,
+//  Image VARCHAR(100)  NULL  ,
+//  ReportCount INTEGER UNSIGNED  NOT NULL DEFAULT 0   ,
+//PRIMARY KEY(NICKNAME));
