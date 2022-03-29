@@ -32,6 +32,8 @@ public class Restaurant {
     @NotNull
     private String Address;
 
+    private String hello;
+
 
 
 
