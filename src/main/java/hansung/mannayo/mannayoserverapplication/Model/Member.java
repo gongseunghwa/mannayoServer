@@ -57,7 +57,6 @@ public class Member {
     @JsonBackReference
     private List<Review> reviewList;
 
-    private String bb;
 
 }
 
