@@ -8,12 +8,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-<<<<<<< HEAD
 
-import java.util.List;
-=======
 import java.util.Date;
->>>>>>> 1a54e4afe5b9727b46327e209b99af1a4912a576
+import java.util.List;
 
 @Entity
 @Getter
