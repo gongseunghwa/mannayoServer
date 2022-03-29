@@ -46,6 +46,7 @@ public class Member {
 
     private String ImageAddress;
 
+    @NotNull
     @ColumnDefault("0")
     private Integer ReportCount;
 
