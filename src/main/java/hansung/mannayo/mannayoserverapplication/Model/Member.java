@@ -29,16 +29,18 @@ public class Member {
     @JsonIgnore
     private String Password;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private AccountType accountTypeEnum;
 
-
+    @NotNull
     private String PhoneNumber;
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date Birth = new Date();
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private LoginType loginTypeEnum;
 
