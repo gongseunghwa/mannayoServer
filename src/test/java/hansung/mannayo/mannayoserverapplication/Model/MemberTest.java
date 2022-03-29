@@ -1,7 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
-import com.mysql.cj.MessageBuilder;
-import lombok.Builder;
+import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
