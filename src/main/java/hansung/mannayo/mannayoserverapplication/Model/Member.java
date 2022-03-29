@@ -1,11 +1,13 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,7 +45,9 @@ public class Member {
     @Column(columnDefinition = "integer default 0")
     private Integer ReportCount;
 
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Review> reviewList;
 }
 
 //CREATE TABLE Member (

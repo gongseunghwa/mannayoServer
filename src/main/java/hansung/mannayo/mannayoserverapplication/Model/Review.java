@@ -1,5 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -35,11 +36,11 @@ public class Review {
     LocalDateTime ModifiedDate;
     LocalDateTime DeletedDate;
 
-    @JoinColumn()
-    @ManyToOne
+    @JoinColumn(name = "member_id")
+    @ManyToOne @JsonManagedReference
     Member member;
 
-    @ManyToOne
+    @ManyToOne @JsonManagedReference @JoinColumn(name = "restaurant_Id")
     Restaurant restaurant;
 
     @PrePersist

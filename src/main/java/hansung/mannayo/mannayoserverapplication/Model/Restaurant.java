@@ -1,11 +1,11 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
@@ -31,6 +31,10 @@ public class Restaurant {
     private LocalDate BusinessStartHours;
 
     private LocalDate BusinessEndHours;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Review> reviewList;
 
 }
 //CREATE TABLE Restaurant (
