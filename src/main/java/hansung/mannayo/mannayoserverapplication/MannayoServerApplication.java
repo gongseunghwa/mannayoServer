@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MannayoServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(MannayoServerApplication.class);
-        app.run(args);
+        SpringApplication.run(MannayoServerApplication.class, args);
     }
 
 }

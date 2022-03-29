@@ -4,13 +4,14 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -23,21 +24,22 @@ public class Member {
     private String Password;
 
     @Enumerated(EnumType.STRING)
-    private Enum<AccountType> accountTypeEnum;
+    private AccountType accountTypeEnum;
 
     @NotNull
     private String PhoneNumber;
 
     @NotNull
-    private Date Birth;
+    private LocalDate Birth;
 
     @Enumerated(EnumType.STRING)
-    private Enum<LoginType> loginTypeEnum;
+    private LoginType loginTypeEnum;
 
     private String ImageAddress;
 
     @NotNull()
     @Column(columnDefinition = "integer default 0")
     private Integer ReportCount;
+
 
 }
