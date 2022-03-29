@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +41,7 @@ public class Member {
     private String PhoneNumber;
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date Birth = new Date();
+    private LocalDate Birth;
 
     @NotNull
     @Enumerated(EnumType.STRING)
