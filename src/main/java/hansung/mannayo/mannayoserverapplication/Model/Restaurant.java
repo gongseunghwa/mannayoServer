@@ -1,6 +1,8 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,23 +16,37 @@ public class Restaurant {
     @Id @GeneratedValue
     private Integer idRestaurant;
 
+    @NotNull
     private String Name;
 
+    @NotNull
     private Restaurant_Type restaurant_type;
 
+    @NotNull
     private String number;
 
+    @NotNull
     private String owner;
 
-    private String address;
-
+    @NotNull
     private String Address;
 
+    @NotNull
+    @ColumnDefault("0")
     private Integer JJIMcount;
 
+    @NotNull
     private LocalDate BusinessStartHours;
 
+    @NotNull
     private LocalDate BusinessEndHours;
+
+    @NotNull
+    private LocalDate BusinessDayOff;
+
+    private Integer reviewCount;
+
+    private Integer StarPointInfo;
 
 }
 //CREATE TABLE Restaurant (
