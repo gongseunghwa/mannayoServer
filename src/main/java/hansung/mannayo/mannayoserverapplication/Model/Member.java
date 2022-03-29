@@ -8,8 +8,12 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+<<<<<<< HEAD
+
 import java.util.List;
+=======
+import java.util.Date;
+>>>>>>> 1a54e4afe5b9727b46327e209b99af1a4912a576
 
 @Entity
 @Getter
@@ -21,6 +25,7 @@ import java.util.List;
 public class Member {
 
     @Id
+    @Column(nullable = false, unique = true)
     private String NickName;
 
     @NotNull
@@ -30,6 +35,7 @@ public class Member {
     @JsonIgnore
     private String Password;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private AccountType accountTypeEnum;
 
@@ -37,14 +43,15 @@ public class Member {
     private String PhoneNumber;
 
     @NotNull
-    private LocalDate Birth;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date Birth = new Date();
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private LoginType loginTypeEnum;
 
     private String ImageAddress;
 
-    @NotNull()
     @ColumnDefault("0")
     private Integer ReportCount;
 

@@ -50,8 +50,10 @@ public class Restaurant {
     @NotNull
     private LocalDate BusinessDayOff;
 
+    @NotNull
     private Integer reviewCount;
 
+    @NotNull
     private Integer StarPointInfo;
 
 
