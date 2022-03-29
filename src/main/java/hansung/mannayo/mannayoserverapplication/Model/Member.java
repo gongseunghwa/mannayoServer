@@ -52,7 +52,7 @@ public class Member {
 
     private String ImageAddress;
 
-    @ColumnDefault("0")
+    @NotNull
     private Integer ReportCount;
 
 
