@@ -23,6 +23,7 @@ public class Restaurant {
     private String Name;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Restaurant_Type restaurant_type;
 
     @NotNull
@@ -34,7 +35,6 @@ public class Restaurant {
     @NotNull
     private String Address;
 
-    @NotNull
     @ColumnDefault("0")
     private Integer JJIMcount;
 
@@ -51,11 +51,9 @@ public class Restaurant {
     @NotNull
     private LocalDate BusinessDayOff;
 
-    @NotNull
     @ColumnDefault("0")
     private Integer reviewCount;
 
-    @NotNull
     @ColumnDefault("0")
     private Integer StarPointInfo;
 
