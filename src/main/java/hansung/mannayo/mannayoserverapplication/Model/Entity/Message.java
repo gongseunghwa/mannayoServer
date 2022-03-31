@@ -36,7 +36,7 @@ public class Message {
     private String contents;
 
     @NotNull
-    private boolean isRead;
+    private Boolean isRead;
 
 }
 
