@@ -40,11 +40,13 @@ public class MemberRunner implements ApplicationRunner {
 
         Member member = Member.builder()
                 .NickName("abc")
-                .Email("hjkwon0814@navercom")
+                .Email("hjkwon0814@naver.com")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .PhoneNumber("010-1234-1234")
                 .loginTypeEnum(LoginType.EMAIL)
+                .Birth(LocalDate.of(2022,1,1))
+                .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
 

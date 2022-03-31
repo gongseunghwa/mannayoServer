@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -50,7 +51,7 @@ public class Member {
 
     private String ImageAddress;
 
-    @NotNull
+    @ColumnDefault("0")
     private Integer ReportCount;
 
     @OneToMany(cascade = CascadeType.ALL)
