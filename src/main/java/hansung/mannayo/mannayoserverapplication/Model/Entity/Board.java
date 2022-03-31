@@ -63,6 +63,10 @@ public class Board {
     @JsonBackReference
     private List<Like> likeList;
 
+    @OneToMany
+    @JsonBackReference
+    private List<Vote> voteList;
+
     @PrePersist
     public void createAt(){
         this.createdDate = LocalDateTime.now();
