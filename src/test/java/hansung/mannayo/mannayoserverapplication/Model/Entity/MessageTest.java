@@ -1,6 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
-<<<<<<< HEAD
+
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import org.junit.jupiter.api.Test;
@@ -8,17 +8,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 
-=======
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
->>>>>>> d219411710047f130d84514e4a344cbc3bc6bdff
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @DataJpaTest
 class MessageTest {
 
-<<<<<<< HEAD
     @Test
     public void test() {
         Member sender = Member.builder()
@@ -53,8 +46,5 @@ class MessageTest {
                 .isRead(true)
                 .build();
     }
-=======
 
-
->>>>>>> d219411710047f130d84514e4a344cbc3bc6bdff
 }
