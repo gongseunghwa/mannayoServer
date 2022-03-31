@@ -30,7 +30,8 @@ class BoardTest {
                 .contents("hi")
                 .build();
 
-        boardRepository.save(board);
+        Board savedBoard1 = boardRepository.save(board);
+
     }
 
 
