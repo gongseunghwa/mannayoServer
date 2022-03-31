@@ -19,9 +19,10 @@ public class Board {
     private Integer id;
 
     @ManyToOne @JsonManagedReference
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "writer")
     private Member member;
 
+    @NotNull
     private String title;
 
     @NotNull
@@ -36,10 +37,10 @@ public class Board {
 
     private LocalDateTime deletedDate;
 
-    @Column(columnDefinition = "boolean default false ")
+  //  @Column(columnDefinition = "boolean default false ")
     private Boolean isModified;
 
-    @Column(columnDefinition = "boolean default false ")
+   // @Column(columnDefinition = "boolean default false ")
     private Boolean isDeleted;
 
     private Boolean isVote;
@@ -48,8 +49,6 @@ public class Board {
 
     @Enumerated(EnumType.STRING)
     private BoardType type;
-
-
 
 
     @PrePersist
