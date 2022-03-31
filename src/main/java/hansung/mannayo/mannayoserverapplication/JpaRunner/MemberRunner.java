@@ -1,6 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.JpaRunner;
 
-import hansung.mannayo.mannayoserverapplication.Model.Member;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

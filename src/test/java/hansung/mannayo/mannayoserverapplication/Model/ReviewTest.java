@@ -1,5 +1,9 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
+import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;

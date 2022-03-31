@@ -1,16 +1,16 @@
-package hansung.mannayo.mannayoserverapplication.Model;
+package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity

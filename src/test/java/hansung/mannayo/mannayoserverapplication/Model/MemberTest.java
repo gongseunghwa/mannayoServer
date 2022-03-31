@@ -1,5 +1,9 @@
 package hansung.mannayo.mannayoserverapplication.Model;
 
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Message;
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

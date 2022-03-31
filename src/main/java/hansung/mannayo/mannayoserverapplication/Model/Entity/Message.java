@@ -1,4 +1,4 @@
-package hansung.mannayo.mannayoserverapplication.Model;
+package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;

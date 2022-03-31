@@ -1,4 +1,4 @@
-package hansung.mannayo.mannayoserverapplication.Model;
+package hansung.mannayo.mannayoserverapplication.Model.Type;
 
 public enum Restaurant_Type {
     HANSIK, BUNSIK, YANGSIK, JUNGSIK, ILSIK, FASTFOOD, CAFE_DESSERT, SULJIP
