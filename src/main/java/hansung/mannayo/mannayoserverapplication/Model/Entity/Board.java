@@ -59,6 +59,9 @@ public class Board {
     @JsonBackReference
     private List<Comment> comments;
 
+    @OneToMany
+    @JsonBackReference
+    private List<Like> likeList;
 
     @PrePersist
     public void createAt(){

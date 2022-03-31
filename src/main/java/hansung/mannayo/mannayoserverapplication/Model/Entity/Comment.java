@@ -1,5 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
@@ -7,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 @Builder
@@ -35,6 +37,10 @@ public class Comment {
     private Boolean isModified;
 
     private Boolean isDeleted;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<CommentToComment> commentToCommentList;
 
     @PrePersist
     public void createAt(){
