@@ -20,9 +20,7 @@ public class MemberRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Message message = new Message.MessageBuilder()
 
-                .build();
 
 
         Session session = entityManager.unwrap(Session.class);
