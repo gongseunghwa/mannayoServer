@@ -20,8 +20,8 @@ public class MemberRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Member member = new Member();
-        member.setNickName("hjk");
-        member.setEmail("hjkwon@naver.com");
+        member.setNickName("hjkwon");
+        member.setEmail("hjkwon@daum.net");
         member.setPassword("1234");
 
         Session session = entityManager.unwrap(Session.class);

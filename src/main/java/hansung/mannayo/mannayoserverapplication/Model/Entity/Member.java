@@ -52,10 +52,14 @@ public class Member {
     @NotNull
     private Integer ReportCount;
 
-
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviewList;
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Message> messageList;
 
 
 }

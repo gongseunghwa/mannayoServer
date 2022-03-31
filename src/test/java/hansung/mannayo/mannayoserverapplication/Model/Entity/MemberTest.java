@@ -1,4 +1,4 @@
-package hansung.mannayo.mannayoserverapplication.Model;
+package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Message;
