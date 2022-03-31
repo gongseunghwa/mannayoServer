@@ -60,11 +60,8 @@ public class Member {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Message> sendMessageList;
+    private List<Message> messageList;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Message> receiveMessageList;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
@@ -77,6 +74,11 @@ public class Member {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Like> likeList;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Block> block_member_List;
+
 
 }
 

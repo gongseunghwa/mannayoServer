@@ -1,5 +1,8 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.CommentRepository;
 import org.junit.jupiter.api.Test;
@@ -23,15 +26,18 @@ class CommentTest {
         Member member = new Member();
         member.setNickName("aa");
         member.setEmail("tmdhk502@naver.com");
+        member.setAccountTypeEnum(AccountType.MEMBER);
         member.setPassword("tmdghk9609!");
         member.setPhoneNumber("010-0202-0303");
         member.setBirth(LocalDate.now());
+        member.setLoginTypeEnum(LoginType.EMAIL);
         member.setReportCount(1);
 
         Board board = Board.builder()
                 .member(member)
                 .title("title")
                 .contents("hi")
+                .type(BoardType.ADVERTISE_BOARD)
                 .build();
 
         Board savedBoard1 = boardRepository.save(board);
