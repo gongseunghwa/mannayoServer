@@ -26,6 +26,7 @@ class JjimTest {
 
     @Autowired
     JjimRepository jjimRepository;
+
     @Test
     public void Test() {
         Jjim jjim = new Jjim();
