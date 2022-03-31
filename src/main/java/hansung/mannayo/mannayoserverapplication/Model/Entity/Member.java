@@ -61,6 +61,10 @@ public class Member {
     @JsonBackReference
     private List<Message> messageList;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Jjim> jjimList;
+
 }
 
 //CREATE TABLE Member (
