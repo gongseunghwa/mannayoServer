@@ -50,11 +50,15 @@ class JjimTest {
                 .loginTypeEnum(LoginType.EMAIL)
                 .build();
 
-        jjim.setRestaurant(restaurantRepository.getById(0));
-        jjim.setMember(memberRepository.getById("hjk"));
-        jjim.setJJIM_ID(0);
+        Member newmember = memberRepository.save(member);
+        Restaurant newRestaurant = restaurantRepository.save(restaurant);
 
-        assertEquals(jjimRepository.getById(1).getRestaurant().getName(), restaurantRepository.getById(0).getName());
+        jjim.setRestaurant(restaurantRepository.getById(newRestaurant.getIdRestaurant()));
+        jjim.setMember(memberRepository.getById(newmember.getNickName()));
+        Jjim savedJjim = jjimRepository.save(jjim);
+
+
+        assertEquals(jjimRepository.getById(savedJjim.getJJIM_ID()).getRestaurant().getName(), restaurantRepository.getById(newRestaurant.getIdRestaurant()).getName());
     }
 
 }
