@@ -56,10 +56,17 @@ public class Member {
     @JsonBackReference
     private List<Review> reviewList;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Message> sendMessageList;
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private List<Message> receiveMessageList;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Message> messageList;
+    private List<Board> boardList;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
