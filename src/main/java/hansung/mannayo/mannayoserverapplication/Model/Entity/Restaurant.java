@@ -59,6 +59,10 @@ public class Restaurant {
     @ColumnDefault("0")
     private Integer StarPointInfo;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Jjim> jjimList;
+
 
 }
 //CREATE TABLE Restaurant (
