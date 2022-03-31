@@ -28,7 +28,7 @@ public class Report {
     @NotNull
     private LocalTime Reporttime;
 
-
+    @Enumerated(EnumType.STRING)
     private FollowUpActionType followUpAction;
 
 }
