@@ -1,6 +1,7 @@
 package hansung.mannayo.mannayoserverapplication.JpaRunner;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Message;
 import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -19,13 +20,13 @@ public class MemberRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Member member = new Member();
-        member.setNickName("hjkwon");
-        member.setEmail("hjkwon@daum.net");
-        member.setPassword("1234");
+        Message message = new Message.MessageBuilder()
+
+                .build();
+
 
         Session session = entityManager.unwrap(Session.class);
-        session.save(member);
+
 
     }
 }
