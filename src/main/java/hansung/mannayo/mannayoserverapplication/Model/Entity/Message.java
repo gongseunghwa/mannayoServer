@@ -1,5 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -18,12 +19,13 @@ public class Message {
     @NotNull
     @ManyToOne(targetEntity = Member.class)
     @JoinColumn(name = "Member_NickName")
+    @JsonManagedReference
     private Member member_Sender;
 
     @NotNull
     @ManyToOne(targetEntity = Member.class)
-
     @JoinColumn(name = "Member_NickName")
+    @JsonManagedReference
     private Member member_Receiver;
 
     @NotNull
