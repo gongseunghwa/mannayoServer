@@ -18,14 +18,20 @@ public class Message {
 
     @NotNull
     @ManyToOne(targetEntity = Member.class)
+<<<<<<< HEAD
 
     @JsonManagedReference
+=======
+>>>>>>> f212cadafb9551168a96b5f4204a0cadf0a32d32
     private Member member_Sender;
 
     @NotNull
     @ManyToOne(targetEntity = Member.class)
+<<<<<<< HEAD
 
     @JsonManagedReference
+=======
+>>>>>>> f212cadafb9551168a96b5f4204a0cadf0a32d32
     private Member member_Receiver;
 
     @NotNull

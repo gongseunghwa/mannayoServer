@@ -68,7 +68,6 @@ public class Member {
     @JsonBackReference
     private List<Board> boardList;
 
-
 }
 
 //CREATE TABLE Member (

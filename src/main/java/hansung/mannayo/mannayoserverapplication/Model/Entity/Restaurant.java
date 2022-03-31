@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class Restaurant {
 
+
     @Id @GeneratedValue
     private Integer idRestaurant;
 
@@ -33,7 +34,6 @@ public class Restaurant {
     @NotNull
     private String Address;
 
-
     @NotNull
     @ColumnDefault("0")
     private Integer JJIMcount;
@@ -44,7 +44,6 @@ public class Restaurant {
     @NotNull
     private LocalTime BusinessEndHours;
 
-
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviewList;
@@ -53,9 +52,11 @@ public class Restaurant {
     private LocalDate BusinessDayOff;
 
     @NotNull
+    @ColumnDefault("0")
     private Integer reviewCount;
 
     @NotNull
+    @ColumnDefault("0")
     private Integer StarPointInfo;
 
 
