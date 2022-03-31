@@ -22,7 +22,9 @@ class JjimTest {
         Jjim jjim = new Jjim();
 
         jjim.setRestaurant(restaurantRepository.getById(3));
+        jjim.setMember(memberRepository.getById("hjk"));
 
+        assertEquals("Maxicana", restaurantRepository.getById(3).getName());
     }
 
 }
