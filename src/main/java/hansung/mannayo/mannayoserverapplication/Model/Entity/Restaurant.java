@@ -1,12 +1,13 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.istack.NotNull;
+
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;

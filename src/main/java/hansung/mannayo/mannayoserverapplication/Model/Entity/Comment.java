@@ -1,10 +1,11 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sun.istack.NotNull;
+
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor

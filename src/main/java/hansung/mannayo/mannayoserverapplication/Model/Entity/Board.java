@@ -3,13 +3,14 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sun.istack.NotNull;
+
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
