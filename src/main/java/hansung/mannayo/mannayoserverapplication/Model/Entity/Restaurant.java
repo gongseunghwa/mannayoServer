@@ -34,11 +34,6 @@ public class Restaurant {
     private String Address;
 
 
-
-
-
-
-
     @NotNull
     @ColumnDefault("0")
     private Integer JJIMcount;

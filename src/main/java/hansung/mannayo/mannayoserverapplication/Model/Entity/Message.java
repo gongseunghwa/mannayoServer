@@ -17,12 +17,12 @@ public class Message {
 
     @NotNull
     @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "Member_Nickname")
+//    @JoinColumn(name = "sender_test")
     private Member member_Sender;
 
     @NotNull
     @ManyToOne(targetEntity = Member.class)
-    @JoinColumn(name = "Meber_Nickname")
+//    @JoinColumn(name = "receiver_test")
     private Member member_Receiver;
 
     @NotNull

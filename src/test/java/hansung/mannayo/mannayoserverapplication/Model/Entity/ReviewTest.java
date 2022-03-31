@@ -1,4 +1,4 @@
-package hansung.mannayo.mannayoserverapplication.Model;
+package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
@@ -63,8 +63,8 @@ class ReviewTest {
 
         Review savedReview = reviewRepository.save(review);
 
-        assertThat(savedReview.getRestaurant()).isEqualTo(savedRestaurant);
-        assertThat(savedReview.getMember()).isEqualTo(savedMember);
+        assertThat(savedReview.getRestaurant().getIdRestaurant()).isEqualTo(savedRestaurant.getIdRestaurant());
+        assertThat(savedReview.getMember().getNickName()).isEqualTo(savedMember.getNickName());
 
 
 
