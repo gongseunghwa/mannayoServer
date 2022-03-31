@@ -1,12 +1,16 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 
+import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(SpringExtension.class)
@@ -14,6 +18,8 @@ import java.time.LocalDate;
 class MessageTest {
 
 
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     public void MessageTest() {
