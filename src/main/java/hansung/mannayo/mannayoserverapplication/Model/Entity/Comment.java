@@ -17,7 +17,7 @@ public class Comment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(targetEntity = Board.class) @JsonManagedReference
     @JoinColumn(name = "Board_id")
     private Board board;
 

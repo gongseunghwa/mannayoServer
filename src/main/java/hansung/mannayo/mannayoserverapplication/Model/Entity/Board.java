@@ -22,7 +22,7 @@ public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(targetEntity = Member.class) @JsonManagedReference
     @JoinColumn(name = "writer")
     private Member member;
 

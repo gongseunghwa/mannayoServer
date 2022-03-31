@@ -15,7 +15,7 @@ public class CommentToComment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(targetEntity = Comment.class) @JsonManagedReference
     private Comment comment;
 
     @NotNull

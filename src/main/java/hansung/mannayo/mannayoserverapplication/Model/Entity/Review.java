@@ -36,10 +36,10 @@ public class Review {
     LocalDateTime DeletedDate;
 
     @JoinColumn(name = "member_id")
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(targetEntity = Member.class) @JsonManagedReference
     Member member;
 
-    @ManyToOne @JsonManagedReference @JoinColumn(name = "restaurant_Id")
+    @ManyToOne(targetEntity = Restaurant.class) @JsonManagedReference @JoinColumn(name = "restaurant_Id")
     Restaurant restaurant;
 
     @PrePersist
