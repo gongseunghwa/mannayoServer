@@ -5,12 +5,16 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
+import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
+import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -22,6 +26,13 @@ public class MemberRunner implements ApplicationRunner {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    BoardRepository boardRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -67,21 +78,14 @@ public class MemberRunner implements ApplicationRunner {
                 .type(BoardType.TODAT_EAT_BOARD)
                 .build();
 
+        board.addVoteList(Vote.builder()
+                        .Contents("chicken")
+                        .Count(0)
+                .build());
 
-        Vote vote = Vote.builder()
-                .board(board)
-                .Contents("chicken")
-                .Count(0)
-                .build();
+        memberRepository.save(member1);
+        boardRepository.save(board);
 
-
-
-        Session session = entityManager.unwrap(Session.class);
-        session.save(member1);
-        session.save(board);
-        session.save(vote);
-        session.save(restaurant);
-        session.save(member);
 
     }
 }
