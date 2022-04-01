@@ -59,17 +59,6 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
-
-        Member member1 = Member.builder()
-                .NickName("123456789")
-                .Email("hjkwon0814@navercom")
-                .Password("1234")
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .PhoneNumber("010-1234-1234")
-                .loginTypeEnum(LoginType.EMAIL)
-                .Birth(LocalDate.now())
-                .build();
-
         Board board = Board.builder()
                 .member(member)
                 .title("title")
@@ -78,11 +67,11 @@ public class MemberRunner implements ApplicationRunner {
                 .type(BoardType.TODAT_EAT_BOARD)
                 .build();
 
-//        board.addVote(Vote.builder()
-//                        .Contents("hi")
-//                .build());
+        Vote vote = Vote.builder()
+                .Contents("hi")
+                .build();
 
-
+        board.addVote(vote);
         memberRepository.save(member);
         boardRepository.save(board);
 
