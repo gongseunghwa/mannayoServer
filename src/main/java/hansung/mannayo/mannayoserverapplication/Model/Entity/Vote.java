@@ -1,5 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -20,6 +21,7 @@ public class Vote {
     @ColumnDefault("0")
     private Integer Count;
 
+    @ManyToOne @JsonManagedReference
     private Board board;
 
 }
