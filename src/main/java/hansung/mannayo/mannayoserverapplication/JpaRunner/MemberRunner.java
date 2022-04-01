@@ -1,9 +1,8 @@
 package hansung.mannayo.mannayoserverapplication.JpaRunner;
 
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Message;
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.*;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import org.hibernate.Session;
@@ -50,8 +49,38 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
 
+        Member member1 = Member.builder()
+                .NickName("abcde")
+                .Email("hjkwon0814@navercom")
+                .Password("1234")
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .PhoneNumber("010-1234-1234")
+                .loginTypeEnum(LoginType.EMAIL)
+                .Birth(LocalDate.now())
+                .build();
+
+        Board board = Board.builder()
+                .member(member)
+                .title("title")
+                .contents("hi")
+                .isVote(true)
+                .type(BoardType.TODAT_EAT_BOARD)
+                .build();
+
+
+        Vote vote = Vote.builder()
+                .board(board)
+                .Contents("chicken")
+                .Count(0)
+                .build();
+
+
+
 
         Session session = entityManager.unwrap(Session.class);
+        session.save(member1);
+        session.save(board);
+        session.save(vote);
         session.save(restaurant);
         session.save(member);
 
