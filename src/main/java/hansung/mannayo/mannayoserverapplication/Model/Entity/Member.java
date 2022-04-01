@@ -79,6 +79,10 @@ public class Member {
     @JsonBackReference
     private List<Block> block_member_List;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Report> reportList;
+
 
 }
 

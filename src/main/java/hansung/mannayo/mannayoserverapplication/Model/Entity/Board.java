@@ -67,9 +67,13 @@ public class Board {
 
 
     @Builder.Default
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Vote> voteList = new ArrayList<Vote>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Report> reportList;
 
     @PrePersist
     public void createAt(){

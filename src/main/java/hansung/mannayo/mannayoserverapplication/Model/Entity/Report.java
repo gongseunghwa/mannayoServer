@@ -2,6 +2,7 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 
 import hansung.mannayo.mannayoserverapplication.Model.Type.FollowUpActionType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.ReportResultType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.ReportType;
 import lombok.*;
 
@@ -28,7 +29,17 @@ public class Report {
     @NotNull
     private LocalTime Reporttime;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private ReportResultType reportResult;
+
     @Enumerated(EnumType.STRING)
     private FollowUpActionType followUpAction;
+
+    @ManyToOne(targetEntity = Member.class)
+    private Member member;
+
+    @ManyToOne(targetEntity = Board.class)
+    private Board board;
 
 }
