@@ -18,11 +18,11 @@ public class Message {
     private Integer idMessage;
 
     @NotNull
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne
     private Member member_Sender;
 
     @NotNull
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne
     private Member member_Receiver;
 
     @NotNull

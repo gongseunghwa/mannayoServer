@@ -20,7 +20,6 @@ public class Vote {
     @ColumnDefault("0")
     private Integer Count;
 
-    @ManyToOne(targetEntity = Board.class)
     private Board board;
 
 }

@@ -16,9 +16,9 @@ public class Jjim {
     @Id @GeneratedValue
     private Integer JJIM_ID;
 
-    @ManyToOne(targetEntity = Restaurant.class)
+    @ManyToOne
     private Restaurant restaurant;
 
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne
     private Member member;
 }

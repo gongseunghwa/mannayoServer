@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor
@@ -18,7 +19,6 @@ public class Comment {
     private Integer id;
 
     @ManyToOne(targetEntity = Board.class) @JsonManagedReference
-    @JoinColumn(name = "Board_id")
     private Board board;
 
     private LocalDateTime time;
@@ -38,9 +38,9 @@ public class Comment {
 
     private Boolean isDeleted;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "comment")
     @JsonBackReference
-    private List<CommentToComment> commentToCommentList;
+    private List<CommentToComment> commentToCommentList = new ArrayList<>();
 
     @PrePersist
     public void createAt(){

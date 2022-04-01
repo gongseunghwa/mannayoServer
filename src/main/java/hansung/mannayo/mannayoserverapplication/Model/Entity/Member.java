@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -54,34 +55,29 @@ public class Member {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     @JsonBackReference
-    private List<Review> reviewList;
+    private List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     @JsonBackReference
-    private List<Message> messageList;
+    private List<Board> boardList = new ArrayList<>();
 
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     @JsonBackReference
-    private List<Board> boardList;
+    private List<Jjim> jjimList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     @JsonBackReference
-    private List<Jjim> jjimList;
+    private List<Like> likeList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Like> likeList;
+//    @OneToMany(mappedBy = "")
+//    @JsonBackReference
+//    private List<Block> block_member_List;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     @JsonBackReference
-    private List<Block> block_member_List;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Report> reportList;
+    private List<Report> reportList = new ArrayList<>();
 
 
 }

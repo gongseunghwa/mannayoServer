@@ -36,10 +36,10 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private FollowUpActionType followUpAction;
 
-    @ManyToOne(targetEntity = Member.class)
+    @ManyToOne
     private Member member;
 
-    @ManyToOne(targetEntity = Board.class)
+    @ManyToOne
     private Board board;
 
 }

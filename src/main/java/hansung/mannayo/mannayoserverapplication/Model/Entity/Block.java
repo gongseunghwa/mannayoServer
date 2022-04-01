@@ -14,10 +14,10 @@ public class Block {
     private Integer id;
 
     @NotNull
-    @ManyToOne(targetEntity = Member.class) @JsonManagedReference
+    @ManyToOne @JsonManagedReference
     private Member member;
 
     @NotNull
-    @ManyToOne(targetEntity = Member.class) @JsonManagedReference
+    @ManyToOne @JsonManagedReference
     private Member target_member;
 }

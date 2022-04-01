@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Setter @Getter @NoArgsConstructor
@@ -23,8 +24,7 @@ public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(targetEntity = Member.class) @JsonManagedReference
-    @JoinColumn(name = "writer")
+    @ManyToOne @JsonManagedReference
     private Member member;
 
     @NotNull
@@ -56,21 +56,26 @@ public class Board {
     @Enumerated(EnumType.STRING)
     private BoardType type;
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     @JsonBackReference
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     @JsonBackReference
-    private List<Like> likeList;
+    private List<Like> likeList = new ArrayList<>();
 
-    @OneToMany( fetch = FetchType.LAZY)
+    @OneToMany(mappedBy ="board")
     @JsonBackReference
-    private List<Vote> voteList;
+    private List<Vote> voteList = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     @JsonBackReference
-    private List<Report> reportList;
+    private List<Report> reportList = new ArrayList<>();
+
+//    public void addVote(Vote vote){
+//        voteList.add(vote);
+//        vote.setBoard(this);
+//    }
 
     @PrePersist
     public void createAt(){

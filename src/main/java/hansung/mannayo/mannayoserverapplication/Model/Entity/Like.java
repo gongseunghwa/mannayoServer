@@ -15,9 +15,9 @@ public class Like {
     @Id @GeneratedValue
     private Integer id;
 
-    @ManyToOne(targetEntity = Member.class) @JsonManagedReference
+    @ManyToOne @JsonManagedReference
     private Member member;
 
-    @ManyToOne(targetEntity = Board.class) @JsonManagedReference
+    @ManyToOne @JsonManagedReference
     private Board board;
 }

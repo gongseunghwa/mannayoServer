@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter @Setter
@@ -45,9 +46,9 @@ public class Restaurant {
     @NotNull
     private LocalTime BusinessEndHours;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant")
     @JsonBackReference
-    private List<Review> reviewList;
+    private List<Review> reviewList = new ArrayList<>();
 
     @NotNull
     private LocalDate BusinessDayOff;
@@ -58,9 +59,9 @@ public class Restaurant {
     @ColumnDefault("0")
     private Integer StarPointInfo;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant")
     @JsonBackReference
-    private List<Jjim> jjimList;
+    private List<Jjim> jjimList = new ArrayList<>();
 
 
 }

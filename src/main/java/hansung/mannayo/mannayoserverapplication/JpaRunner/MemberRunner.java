@@ -78,6 +78,9 @@ public class MemberRunner implements ApplicationRunner {
                 .type(BoardType.TODAT_EAT_BOARD)
                 .build();
 
+//        board.addVote(Vote.builder()
+//                        .Contents("hi")
+//                .build());
 
 
         memberRepository.save(member);
