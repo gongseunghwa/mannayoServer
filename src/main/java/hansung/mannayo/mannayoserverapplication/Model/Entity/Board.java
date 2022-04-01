@@ -63,7 +63,7 @@ public class Board {
     @JsonBackReference
     private List<Like> likeList;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JsonBackReference
     private List<Vote> voteList;
 
