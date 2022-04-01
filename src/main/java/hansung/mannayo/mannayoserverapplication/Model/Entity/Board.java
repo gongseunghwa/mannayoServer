@@ -63,9 +63,16 @@ public class Board {
     @JsonBackReference
     private List<Like> likeList;
 
-    @OneToMany
+
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Vote> voteList;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Report> reportList;
 
     @PrePersist
     public void createAt(){
