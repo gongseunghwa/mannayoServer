@@ -15,7 +15,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity @Setter @Getter @NoArgsConstructor @Builder
+@Entity @Setter @Getter @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Board {
 
@@ -63,9 +64,6 @@ public class Board {
     @JsonBackReference
     private List<Like> likeList;
 
-
-
-    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Vote> voteList;
