@@ -1,5 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
+import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ class BoardTest {
                 .member(member)
                 .title("title")
                 .contents("hi")
+                .type(BoardType.ADVERTISE_BOARD)
                 .build();
 
         Board savedBoard1 = boardRepository.save(board);
