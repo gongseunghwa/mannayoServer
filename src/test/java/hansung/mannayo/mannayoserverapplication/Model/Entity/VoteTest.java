@@ -57,7 +57,6 @@ class VoteTest {
 
         Member savedMember = memberRepository.save(member);
         Vote savedVote = voteRepository.save(vote);
-        board.addVoteList(savedVote);
 
         Board savedBoard = boardRepository.save(board);
 
