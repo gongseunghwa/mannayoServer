@@ -56,7 +56,7 @@ public class Board {
     @Enumerated(EnumType.STRING)
     private BoardType type;
 
-    @OneToMany(cascade =  CascadeType.ALL)
+    @OneToMany
     @JsonBackReference
     private List<Comment> comments;
 
@@ -64,11 +64,11 @@ public class Board {
     @JsonBackReference
     private List<Like> likeList;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany( fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Vote> voteList;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JsonBackReference
     private List<Report> reportList;
 

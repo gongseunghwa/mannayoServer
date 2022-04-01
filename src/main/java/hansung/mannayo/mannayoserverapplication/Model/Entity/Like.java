@@ -4,14 +4,12 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
+@Table(name = "likes")
 public class Like {
 
     @Id @GeneratedValue
