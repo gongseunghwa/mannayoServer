@@ -38,7 +38,7 @@ public class MemberRunner implements ApplicationRunner {
 
 
         Member member = Member.builder()
-                .NickName("abc")
+                .NickName("12345")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
@@ -50,7 +50,7 @@ public class MemberRunner implements ApplicationRunner {
 
 
         Member member1 = Member.builder()
-                .NickName("abcde")
+                .NickName("123456789")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
@@ -73,7 +73,6 @@ public class MemberRunner implements ApplicationRunner {
                 .Contents("chicken")
                 .Count(0)
                 .build();
-
 
 
 

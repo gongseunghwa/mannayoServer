@@ -59,11 +59,11 @@ public class Board {
     @JsonBackReference
     private List<Comment> comments;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Like> likeList;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Vote> voteList;
 
