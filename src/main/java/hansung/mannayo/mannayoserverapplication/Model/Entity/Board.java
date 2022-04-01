@@ -75,4 +75,8 @@ public class Board {
         this.isDeleted = false;
     }
 
+    public void addVoteList(Vote vote) {
+        this.voteList.add(vote);
+    }
+
 }

@@ -53,14 +53,17 @@ class VoteTest {
                 .Count(0)
                 .build();
 
-        memberRepository.save(member);
-        voteRepository.save(vote);
+
+
+        Member savedMember = memberRepository.save(member);
+        Vote savedVote = voteRepository.save(vote);
+        board.addVoteList(savedVote);
+
         Board savedBoard = boardRepository.save(board);
 
-
-//        assertEquals(vote.getBoard().getId(),board.getId());
-//        assertEquals(0, vote.getCount());
-//        assertEquals(boardRepository.findById(savedBoard.getId()).get().getVoteList().get(0).getCount(), vote.getCount());
+        assertEquals(vote.getBoard().getId(),board.getId());
+        assertEquals(0, vote.getCount());
+        assertEquals(boardRepository.findById(savedBoard.getId()).get().getVoteList().get(0).getCount(), savedVote.getCount());
 
 
 
