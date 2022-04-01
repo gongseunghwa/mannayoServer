@@ -1,11 +1,10 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity @Getter
 @Setter @NoArgsConstructor
@@ -15,8 +14,10 @@ public class Vote {
     @Id @GeneratedValue
     private Integer idVote;
 
+    @NotNull
     private String Contents;
 
+    @ColumnDefault("0")
     private Integer Count;
 
     @ManyToOne(targetEntity = Board.class)
