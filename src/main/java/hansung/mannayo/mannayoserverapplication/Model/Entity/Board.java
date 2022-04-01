@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -14,7 +13,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Setter @Getter @NoArgsConstructor @Builder
@@ -61,15 +59,13 @@ public class Board {
     @JsonBackReference
     private List<Comment> comments;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JsonBackReference
     private List<Like> likeList;
 
-
-    @Builder.Default
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany
     @JsonBackReference
-    private List<Vote> voteList = new ArrayList<Vote>();
+    private List<Vote> voteList;
 
     @PrePersist
     public void createAt(){
@@ -77,11 +73,6 @@ public class Board {
         this.viewCount = 0;
         this.isModified = false;
         this.isDeleted = false;
-    }
-
-    public void addVoteList(Vote vote) {
-        this.voteList.add(vote);
-        vote.setBoard(this);
     }
 
 }
