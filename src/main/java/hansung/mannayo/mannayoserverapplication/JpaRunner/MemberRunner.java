@@ -7,6 +7,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
+import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -32,6 +33,9 @@ public class MemberRunner implements ApplicationRunner {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    ReviewRepository reviewRe;
 
 
     @Override
@@ -59,6 +63,20 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
+        Member member2 = Member.builder()
+                .NickName("seunghwa gong")
+                .Email("hjkwon0814@naver.com")
+                .Password("1234")
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .PhoneNumber("010-1234-1234")
+                .loginTypeEnum(LoginType.EMAIL)
+                .Birth(LocalDate.of(2022,1,1))
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .build();
+
+        Review review = Review.builder().member(member).title("hi1").build();
+        Review review1 = Review.builder().member(member).title("hi2").build();
+
         Board board = Board.builder()
                 .member(member)
                 .title("title")
@@ -70,6 +88,11 @@ public class MemberRunner implements ApplicationRunner {
         Vote vote = Vote.builder()
                 .Contents("hi")
                 .build();
+
+
+        memberRepository.save(member);
+        memberRepository.save(member2);
+
 
 
     }

@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -55,9 +56,10 @@ public class Member {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member" ,fetch = FetchType.EAGER)
     @JsonBackReference
-    private List<Review> reviewList = new ArrayList<>();
+    private Collection<Review> reviewList = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "member")
     @JsonBackReference

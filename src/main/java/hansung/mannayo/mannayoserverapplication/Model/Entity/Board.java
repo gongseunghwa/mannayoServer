@@ -64,7 +64,7 @@ public class Board {
     @JsonBackReference
     private List<Like> likeList = new ArrayList<>();
 
-    @OneToMany(mappedBy ="board" )
+    @OneToMany(mappedBy ="board")
     @JsonBackReference
     private List<Vote> voteList = new ArrayList<>();
 
