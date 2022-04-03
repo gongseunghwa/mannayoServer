@@ -20,6 +20,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Transactional
@@ -76,6 +78,11 @@ public class MemberRunner implements ApplicationRunner {
 
         Review review = Review.builder().member(member).title("hi1").build();
         Review review1 = Review.builder().member(member).title("hi2").build();
+        List<Review> reviewList = new ArrayList<Review>();
+
+        reviewList.add(review);
+        reviewList.add(review1);
+        member2.setReviewList(reviewList);
 
         Board board = Board.builder()
                 .member(member)
