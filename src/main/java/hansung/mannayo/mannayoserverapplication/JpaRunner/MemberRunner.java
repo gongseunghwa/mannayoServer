@@ -71,7 +71,7 @@ public class MemberRunner implements ApplicationRunner {
                 .Contents("hi")
                 .build();
 
-//        board.addVote(vote);
+        board.addVote(vote);
         memberRepository.save(member);
         boardRepository.save(board);
 
