@@ -15,3 +15,4 @@ public class MannayoServerApplication {
 
 //TODO
 // VoteTest, 데이터베이스 이미지 저장 어떻게 할것인지 고민, 서비스구현
+//

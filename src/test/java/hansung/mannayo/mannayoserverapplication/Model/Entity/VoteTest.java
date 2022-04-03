@@ -49,7 +49,7 @@ class VoteTest {
 
         Vote vote = Vote.builder()
                 .board(board)
-                .Contents("chicken")
+                .Contents("chickenchicken")
                 .Count(0)
                 .build();
 
