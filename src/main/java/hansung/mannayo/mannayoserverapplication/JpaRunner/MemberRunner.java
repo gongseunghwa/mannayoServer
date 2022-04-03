@@ -72,7 +72,5 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
 
-
-
     }
 }

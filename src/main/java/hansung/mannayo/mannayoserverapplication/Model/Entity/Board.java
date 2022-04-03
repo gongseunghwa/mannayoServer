@@ -72,10 +72,10 @@ public class Board {
     @JsonBackReference
     private List<Report> reportList = new ArrayList<>();
 
-//    public void addVote(Vote vote){
-//        voteList.add(vote);
-//        vote.setBoard(this);
-//    }
+    public void addVote(Vote vote){
+        voteList.add(vote);
+        vote.setBoard(this);
+    }
 
     @PrePersist
     public void createAt(){
