@@ -34,7 +34,11 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<Member> insert(@RequestBody Member obj){
-        return ResponseEntity.ok(service.insert(obj));
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(obj.getNickName()).toUri();
+
+        return ResponseEntity.created(uri).body(obj);
     }
 
     @DeleteMapping("/{id}")
