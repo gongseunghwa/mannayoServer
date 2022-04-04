@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Vote {
 
     @Id @GeneratedValue
-    private Integer idVote;
+    private Long idVote;
 
     @NotNull
     private String Contents;

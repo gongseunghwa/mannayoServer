@@ -8,10 +8,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity @Setter @Getter @AllArgsConstructor @NoArgsConstructor
 @Builder
+@Table(name = "block")
 public class Block {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "block_id")
+    private Long id;
 
     @NotNull
     @ManyToOne @JsonManagedReference

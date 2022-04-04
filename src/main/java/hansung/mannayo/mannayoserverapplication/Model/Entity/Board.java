@@ -8,6 +8,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,24 +20,30 @@ import java.util.List;
 @Entity @Setter @Getter @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Table(name = "board")
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "board_id")
+    private Long id;
 
     @ManyToOne @JsonManagedReference
     private Member member;
 
+    @Column(name = "title")
     @NotNull
     private String title;
 
+    @Column(name = "contents")
     @NotNull
     private String contents;
 
+    @Column(name = "image")
     private String image;
 
 
     private LocalDateTime createdDate;
+
 
     private LocalDateTime modifiedDate;
 

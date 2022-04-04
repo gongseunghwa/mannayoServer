@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Like {
 
     @Id @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @ManyToOne @JsonManagedReference
     private Member member;
