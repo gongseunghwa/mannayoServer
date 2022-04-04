@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "table")
+@Table(name = "review")
 public class Review {
     @Id @GeneratedValue
     private Long id;
