@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "table")
 public class Review {
     @Id @GeneratedValue
     private Long id;
@@ -35,11 +36,11 @@ public class Review {
     LocalDateTime ModifiedDate;
     LocalDateTime DeletedDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JsonManagedReference
     Member member;
 
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.PERSIST) @JsonManagedReference
     Restaurant restaurant;
 
     @PrePersist

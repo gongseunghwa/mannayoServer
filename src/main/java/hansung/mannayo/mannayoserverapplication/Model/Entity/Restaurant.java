@@ -15,6 +15,7 @@ import java.util.List;
 
 @Entity @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
+@Table(name = "restaurant")
 public class Restaurant {
 
 
@@ -46,7 +47,7 @@ public class Restaurant {
     @NotNull
     private LocalTime BusinessEndHours;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Review> reviewList = new ArrayList<>();
 
@@ -59,7 +60,7 @@ public class Restaurant {
     @ColumnDefault("0")
     private Integer StarPointInfo;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Jjim> jjimList = new ArrayList<>();
 

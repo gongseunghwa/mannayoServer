@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity @Getter
 @Setter @NoArgsConstructor
 @AllArgsConstructor @Builder
+@Table(name = "vote")
 public class Vote {
 
     @Id @GeneratedValue
@@ -21,7 +22,7 @@ public class Vote {
     @ColumnDefault("0")
     private Integer Count;
 
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.PERSIST) @JsonManagedReference
     private Board board;
 
 }

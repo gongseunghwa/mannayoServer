@@ -3,6 +3,7 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,20 +13,22 @@ import java.time.LocalDate;
 @Builder
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "message")
 public class Message {
 
     @Id @GeneratedValue
     private Long idMessage;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Member member_Sender;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Member member_Receiver;
 
     @NotNull
+    @CreatedDate
     private LocalDate Date;
 
     @NotNull

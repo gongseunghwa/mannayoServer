@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @Setter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "report")
 public class Report {
 
     @Id @GeneratedValue
@@ -36,10 +37,10 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private FollowUpActionType followUpAction;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Board board;
 
 }

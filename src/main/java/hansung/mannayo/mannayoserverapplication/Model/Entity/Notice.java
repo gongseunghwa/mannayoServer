@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor
-@Builder
+@Builder @Table(name = "notice")
 public class Notice {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
