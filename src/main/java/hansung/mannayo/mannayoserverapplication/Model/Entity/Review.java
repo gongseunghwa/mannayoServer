@@ -35,7 +35,7 @@ public class Review {
     LocalDateTime ModifiedDate;
     LocalDateTime DeletedDate;
 
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY) @JsonManagedReference
     Member member;
 
     @ManyToOne @JsonManagedReference

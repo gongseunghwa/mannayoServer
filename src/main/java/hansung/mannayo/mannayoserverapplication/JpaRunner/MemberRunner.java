@@ -76,12 +76,18 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
-        Review review = Review.builder().member(member).title("hi1").build();
-        Review review1 = Review.builder().member(member).title("hi2").build();
+
+
+
+
+        Review review = Review.builder().title("hi1").build();
+        Review review1 = Review.builder().title("hi2").build();
         List<Review> reviewList = new ArrayList<Review>();
         reviewList.add(review);
         reviewList.add(review1);
         member2.setReviewList(reviewList);
+        review.setMember(member2);
+        review1.setMember(member2);
 
         Board board = Board.builder()
                 .member(member)
@@ -95,9 +101,11 @@ public class MemberRunner implements ApplicationRunner {
                 .Contents("hi")
                 .build();
 
-
+        reviewRe.save(review);
+        reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
+
 
 
 

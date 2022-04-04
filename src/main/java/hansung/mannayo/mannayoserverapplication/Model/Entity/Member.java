@@ -56,9 +56,9 @@ public class Member {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(mappedBy = "member" ,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member"  ,cascade = CascadeType.PERSIST)
     @JsonBackReference
-    private Collection<Review> reviewList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "member")
