@@ -79,7 +79,6 @@ public class MemberRunner implements ApplicationRunner {
         Review review = Review.builder().member(member).title("hi1").build();
         Review review1 = Review.builder().member(member).title("hi2").build();
         List<Review> reviewList = new ArrayList<Review>();
-
         reviewList.add(review);
         reviewList.add(review1);
         member2.setReviewList(reviewList);
