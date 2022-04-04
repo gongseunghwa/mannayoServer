@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor
-@Builder
+@Builder @Table(name = "commenttocomment")
 public class CommentToComment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

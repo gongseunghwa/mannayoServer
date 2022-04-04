@@ -55,7 +55,7 @@ class JjimTest {
         Restaurant newRestaurant = restaurantRepository.save(restaurant);
 
         jjim.setRestaurant(restaurantRepository.getById(newRestaurant.getIdRestaurant()));
-        jjim.setMember(memberRepository.getById(newmember.getNickName()));
+        //jjim.setMember(memberRepository.getById(new member.getId()));
         Jjim savedJjim = jjimRepository.save(jjim);
 
 

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity @Setter @Getter @AllArgsConstructor @NoArgsConstructor
 @Builder
-@Table(name = "block")
+@Table(name = "blocks")
 public class Block {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

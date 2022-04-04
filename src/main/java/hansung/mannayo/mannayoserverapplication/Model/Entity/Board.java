@@ -21,14 +21,14 @@ import java.util.List;
 @Entity @Setter @Getter @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@Table(name = "board")
+@Table(name = "boards")
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
     private Long id;
 
-    @JoinColumn(name = "writer")
+    @JoinColumn(name = "writer_id")
     @ManyToOne @JsonManagedReference
     private Member member;
 

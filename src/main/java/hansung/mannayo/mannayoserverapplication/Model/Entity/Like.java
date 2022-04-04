@@ -16,7 +16,7 @@ public class Like {
     @Column(name = "like_id")
     private Long id;
 
-    @JoinColumn(name = "member_nickname")
+    @JoinColumn(name = "member_id")
     @ManyToOne @JsonManagedReference
     private Member member;
 

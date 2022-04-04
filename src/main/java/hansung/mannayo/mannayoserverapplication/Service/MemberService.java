@@ -27,9 +27,9 @@ public class MemberService {
     }
 
     //find member by pk(nickname)
-    public Member findbyNickName(String nickName){
-        Optional<Member> obj = memberRepository.findById(nickName);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(nickName));
+    public Member findbyId(Long id){
+        Optional<Member> obj = memberRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     //save member
     public Member insert(Member obj){
@@ -37,24 +37,24 @@ public class MemberService {
     }
 
     //delete member by pk(nickname)
-    public void delete(String nickName){
+    public void delete(Long id){
         try{
-            memberRepository.deleteById(nickName);
+            memberRepository.deleteById(id);
         }catch( EmptyResultDataAccessException e){
-            throw new ResourceNotFoundException(nickName);
+            throw new ResourceNotFoundException(id);
         }catch(DataIntegrityViolationException e){
             throw new DatabaseException(e.getMessage());
         }
     }
 
     //update Member by pk(nickname)
-    public Member update(String nickName,Member obj){
+    public Member update(Long id,Member obj){
         try{
-            Member entity = memberRepository.getById(nickName);
+            Member entity = memberRepository.getById(id);
             updateData(entity,obj);
             return memberRepository.save(entity);
         }catch(EntityNotFoundException e){
-            throw new ResourceNotFoundException(nickName);
+            throw new ResourceNotFoundException(id);
         }
     }
 

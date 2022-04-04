@@ -20,6 +20,6 @@ public class Jjim {
     private Restaurant restaurant;
 
     @ManyToOne
-    @JoinColumn(name = "member_nickname")
+    @JoinColumn(name = "member_id")
     private Member member;
 }

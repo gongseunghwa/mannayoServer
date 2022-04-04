@@ -25,32 +25,27 @@ public class MemberController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/{nickName}")
-    public ResponseEntity<Member> findbyNickName(@PathVariable String nickName){
-        Member obj = service.findbyNickName(nickName);
+    @GetMapping("/{id}")
+    public ResponseEntity<Member> findbyNickName(@PathVariable Long id){
+        Member obj = service.findbyId(id);
         return ResponseEntity.ok().body(obj);
 
     }
 
     @PostMapping
     public ResponseEntity<Member> insert(Member obj){
-        obj = service.insert(obj);
-        System.out.println(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{nickName}}")
-                .buildAndExpand(obj.getNickName()).toUri();
-
-        return ResponseEntity.created(uri).body(obj);
+        return ResponseEntity.ok(service.insert(obj));
     }
 
-    @DeleteMapping("/{nickName}")
-    public ResponseEntity<Void> delete(@PathVariable String nickName){
-        service.delete(nickName);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{nickName}")
-    public ResponseEntity<Member> update(@PathVariable String nickName, @RequestBody Member obj){
-        obj = service.update(nickName,obj);
+    @PutMapping("/{id}")
+    public ResponseEntity<Member> update(@PathVariable Long id, @RequestBody Member obj){
+        obj = service.update(id,obj);
         return ResponseEntity.ok().body(obj);
     }
 
