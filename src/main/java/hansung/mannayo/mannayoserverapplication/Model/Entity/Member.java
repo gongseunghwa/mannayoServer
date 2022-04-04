@@ -27,7 +27,7 @@ import java.util.List;
 @Table(name = "member")
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -76,9 +76,9 @@ public class Member {
     @JsonBackReference
     private List<Like> likeList = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "")
-//    @JsonBackReference
-//    private List<Block> block_member_List;
+    @OneToMany(mappedBy = "member")
+    @JsonBackReference
+    private List<Block> block_member_List;
 
     @OneToMany(mappedBy = "member")
     @JsonBackReference

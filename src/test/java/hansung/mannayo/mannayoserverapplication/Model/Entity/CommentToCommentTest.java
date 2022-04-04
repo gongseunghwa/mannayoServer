@@ -28,6 +28,7 @@ class CommentToCommentTest {
     @Test
     public void Test(){
         Member member = new Member();
+        member.setId(0L);
         member.setNickName("aa");
         member.setEmail("tmdhk502@naver.com");
         member.setAccountTypeEnum(AccountType.MEMBER);

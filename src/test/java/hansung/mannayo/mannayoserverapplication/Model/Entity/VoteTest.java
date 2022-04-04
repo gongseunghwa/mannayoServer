@@ -29,6 +29,7 @@ class VoteTest {
     @Test
     public void Test() {
         Member member = new Member.MemberBuilder()
+                .id(0L)
                 .NickName("abc")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")

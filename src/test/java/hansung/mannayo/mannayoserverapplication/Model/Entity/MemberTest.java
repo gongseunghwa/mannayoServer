@@ -29,6 +29,7 @@ class MemberTest {
     @Test
     public void setMemberInfo(){
         Member member = new Member.MemberBuilder()
+                .id(0L)
                 .NickName("abc")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
@@ -44,14 +45,18 @@ class MemberTest {
     public void setMessageInfo() {
 
         Message message = new Message.MessageBuilder()
-                .member_Sender(Member.builder().NickName("abc")
+                .member_Sender(Member.builder()
+                        .id(0L)
+                        .NickName("abc")
                         .Email("hjkwon0814@navercom")
                         .Password("1234")
                         .accountTypeEnum(AccountType.ADMISTRATOR)
                         .PhoneNumber("010-1234-1234")
                         .loginTypeEnum(LoginType.EMAIL)
                         .ReportCount(0).build())
-                .member_Receiver(Member.builder().NickName("cba")
+                .member_Receiver(Member.builder()
+                        .id(0L)
+                        .NickName("cba")
                         .Email("hjkwon0814@navercom")
                         .Password("1234")
                         .accountTypeEnum(AccountType.ADMISTRATOR)

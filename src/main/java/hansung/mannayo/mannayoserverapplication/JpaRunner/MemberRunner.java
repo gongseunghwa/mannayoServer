@@ -55,7 +55,6 @@ public class MemberRunner implements ApplicationRunner {
 
 
         Member member = Member.builder()
-                .id(0L)
                 .NickName("12345")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")
@@ -67,7 +66,6 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
         Member member2 = Member.builder()
-                .id(1L)
                 .NickName("seunghwa gong")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")
@@ -103,10 +101,10 @@ public class MemberRunner implements ApplicationRunner {
                 .Contents("hi")
                 .build();
 
-//        reviewRe.save(review);
-//        reviewRe.save(review1);
-//        memberRepository.save(member);
-//        memberRepository.save(member2);
+        reviewRe.save(review);
+        reviewRe.save(review1);
+        memberRepository.save(member);
+        memberRepository.save(member2);
 
 
 

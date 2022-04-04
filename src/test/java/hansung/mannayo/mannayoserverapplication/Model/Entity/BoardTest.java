@@ -18,6 +18,7 @@ class BoardTest {
     @Test
     public void boardTest(){
         Member member = new Member();
+        member.setId(0L);
         member.setNickName("aa");
         member.setEmail("tmdhk502@naver.com");
         member.setPassword("tmdghk9609!");

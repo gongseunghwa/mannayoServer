@@ -24,6 +24,7 @@ class CommentTest {
     @Test
     public void commentTest(){
         Member member = new Member();
+        member.setId(0L);
         member.setNickName("aa");
         member.setEmail("tmdhk502@naver.com");
         member.setAccountTypeEnum(AccountType.MEMBER);

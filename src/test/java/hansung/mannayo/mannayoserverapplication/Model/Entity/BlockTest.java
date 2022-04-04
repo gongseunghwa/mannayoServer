@@ -25,6 +25,7 @@ class BlockTest {
     @Test
     public void run(){
         Member member1 = new Member.MemberBuilder()
+                .id(0L)
                 .NickName("AAA")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
@@ -36,6 +37,7 @@ class BlockTest {
 
 
         Member member2 = new Member.MemberBuilder()
+                .id(1L)
                 .NickName("BBB")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")

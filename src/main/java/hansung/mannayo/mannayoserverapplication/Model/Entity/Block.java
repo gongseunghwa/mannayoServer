@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @Entity @Setter @Getter @AllArgsConstructor @NoArgsConstructor
 @Builder
 @Table(name = "blocks")
+
 public class Block {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +17,7 @@ public class Block {
 
     @NotNull
     @ManyToOne @JsonManagedReference
-    @JoinColumn(name = "blcok_member")
+    @JoinColumn(name = "block_member")
     private Member member;
 
     @NotNull

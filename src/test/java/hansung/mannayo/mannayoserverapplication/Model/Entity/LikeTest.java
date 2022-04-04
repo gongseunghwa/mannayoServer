@@ -19,6 +19,7 @@ class LikeTest {
     @Test
     public void insert(){
         Member member = new Member.MemberBuilder()
+                .id(0L)
                 .NickName("AAA")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
