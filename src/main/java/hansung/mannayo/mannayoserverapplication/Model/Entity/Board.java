@@ -10,7 +10,6 @@ import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -25,22 +24,18 @@ import java.util.List;
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
     private Long id;
 
     @JoinColumn(name = "writer_id")
     @ManyToOne @JsonManagedReference
     private Member member;
 
-    @Column(name = "title")
     @NotNull
     private String title;
 
-    @Column(name = "contents")
     @NotNull
     private String contents;
 
-    @Column(name = "image")
     private String image;
 
     @CreatedDate

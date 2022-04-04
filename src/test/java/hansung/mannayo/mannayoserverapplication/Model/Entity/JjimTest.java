@@ -31,7 +31,7 @@ class JjimTest {
     public void Test() {
         Jjim jjim = new Jjim();
         Restaurant restaurant = new Restaurant.RestaurantBuilder()
-                .idRestaurant(1l)
+                .idRestaurant(1)
                 .Address("123")
                 .BusinessDayOff(LocalDate.of(2022,03,31))
                 .BusinessEndHours(LocalTime.of(22,10,00))

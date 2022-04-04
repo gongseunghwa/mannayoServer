@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "review")
 public class Review {
+
     @Id @GeneratedValue
     private Long id;
 

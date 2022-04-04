@@ -28,7 +28,7 @@ public class Report {
     private String ReportReason;
 
     @NotNull
-    private LocalTime Reporttime;
+    private LocalTime ReportTime;
 
     @NotNull
     @Enumerated(EnumType.STRING)

@@ -49,7 +49,7 @@ class ReportTest {
                 .board(board)
                 .reportType(ReportType.BADNAME)
                 .ReportReason("ahfjakdf")
-                .Reporttime(LocalTime.now())
+                .ReportTime(LocalTime.now())
                 .reportResult(ReportResultType.PERMENENT)
                 .followUpAction(FollowUpActionType.COMPLETE)
                 .build();
