@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Message {
 
     @Id @GeneratedValue
-    private Integer idMessage;
+    private Long idMessage;
 
     @NotNull
     @ManyToOne

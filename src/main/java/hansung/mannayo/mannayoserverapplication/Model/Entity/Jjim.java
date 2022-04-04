@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 public class Jjim {
 
     @Id @GeneratedValue
-    private Integer JJIM_ID;
+    private Long JJIM_ID;
 
     @ManyToOne
     private Restaurant restaurant;

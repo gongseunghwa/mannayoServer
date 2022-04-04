@@ -17,7 +17,7 @@ import java.time.LocalTime;
 public class Report {
 
     @Id @GeneratedValue
-    private Integer idReport;
+    private Long idReport;
 
     @NotNull
     @Enumerated(EnumType.STRING)

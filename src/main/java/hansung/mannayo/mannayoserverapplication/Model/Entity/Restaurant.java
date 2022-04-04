@@ -19,7 +19,7 @@ public class Restaurant {
 
 
     @Id @GeneratedValue
-    private Integer idRestaurant;
+    private Long idRestaurant;
 
     @NotNull
     private String Name;

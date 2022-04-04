@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentToComment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne @JsonManagedReference
     private Comment comment;

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Review {
     @Id @GeneratedValue
-    private Integer id;
+    private Long id;
 
     String title;
 
