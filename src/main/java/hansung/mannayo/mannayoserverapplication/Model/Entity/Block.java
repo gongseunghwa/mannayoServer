@@ -17,9 +17,11 @@ public class Block {
 
     @NotNull
     @ManyToOne @JsonManagedReference
+    @JoinColumn(name = "blcok_member")
     private Member member;
 
     @NotNull
     @ManyToOne @JsonManagedReference
+    @JoinColumn(name = "blocked_member")
     private Member target_member;
 }

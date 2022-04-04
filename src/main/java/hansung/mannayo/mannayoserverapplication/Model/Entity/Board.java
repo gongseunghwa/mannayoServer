@@ -8,6 +8,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Board {
     @Column(name = "board_id")
     private Long id;
 
+    @JoinColumn(name = "writer")
     @ManyToOne @JsonManagedReference
     private Member member;
 
@@ -41,26 +43,34 @@ public class Board {
     @Column(name = "image")
     private String image;
 
-
+    @CreatedDate
+    @Column(name = "create_date")
     private LocalDateTime createdDate;
 
-
+    @Column(name = "modify_date")
+    @LastModifiedDate
     private LocalDateTime modifiedDate;
 
+    @Column(name="delete_date")
     private LocalDateTime deletedDate;
 
   //  @Column(columnDefinition = "boolean default false ")
+    @Column(name = "isModified")
     private Boolean isModified;
 
-   // @Column(columnDefinition = "boolean default false ")
+    // @Column(columnDefinition = "boolean default false ")
+    @Column(name = "isDeleted")
     private Boolean isDeleted;
 
+    @Column(name = "isVote")
     private Boolean isVote;
 
+    @Column(name = "viewCount")
     private Integer viewCount;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "Board_type")
     private BoardType type;
 
     @OneToMany(mappedBy = "board")
@@ -86,7 +96,6 @@ public class Board {
 
     @PrePersist
     public void createAt(){
-        this.createdDate = LocalDateTime.now();
         this.viewCount = 0;
         this.isModified = false;
         this.isDeleted = false;

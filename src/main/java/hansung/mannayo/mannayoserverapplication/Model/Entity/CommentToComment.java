@@ -4,6 +4,8 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,7 @@ public class CommentToComment {
     private Long id;
 
     @ManyToOne @JsonManagedReference
+    @JoinColumn(name = "comment_id")
     private Comment comment;
 
     @NotNull
@@ -26,8 +29,10 @@ public class CommentToComment {
 
     private Integer Depth;
 
+    @CreatedDate
     private LocalDateTime createdDate;
 
+    @LastModifiedDate
     private LocalDateTime modifiedDate;
 
     private LocalDateTime deletedDate;
@@ -38,7 +43,6 @@ public class CommentToComment {
 
     @PrePersist
     public void createAt(){
-        this.createdDate = LocalDateTime.now();
         this.isModified = false;
         this.isDeleted = false;
     }
