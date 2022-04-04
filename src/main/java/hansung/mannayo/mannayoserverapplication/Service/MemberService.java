@@ -2,15 +2,19 @@ package hansung.mannayo.mannayoserverapplication.Service;
 
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Service.exceptions.DatabaseException;
 import hansung.mannayo.mannayoserverapplication.Service.exceptions.ResourceNotFoundException;
+import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

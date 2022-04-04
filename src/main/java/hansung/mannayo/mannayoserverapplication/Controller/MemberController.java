@@ -33,7 +33,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<Member> insert(Member obj){
+    public ResponseEntity<Member> insert(@RequestBody Member obj){
         return ResponseEntity.ok(service.insert(obj));
     }
 
