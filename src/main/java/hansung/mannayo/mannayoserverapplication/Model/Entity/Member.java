@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 @Table(name = "member")
-public class Member {
+public class Member implements Serializable {
 
     @Id @GeneratedValue
     private Long id;
@@ -59,7 +60,7 @@ public class Member {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(mappedBy = "member"  ,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     @JsonBackReference
     private List<Review> reviewList = new ArrayList<>();
 

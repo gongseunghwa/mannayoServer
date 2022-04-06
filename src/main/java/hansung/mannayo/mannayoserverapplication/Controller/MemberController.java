@@ -4,11 +4,13 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Service.MemberService;
+import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 
@@ -33,9 +35,11 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<Member> insert(@RequestBody Member obj){
-        return ResponseEntity.ok(service.insert(obj));
+    public ResponseEntity<Member> insert(@RequestBody MemberDto memberDto) {
+        System.out.println(memberDto);
+        return ResponseEntity.ok(service.insert(memberDto));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
@@ -44,9 +48,8 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Member> update(@PathVariable Long id, @RequestBody Member obj){
-        obj = service.update(id,obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<Member> update(@PathVariable Long id, @RequestBody MemberDto obj){
+        return ResponseEntity.ok().body(service.update(id,obj));
     }
 
 
