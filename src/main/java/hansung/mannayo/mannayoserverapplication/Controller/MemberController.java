@@ -31,7 +31,6 @@ public class MemberController {
     public ResponseEntity<Member> findbyNickName(@PathVariable Long id){
         Member obj = service.findbyId(id);
         return ResponseEntity.ok().body(obj);
-
     }
 
     @PostMapping

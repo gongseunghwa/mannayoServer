@@ -1,19 +1,44 @@
 package hansung.mannayo.mannayoserverapplication.Service;
 
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
+import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
+import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class ReviewService {
+public interface ReviewService {
+    public List<Review> findAll();
 
-    @Autowired
-    ReviewRepository reviewRepository;
+    //find member by pk(nickname)
+    public Review findbyId(Long id);
 
-    public List<Review> findAll(){
-        return reviewRepository.findAll();
+    //save member
+    public Review insert(ReviewDto obj);
+
+    //delete member by pk(nickname)
+    public void delete(Long id);
+
+    //update Member by pk(nickname)
+    public Review update(Long id, ReviewDto obj);
+
+
+    public void updateData(Review entity, ReviewDto obj);
+
+    default Review dtoToEntity(ReviewDto reviewDto) {
+        Review entity = Review.builder()
+                .title(reviewDto.getTitle())
+                .content(reviewDto.getContent())
+                .writeDate(reviewDto.getWriteDate())
+                .image(reviewDto.getImage())
+                .starPoint(reviewDto.getStarPoint())
+                .isDeleted(reviewDto.getIsDeleted())
+                .isModified(reviewDto.getIsModifoed())
+                .build();
+        return entity;
     }
+
 }
