@@ -105,7 +105,7 @@ public class Member implements Serializable {
         like.setMember(this);
     }
 
-    public void addBlcok(Block block){
+    public void addBlock(Block block){
         this.block_member_List.add(block);
         block.setMember(this);
     }
