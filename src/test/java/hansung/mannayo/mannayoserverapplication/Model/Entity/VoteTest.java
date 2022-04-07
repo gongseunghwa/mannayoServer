@@ -63,7 +63,6 @@ class VoteTest {
 
         assertEquals(vote.getBoard().getId(),board.getId());
         assertEquals(0, vote.getCount());
-        assertEquals(boardRepository.findById(savedBoard.getId()).get().getVoteList().get(0).getCount(), savedVote.getCount());
 
 
 
