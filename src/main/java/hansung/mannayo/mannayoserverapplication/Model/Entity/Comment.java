@@ -54,7 +54,7 @@ public class Comment {
 
     @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<CommentToComment> commentToCommentList = new ArrayList<>();
+    private List<CommentToComment> commentToCommentList;
 
     public void addCommentToComment(CommentToComment commentToComment){
         commentToCommentList.add(commentToComment);

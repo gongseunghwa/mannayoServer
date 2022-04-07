@@ -70,19 +70,19 @@ public class Board {
 
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Like> likeList = new ArrayList<>();
+    private List<Like> likeList;
 
     @OneToMany(mappedBy ="board", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Vote> voteList = new ArrayList<>();
+    private List<Vote> voteList;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Report> reportList = new ArrayList<>();
+    private List<Report> reportList;
 
     public void addVote(Vote vote){
         voteList.add(vote);

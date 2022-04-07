@@ -49,7 +49,7 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Review> reviewList;
 
     @NotNull
     private LocalDate BusinessDayOff;

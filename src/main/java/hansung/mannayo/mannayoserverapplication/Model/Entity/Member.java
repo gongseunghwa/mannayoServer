@@ -62,28 +62,27 @@ public class Member implements Serializable {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Review> reviewList = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Board> boardList = new ArrayList<>();
+    private List<Review> reviewList;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Jjim> jjimList = new ArrayList<>();
+    private List<Board> boardList;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Like> likeList = new ArrayList<>();
+    private List<Jjim> jjimList;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Block> block_member_List = new ArrayList<>();
+    private List<Like> likeList;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Block> block_member_List;
 
     @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Report> reportList = new ArrayList<>();
+    private List<Report> reportList;
 
 
     public void addReview(Review review){
