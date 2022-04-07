@@ -27,16 +27,16 @@ class CommentToCommentTest {
 
     @Test
     public void Test(){
-        Member member = new Member();
-        member.setId(0L);
-        member.setNickName("aa");
-        member.setEmail("tmdhk502@naver.com");
-        member.setAccountTypeEnum(AccountType.MEMBER);
-        member.setPassword("tmdghk9609!");
-        member.setPhoneNumber("010-0202-0303");
-        member.setBirth(LocalDate.now());
-        member.setLoginTypeEnum(LoginType.EMAIL);
-        member.setReportCount(1);
+        Member member = Member.builder()
+                .NickName("aa")
+                .Email("tmdhk502@naver.com")
+                .Password("tmdghk9609!")
+                .PhoneNumber("010-0202-0303")
+                .Birth(LocalDate.now())
+                .ReportCount(1)
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .loginTypeEnum(LoginType.EMAIL)
+                .build();
 
         Board board = Board.builder()
                 .member(member)
