@@ -27,15 +27,15 @@ class ReportTest {
 
     @Test
     public void Test() {
-        Member member = new Member.MemberBuilder()
-                .id(0L)
-                .NickName("abc")
-                .Email("hjkwon0814@navercom")
-                .Password("1234")
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .PhoneNumber("010-1234-1234")
-                .loginTypeEnum(LoginType.EMAIL)
+        Member member = Member.builder()
+                .NickName("aa")
+                .Email("tmdhk502@naver.com")
+                .Password("tmdghk9609!")
+                .PhoneNumber("010-0202-0303")
                 .Birth(LocalDate.now())
+                .ReportCount(1)
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .loginTypeEnum(LoginType.EMAIL)
                 .build();
 
         Board board = Board.builder()

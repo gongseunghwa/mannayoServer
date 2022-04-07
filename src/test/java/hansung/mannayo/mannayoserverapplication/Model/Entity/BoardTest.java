@@ -1,6 +1,8 @@
 package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
+import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,17 @@ class BoardTest {
 
     @Test
     public void boardTest(){
-        Member member = new Member();
-        member.setId(0L);
-        member.setNickName("aa");
-        member.setEmail("tmdhk502@naver.com");
-        member.setPassword("tmdghk9609!");
-        member.setPhoneNumber("010-0202-0303");
-        member.setBirth(LocalDate.now());
-        member.setReportCount(1);
+        Member member = Member.builder()
+                .NickName("aa")
+                .Email("tmdhk502@naver.com")
+                .Password("tmdghk9609!")
+                .PhoneNumber("010-0202-0303")
+                .Birth(LocalDate.now())
+                .ReportCount(1)
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .loginTypeEnum(LoginType.EMAIL)
+                .build();
+
 
         Board board = Board.builder()
                 .member(member)
