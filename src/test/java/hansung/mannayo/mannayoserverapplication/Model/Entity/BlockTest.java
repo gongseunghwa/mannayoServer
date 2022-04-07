@@ -24,8 +24,7 @@ class BlockTest {
 
     @Test
     public void run(){
-        Member member1 = new Member.MemberBuilder()
-                .id(0L)
+        Member member1 = Member.builder()
                 .NickName("AAA")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
@@ -36,8 +35,7 @@ class BlockTest {
                 .build();
 
 
-        Member member2 = new Member.MemberBuilder()
-                .id(1L)
+        Member member2 = Member.builder()
                 .NickName("BBB")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
@@ -47,18 +45,16 @@ class BlockTest {
                 .Birth(LocalDate.now())
                 .build();
 
-        Member savedMember1 = memberRepository.save(member1);
-        Member savedMember2 = memberRepository.save(member2);
 
         Block block = Block.builder()
-                .member(member1)
-                .target_member(member2)
+                .target_member(member1)
+                .member(member2)
                 .build();
 
         Block savedBlock = blockRepository.save(block);
 
-        assertThat(blockRepository.findById(savedBlock.getId()).get().getMember().getNickName()).isEqualTo(savedMember1.getNickName());
-        assertThat(blockRepository.findById(savedBlock.getId()).get().getTarget_member().getNickName()).isEqualTo(savedMember2.getNickName());
+        assertThat(blockRepository.getById(savedBlock.getId()).getTarget_member().getNickName()).isEqualTo(block.getTarget_member().getNickName());
+
     }
 
 

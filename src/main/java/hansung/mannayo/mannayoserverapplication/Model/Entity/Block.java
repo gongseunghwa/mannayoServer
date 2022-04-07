@@ -16,12 +16,12 @@ public class Block {
     private Long id;
 
     @NotNull
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.PERSIST) @JsonManagedReference
     @JoinColumn(name = "block_member")
     private Member member;
 
     @NotNull
-    @ManyToOne @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.PERSIST) @JsonManagedReference
     @JoinColumn(name = "blocked_member")
     private Member target_member;
 }

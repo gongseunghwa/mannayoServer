@@ -5,6 +5,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
+import hansung.mannayo.mannayoserverapplication.Repository.BlockRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
@@ -26,6 +27,9 @@ import java.util.List;
 @Component
 @Transactional
 public class MemberRunner implements ApplicationRunner {
+
+    @Autowired
+    BlockRepository blockRepository;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -108,7 +112,6 @@ public class MemberRunner implements ApplicationRunner {
         reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
-
 
 
     }
