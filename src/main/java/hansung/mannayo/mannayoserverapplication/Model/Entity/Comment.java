@@ -52,9 +52,14 @@ public class Comment {
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment",cascade = CascadeType.ALL)
     @JsonBackReference
     private List<CommentToComment> commentToCommentList = new ArrayList<>();
+
+    public void addCommentToComment(CommentToComment commentToComment){
+        commentToCommentList.add(commentToComment);
+        commentToComment.setComment(this);
+    }
 
     @PrePersist
     public void createAt(){

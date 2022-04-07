@@ -68,25 +68,39 @@ public class Board {
     @Column(name = "Board_type")
     private BoardType type;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Like> likeList = new ArrayList<>();
 
-    @OneToMany(mappedBy ="board")
+    @OneToMany(mappedBy ="board", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Vote> voteList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Report> reportList = new ArrayList<>();
 
     public void addVote(Vote vote){
         voteList.add(vote);
         vote.setBoard(this);
+    }
+
+    public void addComment(Comment comment){
+        comments.add(comment);
+        comment.setBoard(this);
+    }
+    public void addLike(Like like){
+        likeList.add(like);
+        like.setBoard(this);
+    }
+
+    public void addReport(Report report){
+        reportList.add(report);
+        report.setBoard(this);
     }
 
     @PrePersist

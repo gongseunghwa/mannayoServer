@@ -60,31 +60,61 @@ public class Member implements Serializable {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Review> reviewList = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Board> boardList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Jjim> jjimList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Like> likeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Block> block_member_List;
+    private List<Block> block_member_List = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Report> reportList = new ArrayList<>();
 
+
+    public void addReview(Review review){
+        this.reviewList.add(review);
+        review.setMember(this);
+    }
+
+    public void addBoard(Board board){
+        this.boardList.add(board);
+        board.setMember(this);
+    }
+
+    public void addJjim(Jjim jjim){
+        this.jjimList.add(jjim);
+        jjim.setMember(this);
+    }
+
+    public void addLike(Like like){
+        this.likeList.add(like);
+        like.setMember(this);
+    }
+
+    public void addBlcok(Block block){
+        this.block_member_List.add(block);
+        block.setMember(this);
+    }
+
+    public void addReport(Report report){
+        this.reportList.add(report);
+        report.setMember(this);
+    }
 
 }
 

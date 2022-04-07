@@ -22,7 +22,7 @@ public class Vote {
     @ColumnDefault("0")
     private Integer Count;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) @JsonManagedReference
+    @ManyToOne @JsonManagedReference
     private Board board;
 
 }

@@ -47,7 +47,7 @@ public class Restaurant {
     @NotNull
     private LocalTime BusinessEndHours;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Review> reviewList = new ArrayList<>();
 
@@ -60,9 +60,14 @@ public class Restaurant {
     @ColumnDefault("0")
     private Integer StarPointInfo;
 
-    @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Jjim> jjimList = new ArrayList<>();
+
+    public void addJjim(Jjim jjim){
+        this.jjimList.add(jjim);
+        jjim.setRestaurant(this);
+    }
 
 
 }

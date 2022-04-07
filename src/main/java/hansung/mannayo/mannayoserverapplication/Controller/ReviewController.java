@@ -39,6 +39,4 @@ public class ReviewController {
     public ResponseEntity<Review> update(@PathVariable Long id, @RequestBody ReviewDto obj){
         return ResponseEntity.ok().body(service.update(id,obj));
     }
-
-
 }
