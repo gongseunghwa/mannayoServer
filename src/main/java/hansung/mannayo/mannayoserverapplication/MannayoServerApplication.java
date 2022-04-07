@@ -14,5 +14,5 @@ public class MannayoServerApplication {
 
 
 //TODO
-// VoteTest, 데이터베이스 이미지 저장 어떻게 할것인지 고민, 서비스구현
-//
+// Security, cascade
+// DB에 있는 내용을 삭제하지 않되, Member의 AccountType과 게시물의 is_deleted를 이용하여 구분한다.
