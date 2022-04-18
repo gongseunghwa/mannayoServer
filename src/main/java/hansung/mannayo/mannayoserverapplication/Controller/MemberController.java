@@ -3,7 +3,9 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
-import hansung.mannayo.mannayoserverapplication.dto.*;
+import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
+import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
+import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByPhoneNumberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,18 +47,6 @@ public class MemberController {
     public ResponseEntity<String> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
         String email = service.findEmailByPhoneNumber(dto);
         return ResponseEntity.ok().body(email);
-    }
-
-    @PostMapping("/findMyPasswordByEmail")
-    public ResponseEntity findByPasswordByEmail(@RequestBody findMyPasswordByEmailDto dto) {
-        boolean isExist = service.findPasswordByEmail(dto);
-        return ResponseEntity.ok().body(isExist);
-    }
-
-    @PostMapping("/findMyPasswordByPhoneNumber")
-    public ResponseEntity findByPasswordByPhoneNumber(@RequestBody findMyPasswordByPhoneNumberDto dto) {
-        boolean isExist = service.findPasswordByPhoneNumber(dto);
-        return ResponseEntity.ok().body(isExist);
     }
 
 
