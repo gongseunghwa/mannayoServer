@@ -30,12 +30,11 @@ public class Member implements Serializable {
 
     @Id @GeneratedValue
     private Long id;
-    
-    @NotNull
+
     private String realName;
 
     @Column(nullable = false, unique = true)
-    private String NickName;
+    private String nickName;
 
     @NotNull
     private String Email;

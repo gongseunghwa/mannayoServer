@@ -18,7 +18,7 @@ public class JwtTokenUtil {
 
     private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-    @Value("${spring.jwt.secret}")
+    @Value("spring.jwt.secret")
     private String secret;
 
     //jwt 토큰에서 username 얻어오기

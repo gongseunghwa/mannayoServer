@@ -30,7 +30,7 @@ public interface MemberServiceInterface {
 
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
-                .NickName(memberDto.getNickName())
+                .nickName(memberDto.getNickName())
                 .accountTypeEnum(memberDto.getAccountTypeEnum())
                 .loginTypeEnum(memberDto.getLoginTypeEnum())
                 .PhoneNumber(memberDto.getPhoneNumber())

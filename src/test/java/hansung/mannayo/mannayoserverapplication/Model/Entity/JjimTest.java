@@ -44,7 +44,7 @@ class JjimTest {
 
         Member member = new Member.MemberBuilder()
                 .id(0L)
-                .NickName("abc")
+                .nickName("abc")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)

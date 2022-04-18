@@ -24,7 +24,7 @@ class CommentTest {
     @Test
     public void commentTest(){
         Member member = Member.builder()
-                .NickName("aa")
+                .nickName("aa")
                 .Email("tmdhk502@naver.com")
                 .Password("tmdghk9609!")
                 .PhoneNumber("010-0202-0303")

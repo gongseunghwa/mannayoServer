@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    Member findByNameAndNickname(String name, String Nickname);
+    Member findByRealNameAndNickName(String realName, String nickName);
+
 
 }

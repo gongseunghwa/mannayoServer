@@ -59,23 +59,23 @@ public class MemberRunner implements ApplicationRunner {
 
 
         Member member = Member.builder()
-                .NickName("12345")
+                .nickName("12345")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
-                .PhoneNumber("01012341234")
+                .PhoneNumber("010-1234-1234")
                 .loginTypeEnum(LoginType.EMAIL)
                 .Birth(LocalDate.now())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
         Member member2 = Member.builder()
-                .NickName("seunghwa gong")
+                .nickName("seunghwa gong")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")
                 .reviewList(new ArrayList<>())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
-                .PhoneNumber("01012341234")
+                .PhoneNumber("010-1234-1234")
                 .loginTypeEnum(LoginType.EMAIL)
                 .Birth(LocalDate.now())
                 .accountTypeEnum(AccountType.ADMISTRATOR)

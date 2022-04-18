@@ -25,7 +25,7 @@ class BlockTest {
     @Test
     public void run(){
         Member member1 = Member.builder()
-                .NickName("AAA")
+                .nickName("AAA")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
@@ -36,7 +36,7 @@ class BlockTest {
 
 
         Member member2 = Member.builder()
-                .NickName("BBB")
+                .nickName("BBB")
                 .Email("hjkwon0814@navercom")
                 .Password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
