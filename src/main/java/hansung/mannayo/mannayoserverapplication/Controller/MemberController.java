@@ -4,6 +4,7 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
+import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,13 @@ public class MemberController {
     public ResponseEntity<Member> insert(@RequestBody MemberDto memberDto) {
         System.out.println(memberDto);
         return ResponseEntity.ok(service.insert(memberDto));
+    }
+
+    @PostMapping("/findMyAccount")
+    public ResponseEntity<String> findByNameAndEmail(@RequestBody findMyAccountByNicknameDto dto) {
+        System.out.println("닉네임과 실명은 " + dto.getRealName() + dto.getNickName());
+        String email = service.findEmail(dto);
+        return ResponseEntity.ok().body(email);
     }
 
 
