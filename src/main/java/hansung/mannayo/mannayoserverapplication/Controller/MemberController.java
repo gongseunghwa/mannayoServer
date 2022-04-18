@@ -5,7 +5,6 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
-import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByPhoneNumberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,15 +36,10 @@ public class MemberController {
         return ResponseEntity.ok(service.insert(memberDto));
     }
 
-    @PostMapping("/findMyAccountByNickname")
-    public ResponseEntity<String> findByNameAndNickname(@RequestBody findMyAccountByNicknameDto dto) {
-        String email = service.findEmailByNickname(dto);
-        return ResponseEntity.ok().body(email);
-    }
-
-    @PostMapping("/findMyAccountByPhoneNumber")
-    public ResponseEntity<String> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
-        String email = service.findEmailByPhoneNumber(dto);
+    @PostMapping("/findMyAccount")
+    public ResponseEntity<String> findByNameAndEmail(@RequestBody findMyAccountByNicknameDto dto) {
+        System.out.println("닉네임과 실명은 " + dto.getRealName() + dto.getNickName());
+        String email = service.findEmail(dto);
         return ResponseEntity.ok().body(email);
     }
 

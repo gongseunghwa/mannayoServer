@@ -7,7 +7,6 @@ import hansung.mannayo.mannayoserverapplication.Service.exceptions.DatabaseExcep
 import hansung.mannayo.mannayoserverapplication.Service.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
-import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByPhoneNumberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -38,13 +37,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String findEmailByNickname(findMyAccountByNicknameDto dto) {
+    public String findEmail(findMyAccountByNicknameDto dto) {
         return memberRepository.findByRealNameAndNickName(dto.getRealName(), dto.getNickName()).getEmail();
-    }
-
-    @Override
-    public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto) {
-        return memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()).getEmail();
     }
 
     //save member
