@@ -65,7 +65,7 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .PhoneNumber("010-1234-1234")
                 .loginTypeEnum(LoginType.EMAIL)
-                .Birth(LocalDate.of(2022,1,1))
+                .Birth(LocalDate.now())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
@@ -77,7 +77,7 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .PhoneNumber("010-1234-1234")
                 .loginTypeEnum(LoginType.EMAIL)
-                .Birth(LocalDate.of(2022,1,1))
+                .Birth(LocalDate.now())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
