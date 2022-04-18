@@ -2,16 +2,12 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
-import hansung.mannayo.mannayoserverapplication.Service.MemberService;
+import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.transaction.Transactional;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,7 +15,7 @@ import java.util.List;
 public class MemberController {
 
     @Autowired
-    MemberService service;
+    MemberServiceImpl service;
 
     @GetMapping
     public ResponseEntity<List<Member>> findAll(){

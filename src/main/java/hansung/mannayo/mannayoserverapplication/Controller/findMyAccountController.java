@@ -1,6 +1,6 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
 
-import hansung.mannayo.mannayoserverapplication.Service.findMyAccount;
+import hansung.mannayo.mannayoserverapplication.Service.findMyAccountImpl;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class findMyAccountController {
 
     @Autowired
-    findMyAccount service;
+    findMyAccountImpl service;
 
     @PostMapping
     public ResponseEntity<String> findByNameAndEmail(@RequestBody findMyAccountByNicknameDto dto) {
