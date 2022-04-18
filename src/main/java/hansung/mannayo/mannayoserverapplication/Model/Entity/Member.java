@@ -3,6 +3,7 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountStatus;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import lombok.*;
@@ -47,6 +48,9 @@ public class Member implements Serializable {
     @Enumerated(EnumType.STRING)
     private AccountType accountTypeEnum;
 
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus;
+
     @NotNull
     private String PhoneNumber;
 
@@ -58,6 +62,9 @@ public class Member implements Serializable {
     private LoginType loginTypeEnum;
 
     private String ImageAddress;
+
+    @ColumnDefault("0")
+    private Integer passwordFailCount;
 
     @ColumnDefault("0")
     private Integer ReportCount;

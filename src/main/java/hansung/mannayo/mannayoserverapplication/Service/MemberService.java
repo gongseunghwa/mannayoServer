@@ -3,6 +3,7 @@ package hansung.mannayo.mannayoserverapplication.Service;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
+import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByPhoneNumberDto;
 
 import java.util.List;
 
@@ -23,7 +24,9 @@ public interface MemberService {
 
     public void updateData(Member entity, MemberDto obj);
 
-    public String findEmail(findMyAccountByNicknameDto dto);
+    public String findEmailByNickname(findMyAccountByNicknameDto dto);
+
+    public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto);
 
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
