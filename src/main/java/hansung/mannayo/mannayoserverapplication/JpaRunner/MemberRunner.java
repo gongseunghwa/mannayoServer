@@ -59,6 +59,7 @@ public class MemberRunner implements ApplicationRunner {
 
 
         Member member = Member.builder()
+                .realName("권혁진")
                 .nickName("12345")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")
@@ -70,6 +71,7 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
         Member member2 = Member.builder()
+                .realName("공승화")
                 .nickName("seunghwa gong")
                 .Email("hjkwon0814@naver.com")
                 .Password("1234")

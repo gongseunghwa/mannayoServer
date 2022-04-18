@@ -14,6 +14,7 @@ public class findMyAccount implements findMyAccountService{
 
     @Override
     public String findEmail(findMyAccountByNicknameDto dto) {
+        System.out.println("서비스" + dto);
         return memberRepository.findByRealNameAndNickName(dto.getRealName(), dto.getNickName()).getEmail();
     }
 }
