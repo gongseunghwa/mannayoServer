@@ -26,7 +26,7 @@ public interface MemberService {
 
     public String findEmailByNickname(findMyAccountByNicknameDto dto);
 
-//    public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto);
+    public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto);
 
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
