@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Collections;
 
 
 @Api(tags = {"1.sign"})
@@ -58,6 +59,7 @@ public class SignController {
                         .phoneNumber("")
                         .birth(LocalDate.now())
                         .loginTypeEnum(LoginType.EMAIL)
+                        .roles(Collections.singletonList("ROLE_USER"))
                 .build());
 
         return ResponseEntity.ok().body(responseService.getSuccessResult());
