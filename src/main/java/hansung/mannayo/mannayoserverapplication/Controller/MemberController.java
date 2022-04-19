@@ -55,6 +55,7 @@ public class MemberController {
     @PostMapping("/findMyAccountByNickname")
     public ResponseEntity<String> findByNameAndNickname(@RequestBody findMyAccountByNicknameDto dto) {
         String email = service.findEmailByNickname(dto);
+        System.out.println(email);
         return ResponseEntity.ok().body(email);
     }
 
