@@ -73,7 +73,7 @@ public class MemberRunner implements ApplicationRunner {
         Member member2 = Member.builder()
                 .realName("공승화")
                 .nickName("seunghwa gong")
-                .email("hjkwon0814@naver.com")
+                .email("hjkwon0814@yahoo.co.kr")
                 .password("1234")
                 .reviewList(new ArrayList<>())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
