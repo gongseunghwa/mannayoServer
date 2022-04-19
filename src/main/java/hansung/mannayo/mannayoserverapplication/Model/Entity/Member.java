@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -27,7 +32,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 @Table(name = "member")
-public class Member implements Serializable {
+public class Member implements Serializable , UserDetails {
 
     @Id @GeneratedValue
     private Long id;
@@ -38,11 +43,11 @@ public class Member implements Serializable {
     private String nickName;
 
     @NotNull
-    private String Email;
+    private String email;
 
     @NotNull
     @JsonIgnore
-    private String Password;
+    private String password;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -52,16 +57,25 @@ public class Member implements Serializable {
     private AccountStatus accountStatus;
 
     @NotNull
-    private String PhoneNumber;
+    private String phoneNumber;
 
     @NotNull
-    private LocalDate Birth;
+    private LocalDate birth;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private LoginType loginTypeEnum;
 
-    private String ImageAddress;
+    private String imageAddress;
 
     @ColumnDefault("0")
     private Integer passwordFailCount;
@@ -122,6 +136,37 @@ public class Member implements Serializable {
     public void addReport(Report report){
         this.reportList.add(report);
         report.setMember(this);
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

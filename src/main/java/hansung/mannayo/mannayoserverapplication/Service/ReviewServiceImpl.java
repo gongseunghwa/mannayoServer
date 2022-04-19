@@ -2,9 +2,8 @@ package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
-import hansung.mannayo.mannayoserverapplication.Service.exceptions.DatabaseException;
-import hansung.mannayo.mannayoserverapplication.Service.exceptions.ResourceNotFoundException;
-import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
+import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
+import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;

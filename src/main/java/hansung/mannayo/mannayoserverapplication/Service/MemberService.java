@@ -33,12 +33,12 @@ public interface MemberService {
                 .nickName(memberDto.getNickName())
                 .accountTypeEnum(memberDto.getAccountTypeEnum())
                 .loginTypeEnum(memberDto.getLoginTypeEnum())
-                .PhoneNumber(memberDto.getPhoneNumber())
-                .Birth(memberDto.getBirth())
-                .Email(memberDto.getEmail())
+                .phoneNumber(memberDto.getPhoneNumber())
+                .birth(memberDto.getBirth())
+                .email(memberDto.getEmail())
                 .ReportCount(memberDto.getReportCount())
-                .ImageAddress(memberDto.getImageAddress())
-                .Password((memberDto.getPassword()))
+                .imageAddress(memberDto.getImageAddress())
+                .password((memberDto.getPassword()))
                 .build();
 
         return entity;
