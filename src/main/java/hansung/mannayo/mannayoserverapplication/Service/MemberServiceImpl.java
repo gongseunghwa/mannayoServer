@@ -3,11 +3,16 @@ package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
+
 import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
 import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByPhoneNumberDto;
+import hansung.mannayo.mannayoserverapplication.Service.exceptions.DatabaseException;
+import hansung.mannayo.mannayoserverapplication.Service.exceptions.ResourceNotFoundException;
+import hansung.mannayo.mannayoserverapplication.dto.*;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -45,6 +50,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto) {
         return memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()).getEmail();
+    }
+
+    @Override
+    public boolean findPasswordByEmail(findMyPasswordByEmailDto dto) {
+        return (memberRepository.findByRealNameAndEmail(dto.getName(), dto.getEmail()) != null);
+    }
+
+    @Override
+    public boolean findPasswordByPhoneNumber(findMyPasswordByPhoneNumberDto dto) {
+        return (memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()) != null);
     }
 
     //save member

@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import hansung.mannayo.mannayoserverapplication.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +64,18 @@ public class MemberController {
     public ResponseEntity<String> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
         String email = service.findEmailByPhoneNumber(dto);
         return ResponseEntity.ok().body(email);
+    }
+
+    @PostMapping("/findMyPasswordByEmail")
+    public ResponseEntity findByPasswordByEmail(@RequestBody findMyPasswordByEmailDto dto) {
+        boolean isExist = service.findPasswordByEmail(dto);
+        return ResponseEntity.ok().body(isExist);
+    }
+
+    @PostMapping("/findMyPasswordByPhoneNumber")
+    public ResponseEntity findByPasswordByPhoneNumber(@RequestBody findMyPasswordByPhoneNumberDto dto) {
+        boolean isExist = service.findPasswordByPhoneNumber(dto);
+        return ResponseEntity.ok().body(isExist);
     }
 
 
