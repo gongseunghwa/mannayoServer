@@ -9,8 +9,8 @@ import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundExcep
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByPhoneNumberDto;
-import hansung.mannayo.mannayoserverapplication.Service.exceptions.DatabaseException;
-import hansung.mannayo.mannayoserverapplication.Service.exceptions.ResourceNotFoundException;
+import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
+import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.*;
 
 import lombok.RequiredArgsConstructor;
