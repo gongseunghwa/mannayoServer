@@ -1,4 +1,4 @@
-package hansung.mannayo.mannayoserverapplication.Service.exceptions;
+package hansung.mannayo.mannayoserverapplication.exceptions;
 
 public class ResourceNotFoundException extends  RuntimeException{
 

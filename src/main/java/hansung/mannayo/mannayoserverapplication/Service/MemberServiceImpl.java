@@ -3,8 +3,8 @@ package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
-import hansung.mannayo.mannayoserverapplication.Service.exceptions.DatabaseException;
-import hansung.mannayo.mannayoserverapplication.Service.exceptions.ResourceNotFoundException;
+import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
+import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.findMyAccountByNicknameDto;
 import lombok.RequiredArgsConstructor;

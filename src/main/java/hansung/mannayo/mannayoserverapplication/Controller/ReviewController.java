@@ -5,6 +5,9 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Service.ReviewService;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,10 @@ public class ReviewController {
         return ResponseEntity.ok().body(list);
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = true,dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "id로 리뷰조회(1개)" ,notes = "Id로 리뷰를 조회한다")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Review> findbyId(@PathVariable Long id){
         Review obj = service.findbyId(id);

@@ -45,10 +45,10 @@ class JjimTest {
         Member member = new Member.MemberBuilder()
                 .id(0L)
                 .nickName("abc")
-                .Email("hjkwon0814@navercom")
-                .Password("1234")
+                .email("hjkwon0814@navercom")
+                .password("1234")
                 .accountTypeEnum(AccountType.ADMISTRATOR)
-                .PhoneNumber("010-1234-1234")
+                .phoneNumber("010-1234-1234")
                 .loginTypeEnum(LoginType.EMAIL)
                 .build();
 
