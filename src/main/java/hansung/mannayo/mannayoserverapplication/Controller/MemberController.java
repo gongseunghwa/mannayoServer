@@ -43,11 +43,11 @@ public class MemberController {
         return ResponseEntity.ok().body(email);
     }
 
-    @PostMapping("/findMyAccountByPhoneNumber")
-    public ResponseEntity<String> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
-        String email = service.findEmailByPhoneNumber(dto);
-        return ResponseEntity.ok().body(email);
-    }
+//    @PostMapping("/findMyAccountByPhoneNumber")
+//    public ResponseEntity<String> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
+//        String email = service.findEmailByPhoneNumber(dto);
+//        return ResponseEntity.ok().body(email);
+//    }
 
 
     @DeleteMapping("/{id}")

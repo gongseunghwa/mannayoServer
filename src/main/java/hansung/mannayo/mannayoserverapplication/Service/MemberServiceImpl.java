@@ -42,10 +42,10 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByRealNameAndNickName(dto.getRealName(), dto.getNickName()).getEmail();
     }
 
-    @Override
-    public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto) {
-        return memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()).getEmail();
-    }
+//    @Override
+//    public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto) {
+//        return memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()).getEmail();
+//    }
 
     //save member
     @Override
