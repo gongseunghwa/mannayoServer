@@ -33,6 +33,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                         .antMatchers("/signin").permitAll()
                         .antMatchers("/signup").permitAll()
+                        .antMatchers("/members/findMyPasswordByEmail").permitAll()
+                        .antMatchers("/members/findMyAccountByNickname").permitAll()
+                        .antMatchers("/members/findMyAccountByPhoneNumber").permitAll()
                         .anyRequest().hasRole("USER")
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // Jwt토큰 필터를 아이디 패스워드 인증 전에 넣는다.

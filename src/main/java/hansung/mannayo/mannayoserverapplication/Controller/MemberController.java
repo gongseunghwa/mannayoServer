@@ -54,16 +54,21 @@ public class MemberController {
     }
 
     @PostMapping("/findMyAccountByNickname")
-    public ResponseEntity<String> findByNameAndNickname(@RequestBody findMyAccountByNicknameDto dto) {
-        String email = service.findEmailByNickname(dto);
-        System.out.println(email);
-        return ResponseEntity.ok().body(email);
+    public ResponseEntity<findMyAccountByNicknameResponseDto> findByNameAndNickname(@RequestBody findMyAccountByNicknameDto dto) {
+        System.out.println(dto);
+        findMyAccountByNicknameResponseDto responsedto = new findMyAccountByNicknameResponseDto();
+        responsedto.setEmail(service.findEmailByNickname(dto));
+        System.out.println(responsedto.getEmail());
+        return ResponseEntity.ok().body(responsedto);
     }
 
     @PostMapping("/findMyAccountByPhoneNumber")
-    public ResponseEntity<String> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
-        String email = service.findEmailByPhoneNumber(dto);
-        return ResponseEntity.ok().body(email);
+    public ResponseEntity<findMyAccountByPhoneNumberResponseDto> findByNameAndPhoneNumber(@RequestBody findMyAccountByPhoneNumberDto dto) {
+        System.out.println(dto);
+        findMyAccountByPhoneNumberResponseDto responsedto = new findMyAccountByPhoneNumberResponseDto();
+        responsedto.setEmail(service.findEmailByPhoneNumber(dto));
+        System.out.println(responsedto.getEmail());
+        return ResponseEntity.ok().body(responsedto);
     }
 
     @PostMapping("/findMyPasswordByEmail")

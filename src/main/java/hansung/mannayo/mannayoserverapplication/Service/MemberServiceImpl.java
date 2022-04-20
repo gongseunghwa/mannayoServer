@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public String findEmailByPhoneNumber(findMyAccountByPhoneNumberDto dto) {
-        return memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()).getEmail();
+        return memberRepository.findByRealNameAndPhoneNumber(dto.getRealName(), dto.getPhoneNumber()).getEmail();
     }
 
     @Override

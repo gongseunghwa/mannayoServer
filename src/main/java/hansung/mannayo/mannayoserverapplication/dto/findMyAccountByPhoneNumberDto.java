@@ -7,7 +7,7 @@ import lombok.Setter;
 @Data @Setter @Getter
 public class findMyAccountByPhoneNumberDto {
 
-    private String name;
+    private String realName;
 
     private String phoneNumber;
 }
