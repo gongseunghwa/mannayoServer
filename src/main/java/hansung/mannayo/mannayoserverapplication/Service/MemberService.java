@@ -9,8 +9,10 @@ public interface MemberService {
 
     public List<Member> findAll();
 
-    //find member by pk(nickname)
+    //find member by pk(id)
     public Member findbyId(Long id);
+    //find member by nickname(nickname)
+    public Member findbyNickname(String nickname);
     //save member
     public Member insert(MemberDto obj);
 

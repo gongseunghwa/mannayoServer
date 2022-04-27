@@ -43,6 +43,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member findbyNickname(String nickname){
+        Optional<Member> obj = memberRepository.findByNickName(nickname);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(nickname));
+    }
+
+    @Override
     public String findEmailByNickname(findMyAccountByNicknameDto dto) {
         return memberRepository.findByRealNameAndNickName(dto.getRealName(), dto.getNickName()).getEmail();
     }
