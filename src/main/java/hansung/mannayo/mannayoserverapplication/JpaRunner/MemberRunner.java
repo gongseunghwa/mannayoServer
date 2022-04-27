@@ -114,6 +114,7 @@ public class MemberRunner implements ApplicationRunner {
         reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
+        boardRepository.save(board);
 
 
     }

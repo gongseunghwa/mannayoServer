@@ -42,7 +42,7 @@ public class BoardController {
     //게시글list 모두 불러오기
     //제목으로 검색
     //닉네임으로 검색
-    // RequestParam의 인자에 따라 결과값 다르게 출력
+    //RequestParam의 인자에 따라 결과값 다르게 출력
     @ApiOperation(value = "board", notes = "전체검색/닉네임검색/제목검색")
     @GetMapping("/search")
     public ResponseEntity<List<BoardListRequest>> findBoard(
@@ -58,10 +58,13 @@ public class BoardController {
         }
 
         if(title != null && nickName ==null){
-            List<Board> boardList = boardService.findByTitle(title);
-            List<BoardListRequest> boardListRequest = new ArrayList<>();
-            toDto(boardList,boardListRequest);
-            return ResponseEntity.ok().body(boardListRequest);
+            Optional<List<Board>> boardList = boardService.findByTitle(title);
+            if(boardList.isPresent()) {
+                List<Board> boards = boardList.get();
+                List<BoardListRequest> boardListRequest = new ArrayList<>();
+                toDto(boards, boardListRequest);
+                return ResponseEntity.ok().body(boardListRequest);
+            }
         }
 
         Optional<List<Board>> boardList = boardService.findByMember(nickName);
@@ -74,6 +77,7 @@ public class BoardController {
 
         throw new EntityNotFoundException("No Boards by given nickName");
     }
+
 
     //게시글 상세정보 불러오기
 
@@ -129,7 +133,6 @@ public class BoardController {
                 .title(title)
                 .contents(contents)
                 .type(boardType)
-                .createdDate(LocalDateTime.now())
                 .build();
 
         boardRepository.save(board);

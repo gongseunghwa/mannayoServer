@@ -10,6 +10,8 @@ import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ import java.util.List;
 @Entity @Setter @Getter @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class) //현재 Entity에 Auditing 기능을 포함시키기 위한 어노테이션
 @Table(name = "boards")
 public class Board {
 
