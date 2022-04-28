@@ -50,7 +50,7 @@ public class MemberRunner implements ApplicationRunner {
         Restaurant restaurant = new Restaurant();
         restaurant.setAddress("123");
         restaurant.setName("Maxicana");
-        restaurant.setRestaurant_type(Restaurant_Type.HANSIK);
+        restaurant.setType(Restaurant_Type.HANSIK);
         restaurant.setNumber("01051231545");
         restaurant.setOwner("chulsu");
         restaurant.setBusinessStartHours(LocalTime.of(10,00));
@@ -114,6 +114,7 @@ public class MemberRunner implements ApplicationRunner {
         reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
+        boardRepository.save(board);
 
 
     }

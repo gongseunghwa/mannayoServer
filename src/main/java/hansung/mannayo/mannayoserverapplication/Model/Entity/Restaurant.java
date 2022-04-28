@@ -18,16 +18,15 @@ import java.util.List;
 @Table(name = "restaurant")
 public class Restaurant {
 
-
     @Id @GeneratedValue
-    private Long idRestaurant;
+    private Long id;
 
     @NotNull
-    private String Name;
+    private String name;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Restaurant_Type restaurant_type;
+    private Restaurant_Type type;
 
     @NotNull
     private String number;
@@ -36,29 +35,29 @@ public class Restaurant {
     private String owner;
 
     @NotNull
-    private String Address;
+    private String address;
 
     @ColumnDefault("0")
-    private Integer JJIMcount;
+    private Integer jjimcount;
 
     @NotNull
-    private LocalTime BusinessStartHours;
+    private LocalTime businessStartHours;
 
     @NotNull
-    private LocalTime BusinessEndHours;
+    private LocalTime businessEndHours;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Review> reviewList;
 
     @NotNull
-    private LocalDate BusinessDayOff;
+    private LocalDate businessDayOff;
 
     @ColumnDefault("0")
     private Integer reviewCount;
 
     @ColumnDefault("0")
-    private Integer StarPointInfo;
+    private Integer starPointInfo;
 
     @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference

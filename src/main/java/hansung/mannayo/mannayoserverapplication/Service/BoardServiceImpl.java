@@ -25,11 +25,11 @@ public class BoardServiceImpl implements BoardService{
 
 
     @Override
-    public List<Board> findByTitle(String title) {
+    public Optional<List<Board>> findByTitle(String title) {
 
         Optional<List<Board>> boardList  = boardRepository.findByTitleOrderByCreatedDateDesc(title);
         if(boardList.isPresent()){
-            return boardList.get();
+            return boardList;
         }
         throw new EntityNotFoundException("Cannot find any board given title");
     }
