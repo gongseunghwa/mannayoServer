@@ -2,16 +2,16 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Jjim;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Like;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
-import hansung.mannayo.mannayoserverapplication.Service.BoardService;
-import hansung.mannayo.mannayoserverapplication.Service.LikeService;
-import hansung.mannayo.mannayoserverapplication.Service.MemberService;
-import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
+import hansung.mannayo.mannayoserverapplication.Service.*;
 import hansung.mannayo.mannayoserverapplication.dto.BoardDto;
 import hansung.mannayo.mannayoserverapplication.dto.BoardListRequest;
+import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,12 @@ public class BoardController {
 
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    JjimService jjimService;
+
+    @Autowired
+    RestaurantService restaurantService;
 
     @Autowired
     MemberRepository memberRepository;
@@ -144,7 +150,7 @@ public class BoardController {
 
     // 좋아요한 게시물 스크랩하기
     @ApiOperation(value = "board scrapping")
-    @GetMapping("/scrap/{id}")
+    @GetMapping("/scrappost/{id}")
     public ResponseEntity<List<BoardListRequest>> scrappingBoard(@PathVariable Long id) {
         List<Like> likeList = likeService.findListByMemberId(id).get();
         List<Board> boards = new ArrayList<>();
@@ -163,6 +169,34 @@ public class BoardController {
 
     // 찜한 가게 스크랩하기
     @ApiOperation(value = "restaurant scrappint")
+    @GetMapping("/scraprestaurant/{id}")
+    public ResponseEntity<List<RestaurantListRequest>> scrappingRestaurant(@PathVariable Long id) {
+        List<Jjim> jjims = jjimService.findByMemberId(id).get();
+        List<Restaurant> restaurants = new ArrayList<>();
+        if(!jjims.isEmpty()) {
+            for(int i = 0; i<jjims.size(); i++) {
+                restaurants.add(restaurantService.findById(jjims.get(i).getRestaurant().getId()).get());
+            }
+            List<RestaurantListRequest> restaurantListRequest = new ArrayList<>();
+            toRestaurantDto(restaurants, restaurantListRequest);
+            return ResponseEntity.ok().body(restaurantListRequest);
+        }
+
+        throw new EntityNotFoundException("no Jjim by given id");
+    }
+
+    //RestaurantListRequest로 정보옮기기
+    public void toRestaurantDto(List<Restaurant> restaurants, List<RestaurantListRequest> dtoList){
+        for(int i=0 ;i<restaurants.size();i++){
+            RestaurantListRequest list = RestaurantListRequest.builder()
+                    .id(restaurants.get(i).getId())
+                    .name(restaurants.get(i).getName())
+                    .type(restaurants.get(i).getType())
+                    .address(restaurants.get(i).getAddress())
+                    .build();
+            dtoList.add(list);
+        }
+    }
 
 
 

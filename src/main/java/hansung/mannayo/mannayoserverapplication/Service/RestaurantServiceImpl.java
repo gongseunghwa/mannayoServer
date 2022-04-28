@@ -20,6 +20,11 @@ public class RestaurantServiceImpl implements RestaurantService{
     public Optional<List<Restaurant>> findbyRestaurant_type(Restaurant_Type type) {
         return restaurantRepository.findByType(type);
     }
+
+    @Override
+    public Optional<Restaurant> findById(Long id) {
+        return restaurantRepository.findByid(id);
+    }
 }
 
 
