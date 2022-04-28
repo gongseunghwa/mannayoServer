@@ -148,7 +148,8 @@ public class BoardController {
     @ApiOperation(value = "board scrapping")
     @GetMapping("/scrap/{id}")
     public ResponseEntity<BoardDto> scrappingBoard(@PathVariable Long id) {
-
+        BoardDto boardDto = new BoardDto();
+        return ResponseEntity.ok().body(boardDto);
     }
 
 
