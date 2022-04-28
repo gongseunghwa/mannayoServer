@@ -27,4 +27,4 @@ public class MannayoServerApplication {
 //TODO
 // Security, cascade
 // DB에 있는 내용을 삭제하지 않되, Member의 AccountType과 게시물의 is_deleted를 이용하여 구분한다.
-//
+// Contains Tyme mismatch 해결해야함.

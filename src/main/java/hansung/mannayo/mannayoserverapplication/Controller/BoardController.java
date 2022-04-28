@@ -51,6 +51,7 @@ public class BoardController {
     {
 
         if(title == null && nickName ==null) {
+            System.out.println(1);
             List<Board> boardList = boardService.findAll();
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boardList, boardListRequest);
@@ -58,6 +59,7 @@ public class BoardController {
         }
 
         if(title != null && nickName ==null){
+            System.out.println(2);
             List<Board> boardList = boardService.findByTitle(title);
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boardList,boardListRequest);
@@ -66,6 +68,7 @@ public class BoardController {
 
         Optional<List<Board>> boardList = boardService.findByMember(nickName);
         if(boardList.isPresent()) {
+            System.out.println(3);
             List<Board> boards = boardList.get();
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boards, boardListRequest);
@@ -118,21 +121,23 @@ public class BoardController {
 
     @ApiOperation(value = "board write", notes = "글쓰기 기능, 타입은 GOOD_RESTAURANT_BOARD, ADVERTISE_BOARD, TODAT_EAT_BOARD 만 입력")
     @PostMapping("/write")
-    public void writeInsertBoard(
-            @ApiParam(value = "글 타입을 입력하세요", required = false) @RequestParam BoardType boardType,
-            @ApiParam(value = "글 내용을 입력하세요", required = false) @RequestParam String contents,
-            @ApiParam(value = "글 제목을 입력하세요", required = false) @RequestParam String title,
-            @ApiParam(value = "닉네임을 입력하세요", required = false) @RequestParam String nickname)
+    public void writeInsertBoard(@RequestBody BoardDto boardDto)
     {
         Board board = Board.builder()
-                .member(memberService.findbyNickname(nickname))
-                .title(title)
-                .contents(contents)
-                .type(boardType)
+                .member(memberService.findbyNickname(boardDto.getNickName()))
+                .title(boardDto.getTitle())
+                .contents(boardDto.getContents())
+                .type(boardDto.getBoardType())
                 .createdDate(LocalDateTime.now())
                 .build();
 
         boardRepository.save(board);
+    }
+
+    @ApiOperation(value = "board scrapping")
+    @GetMapping("/scrap/{id}")
+    public ResponseEntity<BoardDto> scrappingBoard(@PathVariable Long id) {
+
     }
 
 

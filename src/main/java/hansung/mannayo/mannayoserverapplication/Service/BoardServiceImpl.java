@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public List<Board> findByTitle(String title) {
 
-        Optional<List<Board>> boardList  = boardRepository.findByTitleContainsOrderByCreatedDateDesc(title);
+        Optional<List<Board>> boardList  = boardRepository.findByTitleOrderByCreatedDateDesc(title);
         if(boardList.isPresent()){
             return boardList.get();
         }
