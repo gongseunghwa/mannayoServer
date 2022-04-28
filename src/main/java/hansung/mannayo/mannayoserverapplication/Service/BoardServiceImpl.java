@@ -25,6 +25,11 @@ public class BoardServiceImpl implements BoardService{
 
 
     @Override
+    public Optional<Board> findByMemberId(Long id) {
+        return boardRepository.findByMember_Id(id);
+    }
+
+    @Override
     public Optional<List<Board>> findByTitle(String title) {
 
         Optional<List<Board>> boardList  = boardRepository.findByTitleOrderByCreatedDateDesc(title);

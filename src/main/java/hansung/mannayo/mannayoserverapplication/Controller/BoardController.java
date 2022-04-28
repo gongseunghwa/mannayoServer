@@ -2,10 +2,12 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Like;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Service.BoardService;
+import hansung.mannayo.mannayoserverapplication.Service.LikeService;
 import hansung.mannayo.mannayoserverapplication.Service.MemberService;
 import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
 import hansung.mannayo.mannayoserverapplication.dto.BoardDto;
@@ -32,6 +34,9 @@ public class BoardController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    LikeService likeService;
 
     @Autowired
     MemberRepository memberRepository;
@@ -137,12 +142,27 @@ public class BoardController {
         boardRepository.save(board);
     }
 
+    // 좋아요한 게시물 스크랩하기
     @ApiOperation(value = "board scrapping")
     @GetMapping("/scrap/{id}")
-    public ResponseEntity<BoardDto> scrappingBoard(@PathVariable Long id) {
-        BoardDto boardDto = new BoardDto();
-        return ResponseEntity.ok().body(boardDto);
+    public ResponseEntity<List<BoardListRequest>> scrappingBoard(@PathVariable Long id) {
+        List<Like> likeList = likeService.findListByMemberId(id).get();
+        List<Board> boards = new ArrayList<>();
+        if(!likeList.isEmpty()) {
+            for(int i =0; i<likeList.size(); i++) {
+                boards.add(boardService.findByMemberId(likeList.get(i).getMember().getId()).get());
+            }
+            List<BoardListRequest> boardListRequests = new ArrayList<>();
+            toDto(boards, boardListRequests);
+            return ResponseEntity.ok().body(boardListRequests);
+        }
+
+        throw new EntityNotFoundException("no likes by given id");
+
     }
+
+    // 찜한 가게 스크랩하기
+    @ApiOperation(value = "restaurant scrappint")
 
 
 

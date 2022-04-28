@@ -18,6 +18,9 @@ public interface BoardService {
     //작성자 닉네임으로 게시글 List찾기
     Optional<List<Board>> findByMember(String nickName);
 
+    //작성자 id값으로 게시글 찾기
+    Optional<Board> findByMemberId(Long id);
+
     List<Board> findAll();
 
 }

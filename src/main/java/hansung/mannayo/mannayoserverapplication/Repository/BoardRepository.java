@@ -16,6 +16,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<List<Board>> findByMember_NickName(String nickName);
 
+    Optional<Board> findByMember_Id(Long id);
+
 
     // findAll  order by desc -> findAll(Sort.by(Sort.Direction.DESC, "id")로 할 예정
 }
