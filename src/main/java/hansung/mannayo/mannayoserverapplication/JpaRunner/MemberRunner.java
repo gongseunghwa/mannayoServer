@@ -117,15 +117,15 @@ public class MemberRunner implements ApplicationRunner {
                 .Contents("hi")
                 .build();
 
-        Like like = Like.builder()
-                .member(member)
-                .board(board)
-                .build();
+//        Like like = Like.builder()
+//                .member(member)
+//                .board(board)
+//                .build();
 
-        Jjim jjim = Jjim.builder()
-                .member(member)
-                .restaurant(restaurant)
-                .build();
+//        Jjim jjim = Jjim.builder()
+//                .member(member)
+//                .restaurant(restaurant)
+//                .build();
 
         reviewRe.save(review);
         reviewRe.save(review1);
@@ -133,8 +133,8 @@ public class MemberRunner implements ApplicationRunner {
         memberRepository.save(member2);
         boardRepository.save(board);
         restaurantRepository.save(restaurant);
-        likeRepository.save(like);
-        jjimRepository.save(jjim);
+//        likeRepository.save(like);
+//        jjimRepository.save(jjim);
 
     }
 }
