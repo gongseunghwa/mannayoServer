@@ -1,6 +1,7 @@
 package hansung.mannayo.mannayoserverapplication.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,5 +18,6 @@ public class BoardListRequest {
 
     public String writer;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     public LocalDateTime writeDate;
 }

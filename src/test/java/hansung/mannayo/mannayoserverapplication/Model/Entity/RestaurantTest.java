@@ -24,14 +24,14 @@ class RestaurantTest {
     @Test
     public void insert() {
         Restaurant restaurant = Restaurant.builder()
-                .Name("SH restaurant")
-                .restaurant_type(Restaurant_Type.SULJIP)
+                .name("SH restaurant")
+                .type(Restaurant_Type.SULJIP)
                 .number("010-1323-3332")
                 .owner("seunghwa gong")
-                .Address("seoul gwangjin")
-                .BusinessStartHours(LocalTime.of(9,30))
-                .BusinessEndHours(LocalTime.of(11,0))
-                .BusinessDayOff(LocalDate.of(2022,04,01))
+                .address("seoul gwangjin")
+                .businessStartHours(LocalTime.of(9,30))
+                .businessEndHours(LocalTime.of(11,0))
+                .businessDayOff(LocalDate.of(2022,04,01))
                 .build();
 
         restaurantRepository.save(restaurant);

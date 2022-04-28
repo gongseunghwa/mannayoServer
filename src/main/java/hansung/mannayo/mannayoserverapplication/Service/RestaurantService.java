@@ -1,14 +1,13 @@
-package hansung.mannayo.mannayoserverapplication.Repository;
+package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface RestaurantRepository extends JpaRepository<Restaurant,Long> {
+public interface RestaurantService {
 
-    Optional<List<Restaurant>> findByType(Restaurant_Type type);
+    Optional<List<Restaurant>> findbyRestaurant_type(Restaurant_Type type);
 }

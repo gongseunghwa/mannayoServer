@@ -2,10 +2,12 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.engine.internal.Cascade;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.CreatedDate;
