@@ -63,8 +63,7 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .build();
-
-
+        
         Member member = Member.builder()
                 .realName("권혁진")
                 .nickName("12345")
