@@ -59,13 +59,6 @@ public class BoardController {
         }
 
         if(title != null && nickName ==null){
-<<<<<<< HEAD
-            System.out.println(2);
-            List<Board> boardList = boardService.findByTitle(title);
-            List<BoardListRequest> boardListRequest = new ArrayList<>();
-            toDto(boardList,boardListRequest);
-            return ResponseEntity.ok().body(boardListRequest);
-=======
             Optional<List<Board>> boardList = boardService.findByTitle(title);
             if(boardList.isPresent()) {
                 List<Board> boards = boardList.get();
@@ -73,7 +66,6 @@ public class BoardController {
                 toDto(boards, boardListRequest);
                 return ResponseEntity.ok().body(boardListRequest);
             }
->>>>>>> 9cacefaf24069acf7fcb0abd0af1cb7e3f42c1de
         }
 
         Optional<List<Board>> boardList = boardService.findByMember(nickName);
