@@ -156,7 +156,7 @@ public class BoardController {
         List<Board> boards = new ArrayList<>();
         if(!likeList.isEmpty()) {
             for(int i =0; i<likeList.size(); i++) {
-                boards.add(boardService.findByMemberId(likeList.get(i).getMember().getId()).get());
+                boards.add(boardService.findById(likeList.get(i).getBoard().getId()).get());
             }
             List<BoardListRequest> boardListRequests = new ArrayList<>();
             toDto(boards, boardListRequests);
