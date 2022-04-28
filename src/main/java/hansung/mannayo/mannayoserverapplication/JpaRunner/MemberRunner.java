@@ -134,8 +134,7 @@ public class MemberRunner implements ApplicationRunner {
         boardRepository.save(board);
         restaurantRepository.save(restaurant);
         likeRepository.save(like);
-
-
+        jjimRepository.save(jjim);
 
     }
 }
