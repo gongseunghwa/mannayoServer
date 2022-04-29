@@ -146,32 +146,32 @@ public class MemberController {
     @ApiOperation(value = "프로필 사진 등록")
     @PostMapping("/profileimage")
     public ResponseEntity<String> registerProfileImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
-        Date date = new Date();
-        StringBuilder sb = new StringBuilder();
-        Member member = new Member();
-        if(multipartFile.isEmpty()) {
+        Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
+        StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
+        Member member = new Member(); // 멤버객체 생성
+        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
             sb.append("none");
         } else {
             sb.append(date.getTime());
             sb.append(multipartFile.getOriginalFilename());
         }
 
-        if(!multipartFile.isEmpty()) {
-            File dest = new File("C://images/profile/" + sb.toString());
+        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
+            File dest = new File("C://images/profile/" + sb.toString()); // 파일 생성
             try {
-                member = memberService.findbyId(id);
-                if(member.getImageAddress() == null) {
-                    System.out.println("if");
-                    member.setImageAddress("C://images/profile/" + sb.toString());
-                    memberService.updateImageAddress(member);
-                    multipartFile.transferTo(dest);
+                member = memberService.findbyId(id); // id로 Entity 찾아옴
+                if(member.getImageAddress() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
+                    member.setImageAddress("C://images/profile/" + sb.toString()); // member Entity에 이미지주소 저장
+                    memberService.updateImageAddress(member); // 업데이트
+                    multipartFile.transferTo(dest); // 파일 저장
                 }else {
-                    System.out.println("else");
-                    File file = new File(member.getImageAddress());
-                    file.delete();
-                    member.setImageAddress("C://images/profile/" + sb.toString());
-                    memberService.updateImageAddress(member);
-                    multipartFile.transferTo(dest);
+                    File file = new File(member.getImageAddress()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
+                    if(file.exists()) { // file이 존재한다면
+                        file.delete(); // 삭제
+                    }
+                    member.setImageAddress("C://images/profile/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
+                    memberService.updateImageAddress(member); // Entity 업데이트
+                    multipartFile.transferTo(dest); // 파일 저장
                 }
             } catch (IllegalStateException e) {
                 e.printStackTrace();
