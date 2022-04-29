@@ -99,6 +99,10 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public void updateImageAddress(Member member) {
+        memberRepository.save(member);
+    }
 
     @Override
     public void updateData(Member entity, MemberDto obj) {

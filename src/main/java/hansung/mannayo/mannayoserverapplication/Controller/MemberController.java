@@ -17,10 +17,16 @@ import lombok.RequiredArgsConstructor;
 import hansung.mannayo.mannayoserverapplication.dto.*;
 import org.apache.commons.collections.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -135,6 +141,46 @@ public class MemberController {
         }
 
         return ResponseEntity.ok().body(blockResponseDtos);
+    }
+
+    @ApiOperation(value = "프로필 사진 등록")
+    @PostMapping("/profileimage")
+    public ResponseEntity<String> registerProfileImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
+        Date date = new Date();
+        StringBuilder sb = new StringBuilder();
+        Member member = new Member();
+        if(multipartFile.isEmpty()) {
+            sb.append("none");
+        } else {
+            sb.append(date.getTime());
+            sb.append(multipartFile.getOriginalFilename());
+        }
+
+        if(!multipartFile.isEmpty()) {
+            File dest = new File("C://images/profile/" + sb.toString());
+            try {
+                member = memberService.findbyId(id);
+                if(member.getImageAddress() == null) {
+                    System.out.println("if");
+                    member.setImageAddress("C://images/profile/" + sb.toString());
+                    memberService.updateImageAddress(member);
+                    multipartFile.transferTo(dest);
+                }else {
+                    System.out.println("else");
+                    File file = new File(member.getImageAddress());
+                    file.delete();
+                    member.setImageAddress("C://images/profile/" + sb.toString());
+                    memberService.updateImageAddress(member);
+                    multipartFile.transferTo(dest);
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return ResponseEntity.ok().body("Success");
     }
 
 
