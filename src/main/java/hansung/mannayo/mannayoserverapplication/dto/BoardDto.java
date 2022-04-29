@@ -11,7 +11,9 @@ import java.util.Date;
 @Builder @AllArgsConstructor @NoArgsConstructor
 public class BoardDto {
 
-    private Integer memberId;
+    private Long memberId;
+
+    private Long boardId;
 
     private String nickName;
 

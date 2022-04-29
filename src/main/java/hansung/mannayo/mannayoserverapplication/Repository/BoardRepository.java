@@ -1,6 +1,7 @@
 package hansung.mannayo.mannayoserverapplication.Repository;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
+import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,6 +19,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<List<Board>> findByMember_Id(Long id);
 
+    Optional<List<Board>> findByType(BoardType boardType);
 
     // findAll  order by desc -> findAll(Sort.by(Sort.Direction.DESC, "id")로 할 예정
 }

@@ -50,6 +50,28 @@ public class BoardController {
     @Autowired
     BoardRepository boardRepository;
 
+
+    @ApiOperation(value = "response board", notes = "게시판 타입 별 호출")
+    @GetMapping
+    public ResponseEntity<List<BoardDto>> findBoardByType(@ApiParam(value = "타입 별 게시판 찾기", required = false) @RequestParam(required = false)BoardType boardType) {
+        List<Board> boards = boardService.findBoardByType(boardType).get();
+        BoardDto boardDto = new BoardDto();
+        List<BoardDto> boardDtos = new ArrayList<>();
+
+        for(int i = 0; i<boards.size(); i++) {
+            boardDto.setBoardId(boards.get(i).getId());
+            boardDto.setBoardType(boards.get(i).getType());
+            boardDto.setContents(boards.get(i).getContents());
+            boardDto.setDate(boards.get(i).getCreatedDate());
+            boardDto.setImage(boards.get(i).getImage());
+            boardDto.setMemberId(boards.get(i).getMember().getId());
+            boardDto.setNickName(boards.get(i).getMember().getNickName());
+            boardDto.setTitle(boards.get(i).getTitle());
+            boardDtos.add(boardDto);
+        }
+
+        return ResponseEntity.ok().body(boardDtos);
+    }
     //게시글list 모두 불러오기
     //제목으로 검색
     //닉네임으로 검색
@@ -62,7 +84,6 @@ public class BoardController {
     {
 
         if(title == null && nickName ==null) {
-            System.out.println(1);
             List<Board> boardList = boardService.findAll();
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boardList, boardListRequest);
@@ -81,7 +102,6 @@ public class BoardController {
 
         Optional<List<Board>> boardList = boardService.findByMember(nickName);
         if(boardList.isPresent()) {
-            System.out.println(3);
             List<Board> boards = boardList.get();
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boards, boardListRequest);
@@ -168,7 +188,7 @@ public class BoardController {
     }
 
     // 찜한 가게 스크랩하기
-    @ApiOperation(value = "restaurant scrappint")
+    @ApiOperation(value = "restaurant scrapping")
     @GetMapping("/scraprestaurant/{id}")
     public ResponseEntity<List<RestaurantListRequest>> scrappingRestaurant(@PathVariable Long id) {
         List<Jjim> jjims = jjimService.findByMemberId(id).get();
