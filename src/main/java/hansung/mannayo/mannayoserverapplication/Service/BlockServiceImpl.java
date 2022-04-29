@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class BlockServiceImpl implements BlockService{
@@ -23,5 +26,10 @@ public class BlockServiceImpl implements BlockService{
                 .build();
 
         blockRepository.save(block);
+    }
+
+    @Override
+    public Optional<List<Block>> findByMemberId(Long id) {
+        return blockRepository.findByMember_Id(id);
     }
 }

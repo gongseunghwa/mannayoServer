@@ -1,6 +1,7 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
 
 
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Block;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Service.BlockService;
 import hansung.mannayo.mannayoserverapplication.Service.MemberService;
@@ -14,10 +15,12 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import hansung.mannayo.mannayoserverapplication.dto.*;
+import org.apache.commons.collections.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -115,6 +118,23 @@ public class MemberController {
 
         blockService.insert(member, blockMember);
 
+    }
+
+    @ApiOperation(value = "차단내역 불러오기")
+    @GetMapping("/block")
+    public ResponseEntity<List<BlockResponseDto>> showBlockMember(@RequestParam Long id) {
+
+        List<Block> blocks = blockService.findByMemberId(id).get();
+        List<BlockResponseDto> blockResponseDtos = new ArrayList<>();
+        BlockResponseDto blockResponseDto = new BlockResponseDto();
+
+        for(int i=0; i< blocks.size();i++) {
+            blockResponseDto.setMemberId(blocks.get(i).getTarget_member().getId());
+            blockResponseDto.setNickname(blocks.get(i).getTarget_member().getNickName());
+            blockResponseDtos.add(blockResponseDto);
+        }
+
+        return ResponseEntity.ok().body(blockResponseDtos);
     }
 
 

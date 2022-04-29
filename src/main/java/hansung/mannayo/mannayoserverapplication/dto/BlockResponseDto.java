@@ -4,10 +4,10 @@ import lombok.*;
 
 @Data @Getter @Setter
 @Builder @NoArgsConstructor @AllArgsConstructor
-public class BlockDto { // 차단 내역 insert를 위한 DTO
+public class BlockResponseDto {
 
     private Long memberId;
 
-    private Long blockedMemberId;
+    private String nickname;
 
 }
