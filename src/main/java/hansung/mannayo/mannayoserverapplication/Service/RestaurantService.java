@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface RestaurantService {
 
     Optional<List<Restaurant>> findbyRestaurant_type(Restaurant_Type type);
+
+    Optional<Restaurant> findById(Long id);
 }

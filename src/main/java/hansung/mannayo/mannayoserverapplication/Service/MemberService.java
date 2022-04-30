@@ -32,6 +32,8 @@ public interface MemberService {
 
     public boolean findPasswordByPhoneNumber(findMyPasswordByPhoneNumberDto dto);
 
+    public void updateImageAddress(Member member);
+
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
                 .nickName(memberDto.getNickName())

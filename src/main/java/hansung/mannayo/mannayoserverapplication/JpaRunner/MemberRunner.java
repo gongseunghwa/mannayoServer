@@ -5,10 +5,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
-import hansung.mannayo.mannayoserverapplication.Repository.BlockRepository;
-import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
-import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
-import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
+import hansung.mannayo.mannayoserverapplication.Repository.*;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -43,21 +40,30 @@ public class MemberRunner implements ApplicationRunner {
     @Autowired
     ReviewRepository reviewRe;
 
+    @Autowired
+    RestaurantRepository restaurantRepository;
+
+    @Autowired
+    JjimRepository jjimRepository;
+
+    @Autowired
+    LikeRepository likeRepository;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        Restaurant restaurant = new Restaurant();
-        restaurant.setAddress("123");
-        restaurant.setName("Maxicana");
-        restaurant.setType(Restaurant_Type.HANSIK);
-        restaurant.setNumber("01051231545");
-        restaurant.setOwner("chulsu");
-        restaurant.setBusinessStartHours(LocalTime.of(10,00));
-        restaurant.setBusinessEndHours(LocalTime.of(22,00));
-        restaurant.setBusinessDayOff(LocalDate.of(2022,03,31));
-
-
+        Restaurant restaurant = Restaurant.builder()
+                .address("123")
+                .name("Naxicana")
+                .type(Restaurant_Type.HANSIK)
+                .number("01051231545")
+                .owner("chulsu")
+                .businessStartHours(LocalTime.of(10,00))
+                .businessEndHours(LocalTime.of(22,00))
+                .businessDayOff(LocalDate.of(2022,03,31))
+                .build();
+        
         Member member = Member.builder()
                 .realName("권혁진")
                 .nickName("12345")
@@ -110,12 +116,24 @@ public class MemberRunner implements ApplicationRunner {
                 .Contents("hi")
                 .build();
 
+//        Like like = Like.builder()
+//                .member(member)
+//                .board(board)
+//                .build();
+
+//        Jjim jjim = Jjim.builder()
+//                .member(member)
+//                .restaurant(restaurant)
+//                .build();
+
         reviewRe.save(review);
         reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
         boardRepository.save(board);
-
+        restaurantRepository.save(restaurant);
+//        likeRepository.save(like);
+//        jjimRepository.save(jjim);
 
     }
 }

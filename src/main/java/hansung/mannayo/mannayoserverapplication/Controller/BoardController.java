@@ -2,14 +2,16 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Jjim;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Like;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
-import hansung.mannayo.mannayoserverapplication.Service.BoardService;
-import hansung.mannayo.mannayoserverapplication.Service.MemberService;
-import hansung.mannayo.mannayoserverapplication.Service.MemberServiceImpl;
+import hansung.mannayo.mannayoserverapplication.Service.*;
 import hansung.mannayo.mannayoserverapplication.dto.BoardDto;
 import hansung.mannayo.mannayoserverapplication.dto.BoardListRequest;
+import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +36,42 @@ public class BoardController {
     MemberService memberService;
 
     @Autowired
+    LikeService likeService;
+
+    @Autowired
+    JjimService jjimService;
+
+    @Autowired
+    RestaurantService restaurantService;
+
+    @Autowired
     MemberRepository memberRepository;
 
     @Autowired
     BoardRepository boardRepository;
 
+
+    @ApiOperation(value = "response board", notes = "게시판 타입 별 호출")
+    @GetMapping
+    public ResponseEntity<List<BoardDto>> findBoardByType(@ApiParam(value = "타입 별 게시판 찾기", required = false) @RequestParam(required = false)BoardType boardType) {
+        List<Board> boards = boardService.findBoardByType(boardType).get();
+        BoardDto boardDto = new BoardDto();
+        List<BoardDto> boardDtos = new ArrayList<>();
+
+        for(int i = 0; i<boards.size(); i++) {
+            boardDto.setBoardId(boards.get(i).getId());
+            boardDto.setBoardType(boards.get(i).getType());
+            boardDto.setContents(boards.get(i).getContents());
+            boardDto.setDate(boards.get(i).getCreatedDate());
+            boardDto.setImage(boards.get(i).getImage());
+            boardDto.setMemberId(boards.get(i).getMember().getId());
+            boardDto.setNickName(boards.get(i).getMember().getNickName());
+            boardDto.setTitle(boards.get(i).getTitle());
+            boardDtos.add(boardDto);
+        }
+
+        return ResponseEntity.ok().body(boardDtos);
+    }
     //게시글list 모두 불러오기
     //제목으로 검색
     //닉네임으로 검색
@@ -51,7 +84,6 @@ public class BoardController {
     {
 
         if(title == null && nickName ==null) {
-            System.out.println(1);
             List<Board> boardList = boardService.findAll();
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boardList, boardListRequest);
@@ -70,7 +102,6 @@ public class BoardController {
 
         Optional<List<Board>> boardList = boardService.findByMember(nickName);
         if(boardList.isPresent()) {
-            System.out.println(3);
             List<Board> boards = boardList.get();
             List<BoardListRequest> boardListRequest = new ArrayList<>();
             toDto(boards, boardListRequest);
@@ -137,11 +168,54 @@ public class BoardController {
         boardRepository.save(board);
     }
 
+    // 좋아요한 게시물 스크랩하기
     @ApiOperation(value = "board scrapping")
-    @GetMapping("/scrap/{id}")
-    public ResponseEntity<BoardDto> scrappingBoard(@PathVariable Long id) {
-        BoardDto boardDto = new BoardDto();
-        return ResponseEntity.ok().body(boardDto);
+    @GetMapping("/scrappost/{id}")
+    public ResponseEntity<List<BoardListRequest>> scrappingBoard(@PathVariable Long id) {
+        List<Like> likeList = likeService.findListByMemberId(id).get();
+        List<Board> boards = new ArrayList<>();
+        if(!likeList.isEmpty()) {
+            for(int i =0; i<likeList.size(); i++) {
+                boards.add(boardService.findById(likeList.get(i).getBoard().getId()).get());
+            }
+            List<BoardListRequest> boardListRequests = new ArrayList<>();
+            toDto(boards, boardListRequests);
+            return ResponseEntity.ok().body(boardListRequests);
+        }
+
+        throw new EntityNotFoundException("no likes by given id");
+
+    }
+
+    // 찜한 가게 스크랩하기
+    @ApiOperation(value = "restaurant scrapping")
+    @GetMapping("/scraprestaurant/{id}")
+    public ResponseEntity<List<RestaurantListRequest>> scrappingRestaurant(@PathVariable Long id) {
+        List<Jjim> jjims = jjimService.findByMemberId(id).get();
+        List<Restaurant> restaurants = new ArrayList<>();
+        if(!jjims.isEmpty()) {
+            for(int i = 0; i<jjims.size(); i++) {
+                restaurants.add(restaurantService.findById(jjims.get(i).getRestaurant().getId()).get());
+            }
+            List<RestaurantListRequest> restaurantListRequest = new ArrayList<>();
+            toRestaurantDto(restaurants, restaurantListRequest);
+            return ResponseEntity.ok().body(restaurantListRequest);
+        }
+
+        throw new EntityNotFoundException("no Jjim by given id");
+    }
+
+    //RestaurantListRequest로 정보옮기기
+    public void toRestaurantDto(List<Restaurant> restaurants, List<RestaurantListRequest> dtoList){
+        for(int i=0 ;i<restaurants.size();i++){
+            RestaurantListRequest list = RestaurantListRequest.builder()
+                    .id(restaurants.get(i).getId())
+                    .name(restaurants.get(i).getName())
+                    .type(restaurants.get(i).getType())
+                    .address(restaurants.get(i).getAddress())
+                    .build();
+            dtoList.add(list);
+        }
     }
 
 
