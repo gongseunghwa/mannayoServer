@@ -1,27 +1,30 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
 
 
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Jjim;
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Like;
-import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.*;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Service.*;
 import hansung.mannayo.mannayoserverapplication.dto.BoardDto;
 import hansung.mannayo.mannayoserverapplication.dto.BoardListRequest;
+import hansung.mannayo.mannayoserverapplication.dto.BoardWriteDto;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -152,20 +155,56 @@ public class BoardController {
         }
     }
 
-
+    // 게시판 글쓰기 기능
     @ApiOperation(value = "board write", notes = "글쓰기 기능, 타입은 GOOD_RESTAURANT_BOARD, ADVERTISE_BOARD, TODAT_EAT_BOARD 만 입력")
-    @PostMapping("/write")
-    public void writeInsertBoard(@RequestBody BoardDto boardDto)
+    @PostMapping(value = "/write")
+    public void writeInsertBoard(@RequestPart(value = "file") MultipartFile multipartFile,
+                                 @RequestPart(value = "request", required = false) BoardWriteDto boardWriteDto)
     {
+        Date date = new Date();
+        StringBuilder sb = new StringBuilder();
         Board board = Board.builder()
-                .member(memberService.findbyNickname(boardDto.getNickName()))
-                .title(boardDto.getTitle())
-                .contents(boardDto.getContents())
-                .type(boardDto.getBoardType())
+                .member(memberService.findbyNickname(boardWriteDto.getNickName()))
+                .title(boardWriteDto.getTitle())
+                .contents(boardWriteDto.getContents())
+                .type(boardWriteDto.getBoardType())
                 .createdDate(LocalDateTime.now())
                 .build();
-
         boardRepository.save(board);
+
+        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
+            sb.append("none");
+        } else {
+            sb.append(date.getTime());
+            sb.append(multipartFile.getOriginalFilename());
+        }
+
+        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
+            File dest = new File("C://images/board/" + sb.toString()); // 파일 생성
+            try {
+                board = boardService.findById(board.getId()).get(); // id로 Entity 찾아옴
+                if(board.getImage() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
+                    board.setImage("C://images/board/" + sb.toString()); // member Entity에 이미지주소 저장
+                    boardService.updateImageAddress(board); // 업데이트
+                    multipartFile.transferTo(dest); // 파일 저장
+                }else {
+                    File file = new File(board.getImage()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
+                    if(file.exists()) { // file이 존재한다면
+                        file.delete(); // 삭제
+                    }
+                    board.setImage("C://images/board/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
+                    boardService.updateImageAddress(board); // Entity 업데이트
+                    multipartFile.transferTo(dest); // 파일 저장
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
     }
 
     // 좋아요한 게시물 스크랩하기

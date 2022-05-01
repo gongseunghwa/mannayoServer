@@ -68,4 +68,8 @@ public class BoardServiceImpl implements BoardService{
         return boardList;
     }
 
+    @Override
+    public void updateImageAddress(Board board) {
+        boardRepository.save(board);
+    }
 }

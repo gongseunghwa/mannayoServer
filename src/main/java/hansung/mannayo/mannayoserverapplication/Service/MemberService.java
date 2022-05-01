@@ -14,7 +14,7 @@ public interface MemberService {
     //find member by nickname(nickname)
     public Member findbyNickname(String nickname);
     //save member
-    public Member insert(MemberDto obj);
+    public void insert(signUpDto obj);
 
     //delete member by pk(nickname)
     public void delete(Long id);
@@ -36,9 +36,11 @@ public interface MemberService {
 
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
+                .realName(memberDto.getRealname())
                 .nickName(memberDto.getNickName())
                 .accountTypeEnum(memberDto.getAccountTypeEnum())
                 .loginTypeEnum(memberDto.getLoginTypeEnum())
+                .accountStatus(memberDto.getAccountStatus())
                 .phoneNumber(memberDto.getPhoneNumber())
                 .birth(memberDto.getBirth())
                 .email(memberDto.getEmail())
