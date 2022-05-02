@@ -62,6 +62,7 @@ public class MemberRunner implements ApplicationRunner {
                 .businessStartHours(LocalTime.of(10,00))
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
+                .reviewList(new ArrayList<>())
                 .build();
         
         Member member = Member.builder()
@@ -100,13 +101,26 @@ public class MemberRunner implements ApplicationRunner {
 //        review1.setMember(member2);
 
 
+        restaurant.addReview(review);
+        restaurant.addReview(review1);
 
         member2.addReview(review);
         member2.addReview(review1);
 
+
+
+
         Board board = Board.builder()
                 .member(member)
                 .title("title")
+                .contents("hi")
+                .isVote(true)
+                .type(BoardType.TODAT_EAT_BOARD)
+                .build();
+
+        Board board2 = Board.builder()
+                .member(member)
+                .title("aaa")
                 .contents("hi")
                 .isVote(true)
                 .type(BoardType.TODAT_EAT_BOARD)
@@ -131,6 +145,7 @@ public class MemberRunner implements ApplicationRunner {
         memberRepository.save(member);
         memberRepository.save(member2);
         boardRepository.save(board);
+        boardRepository.save(board2);
         restaurantRepository.save(restaurant);
 //        likeRepository.save(like);
 //        jjimRepository.save(jjim);

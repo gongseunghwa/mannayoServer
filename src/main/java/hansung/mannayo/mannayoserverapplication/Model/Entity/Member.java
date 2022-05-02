@@ -83,7 +83,7 @@ public class Member implements Serializable , UserDetails {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL )
     @JsonBackReference
     private List<Review> reviewList;
 

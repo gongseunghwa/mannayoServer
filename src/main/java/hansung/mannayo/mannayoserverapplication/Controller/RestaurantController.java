@@ -28,7 +28,7 @@ public class RestaurantController {
 
     // 메인화면에서 일식 중식 등.. type을 버튼을 통해 주소로 전달하면 그 type으로 쿼리를 돌려서 list를 리턴
     @ApiOperation(value = "메인화면에서 일식 중식 등.. type을 버튼을 통해 주소로 전달하면 그 type으로 쿼리를 돌려서 list를 리턴")
-    @GetMapping("/{type}")
+    @GetMapping("/type/{type}")
     ResponseEntity<List<RestaurantListResponse>> findRestaurantbyType(@ApiParam(value = "레스토랑 타입을 입력")@PathVariable Restaurant_Type type){
         Optional<List<Restaurant>> request = service.findbyRestaurant_type(type);
         if(request.isPresent()) {
@@ -38,6 +38,19 @@ public class RestaurantController {
         }
 
         throw new EntityNotFoundException("Entity not found by given type");
+    }
+
+
+    //기본 정보를 들어갔을 때 review랑 상세메뉴 중 상세메뉴만 먼저 보이게 한다
+    // fragment를 변경 시켰을 때 다른 query를 돌려서 리뷰리스트를 받을예정
+    @ApiOperation(value = "게시판 목록 중 하나를 누르면 게시판 상세정보 페이지로 이동한다")
+    @GetMapping("/detail/{id}")
+    ResponseEntity<Restaurant> findRestaurantDetail(@ApiParam(value = "레스토랑 id를 입력") @PathVariable Long id){
+        Optional<Restaurant> dto = service.findById(id);
+        if(dto.isPresent()) {
+            return ResponseEntity.ok().body(dto.get());
+        }
+        throw new EntityNotFoundException("Entity not found by given id");
     }
 
     public void toDto(List<Restaurant> restaurant, List<RestaurantListResponse> dto){

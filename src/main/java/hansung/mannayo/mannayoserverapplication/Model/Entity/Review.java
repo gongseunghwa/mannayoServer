@@ -37,11 +37,11 @@ public class Review {
     LocalDateTime ModifiedDate;
     LocalDateTime DeletedDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
     Member member;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL) @JsonManagedReference
     Restaurant restaurant;
 
     @PrePersist

@@ -61,11 +61,16 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Jjim> jjimList = new ArrayList<>();
+    private List<Jjim> jjimList;
 
     public void addJjim(Jjim jjim){
         this.jjimList.add(jjim);
         jjim.setRestaurant(this);
+    }
+
+    public void addReview(Review review){
+        this.reviewList.add(review);
+        review.setRestaurant(this);
     }
 
 
