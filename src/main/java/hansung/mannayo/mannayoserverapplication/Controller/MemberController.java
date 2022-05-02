@@ -62,9 +62,9 @@ public class MemberController {
     }
 
     @ApiOperation(value = "회원가입하기")
-    @PostMapping
-    public ResponseEntity<Member> insert(@RequestBody MemberDto memberDto) {
-        return ResponseEntity.ok(memberService.insert(memberDto));
+    @PostMapping("/sign")
+    public ResponseEntity<String> insert(@RequestBody signUpDto signUpDto) {
+        return ResponseEntity.ok().body("SUCCESS");
     }
 
     @ApiOperation(value = "닉네임으로 계정 찾기")

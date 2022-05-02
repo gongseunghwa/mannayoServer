@@ -14,8 +14,10 @@ import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundExcep
 import hansung.mannayo.mannayoserverapplication.dto.*;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,7 +28,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     //find all members
@@ -70,9 +76,20 @@ public class MemberServiceImpl implements MemberService {
 
     //save member
     @Override
-    public Member insert(MemberDto obj){
-        Member member = dtoToEntity(obj);
-        return memberRepository.save(member);
+    public void insert(signUpDto obj){
+        Member member = Member.builder()
+                .realName(obj.getRealname())
+                .accountStatus(obj.getAccountStatus())
+                .loginTypeEnum(obj.getLoginTypeEnum())
+                .accountTypeEnum(obj.getAccountTypeEnum())
+                .nickName(obj.getNickName())
+                .password(passwordEncoder.encode(obj.getPassword()))
+                .email(obj.getEmail())
+                .phoneNumber(obj.getPhoneNumber())
+                .imageAddress(obj.getImageAddress())
+                .birth(obj.getBirth())
+                .build();
+        memberRepository.save(member);
     }
 
     //delete member by pk(nickname)

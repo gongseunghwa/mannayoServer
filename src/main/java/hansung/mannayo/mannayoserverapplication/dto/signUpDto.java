@@ -1,22 +1,15 @@
 package hansung.mannayo.mannayoserverapplication.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountStatus;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data @Getter @Setter
-public class MemberDto {
-
-    private Long id;
+@Builder @NoArgsConstructor @AllArgsConstructor
+public class signUpDto {
 
     private String realname;
 
@@ -38,5 +31,4 @@ public class MemberDto {
 
     private String ImageAddress;
 
-    private Integer ReportCount;
 }

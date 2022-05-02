@@ -24,4 +24,6 @@ public interface BoardService {
     Optional<Board> findById(Long id);
 
     Optional<List<Board>> findBoardByType(BoardType boardType);
+
+    void updateImageAddress(Board board);
 }
