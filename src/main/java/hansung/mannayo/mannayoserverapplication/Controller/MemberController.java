@@ -157,6 +157,7 @@ public class MemberController {
         }
 
         if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
+
             File dest = new File("C://images/profile/" + sb.toString()); // 파일 생성
             try {
                 member = memberService.findbyId(id); // id로 Entity 찾아옴

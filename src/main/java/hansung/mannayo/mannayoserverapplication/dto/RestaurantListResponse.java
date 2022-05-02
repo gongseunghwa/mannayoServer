@@ -7,7 +7,7 @@ import lombok.*;
  */
 @Builder
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class RestaurantListRequest {
+public class RestaurantListResponse {
 
     Long id; //가게의 아이디
 

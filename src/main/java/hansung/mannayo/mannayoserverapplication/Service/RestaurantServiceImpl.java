@@ -3,7 +3,6 @@ package hansung.mannayo.mannayoserverapplication.Service;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

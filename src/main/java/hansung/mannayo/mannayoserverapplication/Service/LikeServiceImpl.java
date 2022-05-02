@@ -31,5 +31,6 @@ public class LikeServiceImpl implements LikeService{
                 .board(board)
                 .build();
         likeRepository.save(like);
+
     }
 }

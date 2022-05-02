@@ -5,11 +5,10 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data @Setter @Getter
 @Builder @AllArgsConstructor @NoArgsConstructor
-public class BoardDto {
+public class BoardDetailResponse {
 
     private Long memberId;
 

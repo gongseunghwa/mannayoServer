@@ -2,7 +2,6 @@ package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
 
 import java.util.List;
 import java.util.Optional;

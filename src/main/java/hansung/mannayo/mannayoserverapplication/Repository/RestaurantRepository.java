@@ -2,7 +2,6 @@ package hansung.mannayo.mannayoserverapplication.Repository;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantListRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
