@@ -29,7 +29,7 @@ public class JjimController {
     public void jjimUp(@RequestBody JjimDto jjimDto) {
 
         Member member = memberService.findbyId(jjimDto.getMemberid());
-        Restaurant restaurant = restaurantService.findById(jjimDto.getRestaurantid()).get();
+        Restaurant restaurant = restaurantService.findbyId(jjimDto.getRestaurantid()).get();
 
         jjimService.insertJjim(member, restaurant);
 

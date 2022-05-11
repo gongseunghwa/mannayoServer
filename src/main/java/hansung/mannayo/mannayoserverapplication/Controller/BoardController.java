@@ -236,7 +236,7 @@ public class BoardController {
         List<Restaurant> restaurants = new ArrayList<>();
         if(!jjims.isEmpty()) {
             for(int i = 0; i<jjims.size(); i++) {
-                restaurants.add(restaurantService.findById(jjims.get(i).getRestaurant().getId()).get());
+                restaurants.add(restaurantService.findbyId(jjims.get(i).getRestaurant().getId()).get());
             }
             List<RestaurantListResponse> restaurantListRequest = new ArrayList<>();
             toRestaurantDto(restaurants, restaurantListRequest);
