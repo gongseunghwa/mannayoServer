@@ -39,7 +39,6 @@ public class Member implements Serializable , UserDetails {
 
     private String realName;
 
-    @Column(nullable = false, unique = true)
     private String nickName;
 
     @NotNull

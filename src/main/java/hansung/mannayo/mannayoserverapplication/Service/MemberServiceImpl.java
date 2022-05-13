@@ -82,14 +82,14 @@ public class MemberServiceImpl implements MemberService {
                 .accountStatus(obj.getAccountStatus())
                 .loginTypeEnum(obj.getLoginTypeEnum())
                 .accountTypeEnum(obj.getAccountTypeEnum())
-                .nickName(obj.getNickName())
+                .nickName("null")
                 .password(passwordEncoder.encode(obj.getPassword()))
                 .email(obj.getEmail())
                 .phoneNumber(obj.getPhoneNumber())
                 .imageAddress(obj.getImageAddress())
                 .birth(obj.getBirth())
                 .build();
-        memberRepository.save(member);
+        member = memberRepository.save(member);
     }
 
     //delete member by pk(nickname)

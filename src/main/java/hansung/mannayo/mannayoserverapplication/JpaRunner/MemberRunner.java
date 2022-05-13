@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -49,6 +50,8 @@ public class MemberRunner implements ApplicationRunner {
     @Autowired
     LikeRepository likeRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -69,7 +72,7 @@ public class MemberRunner implements ApplicationRunner {
                 .realName("권혁진")
                 .nickName("12345")
                 .email("hjkwon0814@naver.com")
-                .password("1234")
+                .password(passwordEncoder.encode("1234"))
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .phoneNumber("01012341234")
                 .loginTypeEnum(LoginType.EMAIL)
@@ -81,7 +84,7 @@ public class MemberRunner implements ApplicationRunner {
                 .realName("공승화")
                 .nickName("seunghwa gong")
                 .email("hjkwon0814@yahoo.co.kr")
-                .password("1234")
+                .password(passwordEncoder.encode("123"))
                 .reviewList(new ArrayList<>())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .phoneNumber("01012341234")
