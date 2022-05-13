@@ -42,8 +42,8 @@ public class RestaurantController {
     }
 
 
-    //기본 정보를 들어갔을 때 review랑 상세메뉴 중 상세메뉴만 먼저 보이게 한다
-    // fragment를 변경 시켰을 때 다른 query를 돌려서 리뷰리스트를 받을예정
+    //상세정보 페이지
+    // fragment를 변경 시켰을 때 다른 query를 돌려서 리뷰리스트 혹은 메뉴를 받을예정
     @ApiOperation(value = "음식점 목록 중 하나를 누르면 게시판 상세정보 페이지로 이동한다")
     @GetMapping("/detail/{id}")
     ResponseEntity<RestaurantDetailResponse> findRestaurantDetail(@ApiParam(value = "레스토랑 id를 입력") @PathVariable Long id){
