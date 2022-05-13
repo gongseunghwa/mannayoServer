@@ -1,17 +1,22 @@
 package hansung.mannayo.mannayoserverapplication.Service;
 
+import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import hansung.mannayo.mannayoserverapplication.dto.ListResult;
-import hansung.mannayo.mannayoserverapplication.dto.SingleResult;
+import hansung.mannayo.mannayoserverapplication.dto.SingleSignInResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ResponseService {
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Getter
     @RequiredArgsConstructor
@@ -26,10 +31,19 @@ public class ResponseService {
 
 
     //단일건 결과를 처리하는 메소드
-    public <T> SingleResult<T> getSingleResult(T data) {
-        SingleResult<T> result = new SingleResult<>();
+    public <T> SingleSignInResult<T> getSingleSuccessResult(T data) {
+        SingleSignInResult<T> result = new SingleSignInResult<>();
         result.setData(data);
         setSuccessResult(result);
+        return result;
+    }
+
+    public <T> SingleSignInResult<T> getSingleFailResult(T data) {
+        SingleSignInResult<T> result = new SingleSignInResult<>();
+        result.setSuccess(false); // setSuccess : 응답 성공 여부 (true/false)
+        result.setCode(CommonResponse.FAIL.getCode()); // setCode : 응답 코드 번호 >= 0 정상, < 0 비정상
+        result.setMsg(CommonResponse.FAIL.getMsg()); // setMsg 응답 메시지
+        result.setData(data);
         return result;
     }
 

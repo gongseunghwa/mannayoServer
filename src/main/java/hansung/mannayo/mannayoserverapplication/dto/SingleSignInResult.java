@@ -6,7 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SingleResult<T> extends  CommonResult {
+public class SingleSignInResult<T> extends  CommonResult {
 
     private T data;
+
+    private String nickname;
 }

@@ -4,12 +4,12 @@ import hansung.mannayo.mannayoserverapplication.Service.MemberService;
 import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
-import hansung.mannayo.mannayoserverapplication.dto.SingleResult;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Security.JwtTokenProvider;
 import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
+import hansung.mannayo.mannayoserverapplication.dto.SingleSignInResult;
 import hansung.mannayo.mannayoserverapplication.dto.signUpDto;
 import hansung.mannayo.mannayoserverapplication.exceptions.CEmailSigninFailedException;
 import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
@@ -20,14 +20,12 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Optional;
 
 
 @Api(tags = {"1.sign"})
@@ -42,14 +40,25 @@ public class SignController {
     private final MemberService memberService;
 
     @ApiOperation(value = "login", notes = "email login")
-    @PostMapping(value = "/signin")
-    public ResponseEntity<SingleResult<String>> signin(@ApiParam(value = "회원 Id -> 이메일",required = true) @RequestParam String email,
-                                       @ApiParam(value = "비밀번호",required = true) @RequestParam String password){
-        Member member = memberRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
-        if(!passwordEncoder.matches(password, member.getPassword())){
-            throw new CEmailSigninFailedException();
+    @GetMapping(value = "/signin")
+    public ResponseEntity<SingleSignInResult<String>> signin(@ApiParam(value = "회원 Id -> 이메일",required = true) @RequestParam String email,
+                                                             @ApiParam(value = "비밀번호",required = true) @RequestParam String password){
+        Optional<Member> member = memberRepository.findByEmail(email);
+        SingleSignInResult<String> result = new SingleSignInResult<>();
+        if(member.isEmpty()) {
+            String fail = "Email is Not Exist";
+            result = responseService.getSingleFailResult(fail);
+            return ResponseEntity.ok(result);
+        }else {
+            if (!passwordEncoder.matches(password, member.get().getPassword())) {
+                String fail = "password unmatched";
+                result = responseService.getSingleFailResult(fail);
+                return ResponseEntity.ok(result);
+            }
         }
-        return ResponseEntity.ok(responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(member.getId()),member.getRoles())));
+        result = responseService.getSingleSuccessResult(jwtTokenProvider.createToken(String.valueOf(member.get().getId()),member.get().getRoles()));
+        result.setNickname(member.get().getNickName());
+        return ResponseEntity.ok(result);
     }
 
 
