@@ -21,12 +21,11 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/menu")
 public class menuController {
 
     private final MenuRepository menuRepository;
 
-    @GetMapping("/{id}")
+    @GetMapping("restaurant/{id}/menu")
     ResponseEntity<MenuResponse> findMenuById(Long id){
         Optional<Menu> menu = menuRepository.findByRestaurantId(id);
         if(menu.isPresent()){
