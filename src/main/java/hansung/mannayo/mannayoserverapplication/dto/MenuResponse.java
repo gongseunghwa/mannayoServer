@@ -7,8 +7,7 @@ import lombok.Setter;
 import org.springframework.core.io.FileSystemResource;
 
 @Getter
-@Setter
-@Data @Builder
+@Setter @Builder
 public class MenuResponse {
 
     private String name;

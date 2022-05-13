@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 @Setter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Table(name = "menu")
 public class Menu {
 

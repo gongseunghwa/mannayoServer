@@ -6,6 +6,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.*;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Component
 @Transactional
+@RequiredArgsConstructor
 public class MemberRunner implements ApplicationRunner {
 
     @Autowired
@@ -49,6 +51,7 @@ public class MemberRunner implements ApplicationRunner {
     @Autowired
     LikeRepository likeRepository;
 
+    private final MenuRepository menuRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -59,6 +62,7 @@ public class MemberRunner implements ApplicationRunner {
                 .type(Restaurant_Type.HANSIK)
                 .number("01051231545")
                 .owner("chulsu")
+                .menuList(new ArrayList<>())
                 .businessStartHours(LocalTime.of(10,00))
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
@@ -99,8 +103,14 @@ public class MemberRunner implements ApplicationRunner {
 //        member2.setReviewList(reviewList);
 //        review.setMember(member2);
 //        review1.setMember(member2);
+//
+        Menu menu = Menu.builder()
+                .Name("restaurant")
+                .Image("dog.jpg")
+                .Price(1000)
+                .build();
 
-
+        restaurant.addMenu(menu);
         restaurant.addReview(review);
         restaurant.addReview(review1);
 
