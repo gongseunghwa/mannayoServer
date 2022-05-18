@@ -16,15 +16,18 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import hansung.mannayo.mannayoserverapplication.dto.*;
 import org.apache.commons.collections.ArrayStack;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -183,6 +186,18 @@ public class MemberController {
 
         return ResponseEntity.ok().body("Success");
     }
+
+    @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
+    @GetMapping(value = "profileimage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {
+        Member member = memberService.findbyId(id);
+        String imagename = member.getImageAddress();
+        InputStream imageStream = new FileInputStream(imagename);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
 
 
 

@@ -5,6 +5,7 @@ services:
     image: mysql:5.7
     container_name: database
     environment:
+
        MYSQL_ROOT_HOST: '%'
        MYSQL_DATABASE: mannayodb
        MYSQL_ROOT_PASSWORD: tmdghk9609!

@@ -40,6 +40,8 @@ public class Restaurant {
     @ColumnDefault("0")
     private Integer jjimcount;
 
+    private String imageAddress;
+
     @NotNull
     private LocalTime businessStartHours;
 
@@ -57,7 +59,7 @@ public class Restaurant {
     private Integer reviewCount;
 
     @ColumnDefault("0")
-    private Integer starPointInfo;
+    private Float starPointInfo;
 
     @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
