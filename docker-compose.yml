@@ -1,25 +1,26 @@
-version: "3.7"
+version: "4.0"
 
 services:
-  db-mysql:
+  database:
     image: mysql:5.7
+    container_name: database
     environment:
-      MYSQL_DATABASE: mannayodb
-      MYSQL_USER: root
-      MYSQL_PASSWORD: tmdghk9609!
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+       MYSQL_ROOT_HOST: '%'
+       MYSQL_DATABASE: mannayodb
+       MYSQL_ROOT_PASSWORD: tmdghk9609!
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     ports:
       - 3306:3306
     networks:
       - springboot-mysql-net
-  test-app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+
+  application:
+    build: .
     ports:
       - 8080:8080
     depends_on:
-      - db-mysql
+      - database
+    container_name: app
     networks:
       - springboot-mysql-net
 
