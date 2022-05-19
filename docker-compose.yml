@@ -5,10 +5,9 @@ services:
     image: mysql:5.7
     container_name: database
     environment:
-
        MYSQL_ROOT_HOST: '%'
        MYSQL_DATABASE: mannayodb
-       MYSQL_ROOT_PASSWORD: tmdghk9609!
+       MYSQL_ROOT_PASSWORD: rnjs8895
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     ports:
       - 3306:3306
