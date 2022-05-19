@@ -34,6 +34,11 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
         
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+        
       - name: Temporarily save build artifact
         uses: actions/upload-artifact@v2
         with:
@@ -41,10 +46,6 @@ jobs:
           path: build
           retention-days: 1
           
-      - name: Download a single artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: my-artifact
       
   docker:
     name: Deploy Docker Image
