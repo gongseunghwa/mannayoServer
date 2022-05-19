@@ -38,7 +38,7 @@ jobs:
         run: |
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_TOKEN }}
           docker build -t hjkwon0814/docker-repo:first-image .
-          docker push hjkwon0814/docker-repo:first-image
+          docker push hjkwon0814/docker-repo:second
 
 # jobs:
 #   push_to_registry:
