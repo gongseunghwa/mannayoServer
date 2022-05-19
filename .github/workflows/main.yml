@@ -36,7 +36,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker login --username=hjkwon0814 --password=254a0e24-a567-4538-a42e-8b962f5b6956
+          docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_TOKEN }}
           docker build -t hjkwon0814/docker-repo:first-image .
           docker push hjkwon0814/docker-repo:first-image
 
