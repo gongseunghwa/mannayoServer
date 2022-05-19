@@ -38,8 +38,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build-artifact
-          path: build
-          retention-days: 1
+          path: ${{ github.workspace }}
+          retention-days: 30
           
       
   docker:
