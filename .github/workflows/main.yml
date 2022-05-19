@@ -36,7 +36,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker login --username=${{secret.DOCKER_USERNAME}} --password=${{secret.DOCKER_TOKEN}}
+          docker login --username=${{secrets.DOCKER_USERNAME}} --password=${{secrets.DOCKER_TOKEN}}
           docker build -t hjkwon0814/docker-repo:second .
           docker push hjkwon0814/docker-repo:second
 
