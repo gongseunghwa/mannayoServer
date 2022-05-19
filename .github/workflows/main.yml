@@ -36,7 +36,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }} 
+          docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_TOKEN }} 
           docker build -t spring-cicd . 
           docker tag spring-cide ${{ secrets.DOCKER_USERNAME }}/spring-cicd:${GITHUB_SHA::7} 
           docker push ${{ secrets.DOCKER_USERNAME }}/spring-cicd:${GITHUB_SHA::7}
