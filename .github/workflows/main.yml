@@ -37,7 +37,7 @@ jobs:
       - name: Docker build
         run: |
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_TOKEN }} 
-          docker built -t hjkwon0814/docker-repo:first-image .
+          docker buil -t hjkwon0814/docker-repo:first-image .
           docker tag hjkwon0814/docker-repo:first-image
           docker push hjkwon0814/docker-repo:first-image
           
