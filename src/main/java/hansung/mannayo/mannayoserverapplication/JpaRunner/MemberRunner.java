@@ -135,9 +135,9 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
         Member member2 = Member.builder()
-                .realName("공승화")
+                .realName("맛나요")
                 .nickName("seunghwa gong")
-                .email("hjkwon0814@yahoo.co.kr")
+                .email("mannayo@hansung.ac.kr")
                 .password(passwordEncoder.encode("123"))
                 .reviewList(new ArrayList<>())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
