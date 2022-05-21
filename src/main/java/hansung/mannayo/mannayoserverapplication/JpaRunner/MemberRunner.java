@@ -73,7 +73,7 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .reviewList(new ArrayList<>())
-                .imageAddress("C://images/restaurant/mexicana_new.jpg")
+                .imageAddress("")
                 .starPointInfo(5.0f)
                 .build();
 
@@ -88,7 +88,7 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .reviewList(new ArrayList<>())
-                .imageAddress("C://images/restaurant/pericana_new.png")
+                .imageAddress("")
                 .starPointInfo(5.0f)
                 .build();
 
@@ -103,7 +103,7 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .reviewList(new ArrayList<>())
-                .imageAddress("C://images/restaurant/gyochon_new.png")
+                .imageAddress("")
                 .starPointInfo(5.0f)
                 .build();
         Menu menu1 = Menu.builder()
