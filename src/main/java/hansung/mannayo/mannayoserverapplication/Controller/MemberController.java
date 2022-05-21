@@ -168,11 +168,11 @@ public class MemberController {
 
         if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
 
-            File dest = new File("/var/lib/docker/volumes/mannayo-vol/_data/" + sb.toString()); // 파일 생성
+            File dest = new File("/home/ec2-user/images/" + sb.toString()); // 파일 생성
             try {
                 member = memberService.findbyId(id); // id로 Entity 찾아옴
                 if(member.getImageAddress() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
-                    member.setImageAddress("/var/lib/docker/volumes/mannayo-vol/_data/" + sb.toString()); // member Entity에 이미지주소 저장
+                    member.setImageAddress("/home/ec2-user/images/" + sb.toString()); // member Entity에 이미지주소 저장
                     memberService.updateImageAddress(member); // 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
                     System.out.println("파일 저장 완료 1");
@@ -182,7 +182,7 @@ public class MemberController {
                         file.delete(); // 삭제
                     }
 
-                    member.setImageAddress("/home/ec2-user/images/profile/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
+                    member.setImageAddress("/home/ec2-user/images/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
                     memberService.updateImageAddress(member); // Entity 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
                     System.out.println("파일 저장 완료 2");
