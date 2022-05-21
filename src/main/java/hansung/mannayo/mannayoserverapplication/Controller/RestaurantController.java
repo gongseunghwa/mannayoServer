@@ -97,6 +97,7 @@ public class RestaurantController {
                     .starttime(restaurant.get(i).getBusinessStartHours())
                     .endtime(restaurant.get(i).getBusinessEndHours())
                     .point(restaurant.get(i).getStarPointInfo())
+                    .imageAddress(restaurant.get(i).getImageAddress())
                     .build();
             dto.add(request);
         }

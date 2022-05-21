@@ -29,4 +29,6 @@ public class RestaurantListResponse {
 
     float point; // 평점
 
+    String imageAddress;
+
 }
