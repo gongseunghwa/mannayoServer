@@ -58,6 +58,7 @@ public class SignController {
         }
         result = responseService.getSingleSuccessResult(jwtTokenProvider.createToken(String.valueOf(member.get().getId()),member.get().getRoles()));
         result.setNickname(member.get().getNickName());
+        result.setId(member.get().getId());
         return ResponseEntity.ok(result);
     }
 

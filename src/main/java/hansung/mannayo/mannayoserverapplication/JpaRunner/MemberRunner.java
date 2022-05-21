@@ -124,7 +124,7 @@ public class MemberRunner implements ApplicationRunner {
 
         Member member = Member.builder()
                 .realName("권혁진")
-                .nickName("12345")
+                .nickName("null")
                 .email("hjkwon0814@naver.com")
                 .password(passwordEncoder.encode("1234"))
                 .accountTypeEnum(AccountType.ADMISTRATOR)

@@ -74,6 +74,18 @@ public class MemberServiceImpl implements MemberService {
         return (memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()) != null);
     }
 
+    @Override
+    public boolean updateNickname(Long id, String nickname) {
+        Optional<Member> member = memberRepository.findById(id);
+        if(member.isPresent()) {
+            member.get().setNickName(nickname);
+            memberRepository.save(member.get());
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     //save member
     @Override
     public void insert(signUpDto obj){

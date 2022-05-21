@@ -34,6 +34,8 @@ public interface MemberService {
 
     public void updateImageAddress(Member member);
 
+    public boolean updateNickname(Long id, String nickname);
+
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
                 .realName(memberDto.getRealname())

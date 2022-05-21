@@ -62,12 +62,6 @@ public class MemberController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @ApiOperation(value = "회원가입하기")
-    @PostMapping("/sign")
-    public ResponseEntity<String> insert(@RequestBody signUpDto signUpDto) {
-        return ResponseEntity.ok().body("SUCCESS");
-    }
-
     @ApiOperation(value = "닉네임으로 계정 찾기")
     @PostMapping("/findMyAccountByNickname")
     public ResponseEntity<findMyAccountByNicknameResponseDto> findByNameAndNickname(@RequestBody findMyAccountByNicknameDto dto) {
@@ -144,14 +138,29 @@ public class MemberController {
         return ResponseEntity.ok().body(blockResponseDtos);
     }
 
+    @ApiOperation(value = "닉네임 입력하기")
+    @PostMapping("/inputnickname")
+    public ResponseEntity<CommonResult> inputNickname(@RequestParam Long id, @RequestParam String nickname) {
+        CommonResult commonResult = new CommonResult();
+        if(memberService.updateNickname(id, nickname)) {
+            commonResult = responseService.getSuccessResult();
+
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
+    }
+
     @ApiOperation(value = "프로필 사진 등록")
     @PostMapping("/profileimage")
-    public ResponseEntity<String> registerProfileImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
+    public ResponseEntity<CommonResult> registerProfileImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
         Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
         StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
         Member member = new Member(); // 멤버객체 생성
+        CommonResult commonResult = new CommonResult();
         if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
             sb.append("none");
+            commonResult = responseService.getFailResult();
         } else {
             sb.append(date.getTime());
             sb.append(multipartFile.getOriginalFilename());
@@ -182,7 +191,8 @@ public class MemberController {
             }
         }
 
-        return ResponseEntity.ok().body("Success");
+        commonResult = responseService.getSuccessResult();
+        return ResponseEntity.ok().body(commonResult);
     }
 
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
