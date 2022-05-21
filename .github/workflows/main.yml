@@ -36,9 +36,12 @@ jobs:
 
       - name: Docker build
         run: |
-          docker login --username=${{secrets.DOCKER_USERNAME}} --password=${{secrets.DOCKER_TOKEN}}
+          docker login --username="$dockername" --password="$dockerpass"
           docker build -t hjkwon0814/docker-repo:second .
           docker push hjkwon0814/docker-repo:second
+        env:
+          dockername: ${{secrets.DOCKERHUB_USERNAME}}
+          dockerpass: ${{secrets.DOCKERHUB_TOKEN}}
 
 # jobs:
 #   push_to_registry:
