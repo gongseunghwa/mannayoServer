@@ -180,6 +180,7 @@ public class MemberController {
                     if(file.exists()) { // file이 존재한다면
                         file.delete(); // 삭제
                     }
+
                     member.setImageAddress("C://images/profile/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
                     memberService.updateImageAddress(member); // Entity 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
