@@ -175,6 +175,7 @@ public class MemberController {
                     member.setImageAddress("\\home\\ec2-user\\images\\profile\\" + sb.toString()); // member Entity에 이미지주소 저장
                     memberService.updateImageAddress(member); // 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
+                    System.out.println("파일 저장 완료 1");
                 }else {
                     File file = new File(member.getImageAddress()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
                     if(file.exists()) { // file이 존재한다면
@@ -184,6 +185,7 @@ public class MemberController {
                     member.setImageAddress("/home/ec2-user/images/profile/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
                     memberService.updateImageAddress(member); // Entity 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
+                    System.out.println("파일 저장 완료 2");
                 }
             } catch (IllegalStateException e) {
                 e.printStackTrace();
