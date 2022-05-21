@@ -123,9 +123,9 @@ public class MemberRunner implements ApplicationRunner {
         restaurant.setMenuList(maxicana_menu);
 
         Member member = Member.builder()
-                .realName("권혁진")
+                .realName("맛나요2")
                 .nickName("null")
-                .email("hjkwon0814@naver.com")
+                .email("mannayo2@hansung.ac.kr")
                 .password(passwordEncoder.encode("1234"))
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .phoneNumber("01012341234")
@@ -136,9 +136,9 @@ public class MemberRunner implements ApplicationRunner {
 
         Member member2 = Member.builder()
                 .realName("맛나요")
-                .nickName("seunghwa gong")
+                .nickName("null")
                 .email("mannayo@hansung.ac.kr")
-                .password(passwordEncoder.encode("123"))
+                .password(passwordEncoder.encode("1234"))
                 .reviewList(new ArrayList<>())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .phoneNumber("01012341234")
