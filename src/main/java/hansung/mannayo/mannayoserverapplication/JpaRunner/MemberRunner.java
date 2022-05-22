@@ -147,6 +147,32 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
+        Member member3 = Member.builder()
+                .realName("맛나요3")
+                .nickName("null")
+                .email("mannayo3@hansung.ac.kr")
+                .password(passwordEncoder.encode("1234"))
+                .reviewList(new ArrayList<>())
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .phoneNumber("01012341234")
+                .loginTypeEnum(LoginType.EMAIL)
+                .birth(LocalDate.now())
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .build();
+
+        Member member4 = Member.builder()
+                .realName("맛나요4")
+                .nickName("null")
+                .email("mannayo4@hansung.ac.kr")
+                .password(passwordEncoder.encode("1234"))
+                .reviewList(new ArrayList<>())
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .phoneNumber("01012341234")
+                .loginTypeEnum(LoginType.EMAIL)
+                .birth(LocalDate.now())
+                .accountTypeEnum(AccountType.ADMISTRATOR)
+                .build();
+
 
         Review review = Review.builder().title("hi1").build();
         Review review1 = Review.builder().title("hi2").build();
@@ -207,6 +233,8 @@ public class MemberRunner implements ApplicationRunner {
         reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
+        memberRepository.save(member3);
+        memberRepository.save(member4);
         boardRepository.save(board);
         boardRepository.save(board2);
         restaurantRepository.save(restaurant);
