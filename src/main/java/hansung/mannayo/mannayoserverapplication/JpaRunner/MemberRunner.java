@@ -96,7 +96,7 @@ public class MemberRunner implements ApplicationRunner {
                 .address("경기도 오산시 동부대로 436번길 55-18")
                 .name("교촌")
                 .type(Restaurant_Type.HANSIK)
-                .number("0313713500")
+                .number("0313713501")
                 .owner("여맹구")
                 .menuList(new ArrayList<Menu>())
                 .businessStartHours(LocalTime.of(10,00))
