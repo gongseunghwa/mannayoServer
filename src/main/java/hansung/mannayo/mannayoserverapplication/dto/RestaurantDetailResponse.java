@@ -15,8 +15,6 @@ public class RestaurantDetailResponse {
 
     private String name;
 
-    private Restaurant_Type type;
-
     private String number;
 
     private String address;
@@ -30,5 +28,7 @@ public class RestaurantDetailResponse {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime end_time;
+
+    private Float starPoint;
 
 }

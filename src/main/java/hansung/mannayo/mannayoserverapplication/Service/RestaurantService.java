@@ -24,7 +24,7 @@ public interface RestaurantService {
                 .number(restaurant.getNumber())
                 .jjimcount(restaurant.getJjimcount())
                 .owner(restaurant.getOwner())
-                .type(restaurant.getType())
+                .starPoint(restaurant.getStarPointInfo())
                 .build();
         return entity;
     }

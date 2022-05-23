@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @Getter @Setter @Builder
 public class ReviewDto {
 
-    private Long id;
-
     private String title;
 
     private Long memberId;
+
+    private Long restaurantId;
 
     private String memberNickname;
 

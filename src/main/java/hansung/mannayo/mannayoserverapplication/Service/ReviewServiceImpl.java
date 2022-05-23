@@ -1,11 +1,14 @@
 package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
+import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
+import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
 import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
 import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,12 @@ import java.util.Optional;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
 
     @Override
     public List<Review> findAll() {
@@ -68,5 +77,20 @@ public class ReviewServiceImpl implements ReviewService {
         entity.setStarPoint(obj.getStarPoint());
         entity.setIsDeleted(obj.getIsDeleted());
         entity.setIsDeleted(obj.getIsDeleted());
+    }
+
+    private Review dtoToEntity(ReviewDto reviewDto) {
+        Review entity = Review.builder()
+                .title(reviewDto.getTitle())
+                .content(reviewDto.getContent())
+                .member(memberRepository.findById(reviewDto.getMemberId()).get())
+                .restaurant(restaurantRepository.findById(reviewDto.getRestaurantId()).get())
+                .writeDate(reviewDto.getWriteDate())
+                .image(reviewDto.getImage())
+                .starPoint(reviewDto.getStarPoint())
+                .isDeleted(reviewDto.getIsDeleted())
+                .isModified(reviewDto.getIsModifoed())
+                .build();
+        return entity;
     }
 }

@@ -28,17 +28,6 @@ public interface ReviewService {
 
     public void updateData(Review entity, ReviewDto obj);
 
-    default Review dtoToEntity(ReviewDto reviewDto) {
-        Review entity = Review.builder()
-                .title(reviewDto.getTitle())
-                .content(reviewDto.getContent())
-                .writeDate(reviewDto.getWriteDate())
-                .image(reviewDto.getImage())
-                .starPoint(reviewDto.getStarPoint())
-                .isDeleted(reviewDto.getIsDeleted())
-                .isModified(reviewDto.getIsModifoed())
-                .build();
-        return entity;
-    }
+
 
 }
