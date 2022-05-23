@@ -58,6 +58,7 @@ public class ReviewController {
             commonResult = responseService.getSuccessResult();
             return ResponseEntity.ok().body(commonResult);
         }
+
         commonResult = responseService.getFailResult();
         return  ResponseEntity.ok().body(commonResult);
     }
