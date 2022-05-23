@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,12 +20,13 @@ import java.util.List;
 public class ReviewController {
 
     @Autowired
-    ReviewService service;
+    ReviewService reviewService;
 
     @GetMapping
-    public ResponseEntity<List<Review>> findAll(){
-        List<Review> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<List<ReviewDto>> findAll(){
+        List<Review> list = reviewService.findAll();
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+        return ResponseEntity.ok().body(reviewDtoList);
     }
 
     @ApiImplicitParams({
@@ -33,23 +35,42 @@ public class ReviewController {
     @ApiOperation(value = "id로 리뷰조회(1개)" ,notes = "Id로 리뷰를 조회한다")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Review> findbyId(@PathVariable Long id){
-        Review obj = service.findbyId(id);
+        Review obj = reviewService.findbyId(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
     public ResponseEntity<Review> insert(@RequestBody ReviewDto reviewDto){
-        return  ResponseEntity.ok(service.insert(reviewDto));
+        return  ResponseEntity.ok(reviewService.insert(reviewDto));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Review> update(@PathVariable Long id, @RequestBody ReviewDto obj){
-        return ResponseEntity.ok().body(service.update(id,obj));
+        return ResponseEntity.ok().body(reviewService.update(id,obj));
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Review> delete(@PathVariable Long id, @RequestBody ReviewDto obj){
-        service.delete(id);
+        reviewService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private List<ReviewDto> toConvertDto(List<Review> list) {
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+        for(Review r : list) {
+            ReviewDto reviewDto= ReviewDto.builder()
+                    .content(r.getContent())
+                    .id(r.getId())
+                    .memberId(r.getMember().getId())
+                    .image(r.getImage())
+                    .isDeleted(r.getIsDeleted())
+                    .isModifoed(r.getIsModified())
+                    .starPoint(r.getStarPoint())
+                    .title(r.getTitle())
+                    .writeDate(r.getWriteDate())
+                    .build();
+            reviewDtoList.add(reviewDto);
+        }
+        return reviewDtoList;
     }
 }
