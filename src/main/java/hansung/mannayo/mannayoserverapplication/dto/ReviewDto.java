@@ -2,21 +2,18 @@ package hansung.mannayo.mannayoserverapplication.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.GeneratedValue;
 import java.time.LocalDateTime;
 
 @Getter @Setter @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class ReviewDto {
 
-    private String title;
+    private Long id;
 
     private Long memberId;
-
-    private Long restaurantId;
 
     private String memberNickname;
 

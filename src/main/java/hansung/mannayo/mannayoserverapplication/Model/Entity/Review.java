@@ -2,6 +2,7 @@ package hansung.mannayo.mannayoserverapplication.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,10 +19,9 @@ public class Review {
     @Id @GeneratedValue
     private Long id;
 
-    String title;
-
     String content;
 
+    @CreatedDate
     LocalDateTime writeDate;
 
     String image;

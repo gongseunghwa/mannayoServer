@@ -1,9 +1,11 @@
 package hansung.mannayo.mannayoserverapplication.Service;
 
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
+import hansung.mannayo.mannayoserverapplication.dto.ReviewRequestDto;
 import hansung.mannayo.mannayoserverapplication.exceptions.DatabaseException;
 import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundException;
 import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
@@ -14,6 +16,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,13 +38,44 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Optional<Review> findbyId(Long id) {
-        Optional<Review> obj = reviewRepository.findByRestaurantId(id);
+    public Optional<Review> findById(Long id) {
+        return reviewRepository.findById(id);
+    }
+
+    @Override
+    public List<ReviewDto> findByRestaurantId(Long id) {
+        List<Review> reviews = reviewRepository.findByRestaurantId(id).get();
+        List<ReviewDto> obj = new ArrayList<>();
+        for(Review review : reviews) {
+            ReviewDto reviewDto = ReviewDto.builder()
+                    .id(review.getId())
+                    .memberId(review.getMember().getId())
+                    .content(review.getContent())
+                    .writeDate(review.getWriteDate())
+                    .image(review.getImage())
+                    .starPoint(review.getStarPoint())
+                    .isModifoed(review.getIsModified())
+                    .isDeleted(review.getIsDeleted())
+                    .memberImage(review.getMember().getImageAddress())
+                    .memberNickname(review.getMember().getNickName())
+                    .build();
+            obj.add(reviewDto);
+        }
+        return obj;
+    }
+
+    public Optional<Review> findimagebyId(Long id) {
+        Optional<Review> obj = reviewRepository.findById(id);
         return obj;
     }
 
     @Override
-    public Review insert(ReviewDto obj) {
+    public void updateImageAddress(Review review) {
+        reviewRepository.save(review);
+    }
+
+    @Override
+    public Review insert(ReviewRequestDto obj) {
         Review review = dtoToEntity(obj);
         return reviewRepository.save(review);
     }
@@ -70,7 +104,6 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void updateData(Review entity, ReviewDto obj) {
-        entity.setTitle(obj.getTitle());
         entity.setContent(obj.getContent());
         entity.setWriteDate(obj.getWriteDate());
         entity.setImage(obj.getImage());
@@ -79,17 +112,12 @@ public class ReviewServiceImpl implements ReviewService {
         entity.setIsDeleted(obj.getIsDeleted());
     }
 
-    private Review dtoToEntity(ReviewDto reviewDto) {
+    private Review dtoToEntity(ReviewRequestDto reviewRequestDto) {
         Review entity = Review.builder()
-                .title(reviewDto.getTitle())
-                .content(reviewDto.getContent())
-                .member(memberRepository.findById(reviewDto.getMemberId()).get())
-                .restaurant(restaurantRepository.findById(reviewDto.getRestaurantId()).get())
-                .writeDate(reviewDto.getWriteDate())
-                .image(reviewDto.getImage())
-                .starPoint(reviewDto.getStarPoint())
-                .isDeleted(reviewDto.getIsDeleted())
-                .isModified(reviewDto.getIsModifoed())
+                .content(reviewRequestDto.getContent())
+                .member(memberRepository.findById(reviewRequestDto.getMemberId()).get())
+                .restaurant(restaurantRepository.findById(reviewRequestDto.getRestaurantId()).get())
+                .starPoint(reviewRequestDto.getStarPoint())
                 .build();
         return entity;
     }

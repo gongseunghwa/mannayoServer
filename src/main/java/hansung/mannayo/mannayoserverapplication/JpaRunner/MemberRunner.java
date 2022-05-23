@@ -173,9 +173,6 @@ public class MemberRunner implements ApplicationRunner {
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
 
-
-        Review review = Review.builder().title("hi1").build();
-        Review review1 = Review.builder().title("hi2").build();
 //        List<Review> reviewList = new ArrayList<Review>();
 //        reviewList.add(review);
 //        reviewList.add(review1);
@@ -190,11 +187,6 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
         restaurant.addMenu(menu);
-        restaurant.addReview(review);
-        restaurant.addReview(review1);
-
-        member2.addReview(review);
-        member2.addReview(review1);
 
 
 
@@ -229,8 +221,6 @@ public class MemberRunner implements ApplicationRunner {
 //                .restaurant(restaurant)
 //                .build();
 
-        reviewRe.save(review);
-        reviewRe.save(review1);
         memberRepository.save(member);
         memberRepository.save(member2);
         memberRepository.save(member3);
