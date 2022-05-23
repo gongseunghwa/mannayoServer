@@ -68,6 +68,7 @@ public class ReviewController {
                     .starPoint(r.getStarPoint())
                     .title(r.getTitle())
                     .writeDate(r.getWriteDate())
+                    .memberImage(r.getMember().getImageAddress())
                     .build();
             reviewDtoList.add(reviewDto);
         }

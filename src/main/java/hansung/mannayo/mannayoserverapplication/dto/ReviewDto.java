@@ -25,6 +25,8 @@ public class ReviewDto {
 
     private String image;
 
+    private String memberImage;
+
     private Float starPoint;
 
     private Boolean isDeleted;
