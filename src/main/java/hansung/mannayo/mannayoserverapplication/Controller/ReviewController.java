@@ -158,6 +158,7 @@ public class ReviewController {
                     .memberNickname(r.getMember().getNickName())
                     .build();
             reviewDtoList.add(reviewDto);
+
         }
         return reviewDtoList;
     }
