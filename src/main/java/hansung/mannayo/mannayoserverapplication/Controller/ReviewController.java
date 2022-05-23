@@ -8,10 +8,16 @@ import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +61,17 @@ public class ReviewController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
+    @GetMapping(value = "image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {
+        Review review = reviewService.findbyId(id);
+        String imagename = review.getImage();
+        InputStream imageStream = new FileInputStream(imagename);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
+
     private List<ReviewDto> toConvertDto(List<Review> list) {
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for(Review r : list) {
@@ -69,6 +86,7 @@ public class ReviewController {
                     .title(r.getTitle())
                     .writeDate(r.getWriteDate())
                     .memberImage(r.getMember().getImageAddress())
+                    .memberNickname(r.getMember().getNickName())
                     .build();
             reviewDtoList.add(reviewDto);
         }
