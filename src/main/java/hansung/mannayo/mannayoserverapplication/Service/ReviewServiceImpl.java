@@ -35,9 +35,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review findbyId(Long id) {
-        Optional<Review> obj = reviewRepository.findById(id);
-        return obj.orElseThrow(()-> new ResourceNotFoundException(id));
+    public Optional<Review> findbyId(Long id) {
+        Optional<Review> obj = reviewRepository.findByRestaurantId(id);
+        return obj;
     }
 
     @Override

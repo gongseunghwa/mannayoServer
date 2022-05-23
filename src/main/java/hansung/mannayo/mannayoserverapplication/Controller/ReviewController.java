@@ -2,7 +2,9 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
+import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
 import hansung.mannayo.mannayoserverapplication.Service.ReviewService;
+import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/reviews")
@@ -27,6 +30,9 @@ public class ReviewController {
 
     @Autowired
     ReviewService reviewService;
+
+    @Autowired
+    ResponseService responseService;
 
     @GetMapping
     public ResponseEntity<List<ReviewDto>> findAll(){
@@ -40,14 +46,20 @@ public class ReviewController {
     })
     @ApiOperation(value = "id로 리뷰조회(1개)" ,notes = "Id로 리뷰를 조회한다")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Review> findbyId(@PathVariable Long id){
-        Review obj = reviewService.findbyId(id);
+    public ResponseEntity<Review> findbyId(@PathVariable Long id){ //restaurant id
+        Review obj = reviewService.findbyId(id).get();
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public ResponseEntity<Review> insert(@RequestBody ReviewDto reviewDto){
-        return  ResponseEntity.ok(reviewService.insert(reviewDto));
+    public ResponseEntity<CommonResult> insert(@RequestBody ReviewDto reviewDto){
+        CommonResult commonResult = new CommonResult();
+        if(reviewService.insert(reviewDto) != null) {
+            commonResult = responseService.getSuccessResult();
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return  ResponseEntity.ok().body(commonResult);
     }
 
     @PutMapping(value = "/{id}")
@@ -64,8 +76,8 @@ public class ReviewController {
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
     @GetMapping(value = "image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {
-        Review review = reviewService.findbyId(id);
-        String imagename = review.getImage();
+        Optional<Review> review = reviewService.findbyId(id);
+        String imagename = review.get().getImage();
         InputStream imageStream = new FileInputStream(imagename);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
@@ -77,7 +89,6 @@ public class ReviewController {
         for(Review r : list) {
             ReviewDto reviewDto= ReviewDto.builder()
                     .content(r.getContent())
-                    .id(r.getId())
                     .memberId(r.getMember().getId())
                     .image(r.getImage())
                     .isDeleted(r.getIsDeleted())

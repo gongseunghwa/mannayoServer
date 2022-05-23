@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewService {
     public List<Review> findAll();
 
     //find member by pk(nickname)
-    public Review findbyId(Long id);
+    public Optional<Review> findbyId(Long id);
 
     //save member
     public Review insert(ReviewDto obj);
