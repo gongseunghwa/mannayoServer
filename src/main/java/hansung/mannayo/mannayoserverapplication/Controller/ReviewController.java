@@ -2,6 +2,7 @@ package hansung.mannayo.mannayoserverapplication.Controller;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
+import hansung.mannayo.mannayoserverapplication.Service.MemberService;
 import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
 import hansung.mannayo.mannayoserverapplication.Service.ReviewService;
 import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
@@ -37,6 +38,11 @@ public class ReviewController {
 
     @Autowired
     ResponseService responseService;
+
+    @Autowired
+    MemberService memberService;
+
+    @Autowired
 
     String AWSfilepath = "/home/ec2-user/images/";
 
@@ -96,12 +102,31 @@ public class ReviewController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "feed image List 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
+    @GetMapping(value = "imagelist/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<List<byte[]>> getProfileImageList(@PathVariable("id") Long id) throws IOException {
+        Optional<Review> review = reviewService.findimagebyId(id);
+        Member member = memberService.findbyId(review.get().getMember().getId());
+        List<byte[]> bytes = new ArrayList<>();
+        String reviewimagename = review.get().getImage();
+        String profileimagename = member.getImageAddress();
+        InputStream reviewimageStream = new FileInputStream(reviewimagename);
+        byte[] reviewimageByteArray = IOUtils.toByteArray(reviewimageStream);
+        reviewimageStream.close();
+        InputStream profileimageStream = new FileInputStream(profileimagename);
+        byte[] profileimageByteArray = IOUtils.toByteArray(profileimageStream);
+        profileimageStream.close();
+        bytes.add(reviewimageByteArray);
+        bytes.add(profileimageByteArray);
+        return ResponseEntity.ok().body(bytes);
+    }
+
     @ApiOperation(value = "리뷰 사진 등록")
     @PostMapping("/reviewimage")
     public ResponseEntity<CommonResult> registerProfileImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
         Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
         StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
-        Review review = new Review(); // 멤버객체 생성
+        Review review = new Review(); // 리뷰객체 생성
         CommonResult commonResult = new CommonResult();
         if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
             sb.append("none");
