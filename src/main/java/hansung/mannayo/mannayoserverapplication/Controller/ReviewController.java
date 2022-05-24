@@ -42,11 +42,9 @@ public class ReviewController {
     @Autowired
     MemberService memberService;
 
-    @Autowired
-
     String AWSfilepath = "/home/ec2-user/images/";
 
-    String localfilepath = "C://images/profile/";
+    String localfilepath = "C://images/review/";
 
     @GetMapping
     public ResponseEntity<List<ReviewDto>> findAll(){
@@ -118,7 +116,7 @@ public class ReviewController {
         profileimageStream.close();
         bytes.add(reviewimageByteArray);
         bytes.add(profileimageByteArray);
-        return ResponseEntity.ok().body(bytes);
+        return new ResponseEntity<>(bytes, HttpStatus.OK);
     }
 
     @ApiOperation(value = "리뷰 사진 등록")
@@ -138,11 +136,11 @@ public class ReviewController {
 
         if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
 
-            File dest = new File(AWSfilepath + sb.toString()); // 파일 생성
+            File dest = new File(localfilepath + sb.toString()); // 파일 생성
             try {
                 review = reviewService.findById(id).get();// id로 Entity 찾아옴
                 if(review.getImage() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
-                    review.setImage(AWSfilepath + sb.toString()); // member Entity에 이미지주소 저장
+                    review.setImage(localfilepath + sb.toString()); // member Entity에 이미지주소 저장
                     reviewService.updateImageAddress(review); // 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
                     System.out.println("파일 저장 완료 1");
@@ -152,7 +150,7 @@ public class ReviewController {
                         file.delete(); // 삭제
                     }
 
-                    review.setImage(AWSfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
+                    review.setImage(localfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
                     reviewService.updateImageAddress(review); // Entity 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
                     System.out.println("파일 저장 완료 2");
