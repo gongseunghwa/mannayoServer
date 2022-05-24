@@ -138,7 +138,6 @@ public class ReviewController {
                 e.printStackTrace();
             }
         }
-
         commonResult = responseService.getSuccessResult();
         return ResponseEntity.ok().body(commonResult);
     }
