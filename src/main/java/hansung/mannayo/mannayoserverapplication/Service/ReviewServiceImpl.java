@@ -38,6 +38,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Long getCountReviewsByRestaurantId(Long id) {
+        return reviewRepository.countReviewsByRestaurantId(id);
+    }
+
+    @Override
+    public Long getCountReviews() {
+        return reviewRepository.countReview();
+    }
+
+    @Override
     public Optional<Review> findById(Long id) {
         return reviewRepository.findById(id);
     }

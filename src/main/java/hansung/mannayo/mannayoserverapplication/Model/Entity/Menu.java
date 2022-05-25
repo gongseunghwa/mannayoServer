@@ -24,6 +24,8 @@ public class Menu {
 
     private String Image;
 
+    private boolean isBest;
+
     @ManyToOne
     private Restaurant restaurant;
 }

@@ -1,14 +1,14 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
+import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
 import hansung.mannayo.mannayoserverapplication.Service.MemberService;
 import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
+import hansung.mannayo.mannayoserverapplication.Service.RestaurantService;
 import hansung.mannayo.mannayoserverapplication.Service.ReviewService;
-import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
-import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
-import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
-import hansung.mannayo.mannayoserverapplication.dto.ReviewRequestDto;
+import hansung.mannayo.mannayoserverapplication.dto.*;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +42,12 @@ public class ReviewController {
     @Autowired
     MemberService memberService;
 
+    @Autowired
+    RestaurantService restaurantService;
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
+
     String AWSfilepath = "/home/ec2-user/images/";
 
     String localfilepath = "C://images/review/";
@@ -67,6 +73,21 @@ public class ReviewController {
     public ResponseEntity<CommonResult> insert(@RequestBody ReviewRequestDto reviewRequestDto){
         CommonResult commonResult = new CommonResult();
         Review review = reviewService.insert(reviewRequestDto);
+        Restaurant restaurant = restaurantRepository.findById(reviewRequestDto.getRestaurantId()).get();
+        Long count = reviewService.getCountReviews();
+        String c = count.toString();
+        Float fc = Float.parseFloat(c);
+        Float starpoint = restaurant.getStarPointInfo();
+
+        System.out.println(starpoint + " before");
+        System.out.println("count = " + fc);
+        System.out.println("reviewRequestDto = " + reviewRequestDto.getStarPoint());
+
+        starpoint = (((fc-1) * starpoint) + reviewRequestDto.getStarPoint()) / (count);
+        System.out.println(starpoint + " after");
+        restaurant.setStarPointInfo(starpoint);
+
+        restaurantRepository.save(restaurant);
 
         if(review != null) {
             commonResult = responseService.getSuccessResult();
@@ -91,32 +112,13 @@ public class ReviewController {
 
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
     @GetMapping(value = "image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {
+    public ResponseEntity<byte[]> getReviewImage(@PathVariable("id") Long id) throws IOException {
         Optional<Review> review = reviewService.findimagebyId(id);
         String imagename = review.get().getImage();
         InputStream imageStream = new FileInputStream(imagename);
         byte[] imageByteArray = IOUtils.toByteArray(imageStream);
         imageStream.close();
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "feed image List 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
-    @GetMapping(value = "imagelist/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<List<byte[]>> getProfileImageList(@PathVariable("id") Long id) throws IOException {
-        Optional<Review> review = reviewService.findimagebyId(id);
-        Member member = memberService.findbyId(review.get().getMember().getId());
-        List<byte[]> bytes = new ArrayList<>();
-        String reviewimagename = review.get().getImage();
-        String profileimagename = member.getImageAddress();
-        InputStream reviewimageStream = new FileInputStream(reviewimagename);
-        byte[] reviewimageByteArray = IOUtils.toByteArray(reviewimageStream);
-        reviewimageStream.close();
-        InputStream profileimageStream = new FileInputStream(profileimagename);
-        byte[] profileimageByteArray = IOUtils.toByteArray(profileimageStream);
-        profileimageStream.close();
-        bytes.add(reviewimageByteArray);
-        bytes.add(profileimageByteArray);
-        return new ResponseEntity<>(bytes, HttpStatus.OK);
     }
 
     @ApiOperation(value = "리뷰 사진 등록")

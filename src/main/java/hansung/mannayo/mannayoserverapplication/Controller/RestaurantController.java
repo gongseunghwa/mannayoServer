@@ -1,14 +1,19 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
 
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Jjim;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
+import hansung.mannayo.mannayoserverapplication.Service.JjimService;
+import hansung.mannayo.mannayoserverapplication.Service.MemberService;
 import hansung.mannayo.mannayoserverapplication.Service.RestaurantService;
+import hansung.mannayo.mannayoserverapplication.Service.ReviewService;
 import hansung.mannayo.mannayoserverapplication.dto.ImageDto;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantDetailResponse;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantListResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.Response;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,18 +37,57 @@ public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
 
+    @Autowired
+    JjimService jjimService;
+
+    @Autowired
+    MemberService memberService;
+
+    @Autowired
+    ReviewService reviewService;
+
     // 메인화면에서 일식 중식 등.. type을 버튼을 통해 주소로 전달하면 그 type으로 쿼리를 돌려서 list를 리턴
     @ApiOperation(value = "메인화면에서 일식 중식 등.. type을 버튼을 통해 주소로 전달하면 그 type으로 쿼리를 돌려서 list를 리턴")
     @GetMapping("/type")
-    ResponseEntity<List<RestaurantListResponse>> findRestaurantbyType(@ApiParam(value = "레스토랑 타입을 입력")@RequestParam Restaurant_Type type){
+    ResponseEntity<List<RestaurantListResponse>> findRestaurantbyType(@ApiParam(value = "레스토랑 타입을 입력")@RequestParam Restaurant_Type type, @RequestParam Long memberId){
         Optional<List<Restaurant>> request = restaurantService.findbyRestaurant_type(type);
+        Optional<Jjim> jjim;
+        Long reviewCount, JjimCount;
         if(request.isPresent()) {
             List<RestaurantListResponse> dto = new ArrayList<>();
             toDto(request.get(),dto);
+            for(RestaurantListResponse r : dto) {
+                jjim = jjimService.fincByMemberIdAndRestaurantId(memberId, r.getId());
+                reviewCount = reviewService.getCountReviewsByRestaurantId(r.getId());
+                JjimCount = jjimService.getCountJjimsByRestaurantId(r.getId());
+                r.setCountReview(reviewCount);
+                r.setCountJjim(JjimCount);
+                if(!jjim.isEmpty()) {
+                    r.setIsJjim(true);
+                } else {
+                    r.setIsJjim(false);
+                }
+            }
             return ResponseEntity.ok().body(dto);
         }
 
         throw new EntityNotFoundException("Entity not found by given type");
+    }
+
+    @ApiOperation(value = "찜 목록 설정된 나의 식당들을 호출한다.")
+    @GetMapping("/restaurantJjim")
+    ResponseEntity<List<RestaurantListResponse>> findRestaurantJjimByMemberId(@RequestParam Long memberId) {
+        Member member = memberService.findbyId(memberId);
+        List<Jjim> jjims = member.getJjimList();
+        List<RestaurantListResponse> restaurantListResponses = new ArrayList<>();
+        List<Restaurant> restaurantList = new ArrayList<>();
+        for(Jjim j : jjims) {
+            Restaurant restaurant = restaurantService.findbyId(j.getRestaurant().getId()).get();
+            restaurantList.add(restaurant);
+        }
+        toDto(restaurantList, restaurantListResponses);
+
+        return ResponseEntity.ok().body(restaurantListResponses);
     }
 
 
@@ -54,22 +98,6 @@ public class RestaurantController {
     ResponseEntity<RestaurantDetailResponse> findRestaurantDetail(@ApiParam(value = "레스토랑 id를 입력") @PathVariable Long id){
         RestaurantDetailResponse dto = restaurantService.findById(id);
         return ResponseEntity.ok().body(dto);
-    }
-
-    @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
-    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<ImageDto> getProfileImage(@RequestParam("id") Long id) throws IOException {
-        Optional<Restaurant> restaurant = restaurantService.findbyId(id);
-        ImageDto imageDto = new ImageDto();
-        if(restaurant.isPresent()) {
-            String imagename = restaurant.get().getImageAddress();
-            InputStream imageStream = new FileInputStream(imagename);
-            imageDto.setImage(IOUtils.toByteArray(imageStream));
-            imageStream.close();
-            return ResponseEntity.ok().body(imageDto);
-        }
-        throw new EntityNotFoundException("Entity not found by given type");
-
     }
 
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")

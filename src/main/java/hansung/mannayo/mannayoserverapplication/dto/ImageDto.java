@@ -9,4 +9,6 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImageDto {
     private byte[] image;
+
+
 }

@@ -73,8 +73,8 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .reviewList(new ArrayList<>())
-                .imageAddress("")
-                .starPointInfo(5.0f)
+                .imageAddress("C://images/restaurant/mexicana_new.jpg")
+                .starPointInfo(0f)
                 .build();
 
         Restaurant restaurant2 = Restaurant.builder()
@@ -88,8 +88,8 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .reviewList(new ArrayList<>())
-                .imageAddress("")
-                .starPointInfo(5.0f)
+                .imageAddress("C://images/restaurant/pericana_new.png")
+                .starPointInfo(0f)
                 .build();
 
         Restaurant restaurant3 = Restaurant.builder()
@@ -103,19 +103,23 @@ public class MemberRunner implements ApplicationRunner {
                 .businessEndHours(LocalTime.of(22,00))
                 .businessDayOff(LocalDate.of(2022,03,31))
                 .reviewList(new ArrayList<>())
-                .imageAddress("")
-                .starPointInfo(5.0f)
+                .imageAddress("C://images/restaurant/gyochon_new.png")
+                .starPointInfo(0f)
                 .build();
         Menu menu1 = Menu.builder()
                 .Name("어향요리치킨")
                 .Price(19800)
-                .Image("C://images/menu/어향요리치킨.jpg")
+                .Image("C://images/menu/어향요리치킨.png")
+                .isBest(false)
+                .restaurant(restaurant)
                 .build();
 
         Menu menu2 = Menu.builder()
                 .Name("깐풍요리치킨")
                 .Price(29800)
-                .Image("C://images/menu/깐풍요리치킨.jpg")
+                .Image("C://images/menu/깐풍요리치킨.png")
+                .isBest(true)
+                .restaurant(restaurant)
                 .build();
         ArrayList<Menu> maxicana_menu = new ArrayList<Menu>();
         maxicana_menu.add(menu1);
@@ -172,23 +176,6 @@ public class MemberRunner implements ApplicationRunner {
                 .birth(LocalDate.now())
                 .accountTypeEnum(AccountType.ADMISTRATOR)
                 .build();
-
-//        List<Review> reviewList = new ArrayList<Review>();
-//        reviewList.add(review);
-//        reviewList.add(review1);
-//        member2.setReviewList(reviewList);
-//        review.setMember(member2);
-//        review1.setMember(member2);
-//
-        Menu menu = Menu.builder()
-                .Name("restaurant")
-                .Image("dog.jpg")
-                .Price(1000)
-                .build();
-
-        restaurant.addMenu(menu);
-
-
 
 
         Board board = Board.builder()

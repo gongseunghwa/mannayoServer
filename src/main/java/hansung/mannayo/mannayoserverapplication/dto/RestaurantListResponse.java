@@ -5,11 +5,12 @@ import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import lombok.*;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /*
  *  가게의 List를 받아올 때 사용 할 Dto
  */
-@Builder
+@Builder @Data
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class RestaurantListResponse {
 
@@ -30,5 +31,11 @@ public class RestaurantListResponse {
     float point; // 평점
 
     String imageAddress;
+
+    Boolean isJjim;
+
+    Long countReview;
+
+    Long countJjim;
 
 }

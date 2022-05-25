@@ -11,5 +11,11 @@ public interface JjimService {
 
     Optional<List<Jjim>> findByMemberId(Long id);
 
-    public void insertJjim(Member member, Restaurant restaurant);
+    Optional<Jjim> fincByMemberIdAndRestaurantId(Long memberid, Long restaurantid);
+
+    Jjim insertJjim(Member member, Restaurant restaurant);
+
+    boolean deleteJjim(Long membeerid, Long Restaurantid);
+
+    Long getCountJjimsByRestaurantId(Long id);
 }

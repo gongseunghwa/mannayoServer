@@ -34,7 +34,11 @@ public interface ReviewService {
     public Review update(Long id, ReviewDto obj);
 
 
+    public Long getCountReviewsByRestaurantId(Long id);
+
     public void updateData(Review entity, ReviewDto obj);
+
+    public Long getCountReviews();
 
 
 
