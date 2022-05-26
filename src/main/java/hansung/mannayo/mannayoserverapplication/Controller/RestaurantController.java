@@ -86,6 +86,9 @@ public class RestaurantController {
             restaurantList.add(restaurant);
         }
         toDto(restaurantList, restaurantListResponses);
+        for(RestaurantListResponse r : restaurantListResponses) {
+            r.setIsJjim(true);
+        }
 
         return ResponseEntity.ok().body(restaurantListResponses);
     }
