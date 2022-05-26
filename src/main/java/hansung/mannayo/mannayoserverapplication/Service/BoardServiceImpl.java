@@ -1,9 +1,11 @@
 package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
+import hansung.mannayo.mannayoserverapplication.dto.BoardRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,5 +67,26 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void updateImageAddress(Board board) {
         boardRepository.save(board);
+    }
+
+    @Override
+    public Board insert(BoardRequest dto) {
+        Member member = memberRepository.findById(dto.getMemberid()).get();
+        Board board = dtoToEntity(dto);
+        member.addBoard(board);
+        return boardRepository.save(board);
+    }
+
+    private Board dtoToEntity(BoardRequest dto){
+        Member member = memberRepository.findById(dto.getMemberid()).get();
+
+        Board board = Board.builder()
+                .member(member)
+                .title(dto.getTitle())
+                .contents(dto.getContents())
+                .isVote(dto.getIsVote())
+                .type(dto.getType())
+                .build();
+        return board;
     }
 }

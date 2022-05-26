@@ -58,6 +58,9 @@ public class MemberRunner implements ApplicationRunner {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    ReviewRepository reviewRepository;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -208,6 +211,12 @@ public class MemberRunner implements ApplicationRunner {
 //                .restaurant(restaurant)
 //                .build();
 
+        Review review =  Review.builder()
+                .member(member)
+                .content("dsds")
+                .restaurant(restaurant)
+                .build();
+
         memberRepository.save(member);
         memberRepository.save(member2);
         memberRepository.save(member3);
@@ -217,6 +226,7 @@ public class MemberRunner implements ApplicationRunner {
         restaurantRepository.save(restaurant);
         restaurantRepository.save(restaurant2);
         restaurantRepository.save(restaurant3);
+        reviewRepository.save(review);
 //        likeRepository.save(like);
 //        jjimRepository.save(jjim);
 

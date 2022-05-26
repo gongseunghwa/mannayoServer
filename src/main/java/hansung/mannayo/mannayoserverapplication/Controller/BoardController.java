@@ -7,12 +7,12 @@ import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Service.*;
 
-import hansung.mannayo.mannayoserverapplication.dto.BoardDetailResponse;
-import hansung.mannayo.mannayoserverapplication.dto.BoardListResponse;
-import hansung.mannayo.mannayoserverapplication.dto.BoardWriteDto;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantListResponse;
+import hansung.mannayo.mannayoserverapplication.dto.*;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +30,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+
+    private final ResponseService responseService;
 
     @Autowired
     BoardService boardService;
@@ -53,6 +56,10 @@ public class BoardController {
 
     @Autowired
     BoardRepository boardRepository;
+
+    String AWSfilepath = "/home/ec2-user/images/";
+
+    String localfilepath = "C://images/board/";
 
 
     @ApiOperation(value = "response board", notes = "게시판 타입 별 호출")
@@ -157,57 +164,122 @@ public class BoardController {
     }
 
     // 게시판 글쓰기 기능
-    @ApiOperation(value = "board write", notes = "글쓰기 기능, 타입은 GOOD_RESTAURANT_BOARD, ADVERTISE_BOARD, TODAT_EAT_BOARD 만 입력")
-    @PostMapping(value = "/write")
-    public void writeInsertBoard(@RequestPart(value = "file") MultipartFile multipartFile,
-                                 @RequestPart(value = "request", required = false) BoardWriteDto boardWriteDto)
+//    @ApiOperation(value = "board write", notes = "글쓰기 기능, 타입은 GOOD_RESTAURANT_BOARD, ADVERTISE_BOARD, TODAT_EAT_BOARD 만 입력")
+//    @PostMapping(value = "/write")
+//    public void writeInsertBoard(@RequestPart(value = "file") MultipartFile multipartFile,
+//                                 @RequestPart(value = "request", required = false) BoardWriteDto boardWriteDto)
+//
+//    {
+//        Date date = new Date();
+//        StringBuilder sb = new StringBuilder();
+//        Board board = Board.builder()
+//                .member(memberService.findbyNickname(boardWriteDto.getNickName()))
+//                .title(boardWriteDto.getTitle())
+//                .contents(boardWriteDto.getContents())
+//                .type(boardWriteDto.getBoardType())
+//                .createdDate(LocalDateTime.now())
+//                .build();
+//        boardRepository.save(board);
+//
+//        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
+//            sb.append("none");
+//        } else {
+//            sb.append(date.getTime());
+//            sb.append(multipartFile.getOriginalFilename());
+//        }
+//
+//        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
+//            File dest = new File("C://images/board/" + sb.toString()); // 파일 생성
+//            try {
+//                board = boardService.findById(board.getId()).get(); // id로 Entity 찾아옴
+//                if(board.getImage() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
+//                    board.setImage("C://images/board/" + sb.toString()); // member Entity에 이미지주소 저장
+//                    boardService.updateImageAddress(board); // 업데이트
+//                    multipartFile.transferTo(dest); // 파일 저장
+//                }else {
+//                    File file = new File(board.getImage()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
+//                    if(file.exists()) { // file이 존재한다면
+//                        file.delete(); // 삭제
+//                    }
+//                    board.setImage("C://images/board/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
+//                    boardService.updateImageAddress(board); // Entity 업데이트
+//                    multipartFile.transferTo(dest); // 파일 저장
+//                }
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//
+//
+//    }
 
-    {
-        Date date = new Date();
-        StringBuilder sb = new StringBuilder();
-        Board board = Board.builder()
-                .member(memberService.findbyNickname(boardWriteDto.getNickName()))
-                .title(boardWriteDto.getTitle())
-                .contents(boardWriteDto.getContents())
-                .type(boardWriteDto.getBoardType())
-                .createdDate(LocalDateTime.now())
-                .build();
-        boardRepository.save(board);
 
-        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
-            sb.append("none");
-        } else {
-            sb.append(date.getTime());
-            sb.append(multipartFile.getOriginalFilename());
+    // "/board"로 post 요청이 올 시 동작
+    //게시판 글쓰기기능>>
+
+    @ApiOperation(value = "게시판 글쓰기 기능" ,notes = "게시판을 작성할 떄 동작 (이미지는 다른 컨트롤러에서 따로 처리한다)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
+    })
+    @PostMapping
+    public ResponseEntity<CommonResult> insert(@RequestBody BoardRequest dto){
+        CommonResult commonResult = new CommonResult();
+        Board board = boardService.insert(dto);
+
+        if(board != null){
+            commonResult = responseService.getSuccessResult();
+            commonResult.setMsg(board.getId().toString());
+            return ResponseEntity.ok(commonResult);
         }
 
-        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
-            File dest = new File("C://images/board/" + sb.toString()); // 파일 생성
-            try {
-                board = boardService.findById(board.getId()).get(); // id로 Entity 찾아옴
-                if(board.getImage() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
-                    board.setImage("C://images/board/" + sb.toString()); // member Entity에 이미지주소 저장
-                    boardService.updateImageAddress(board); // 업데이트
-                    multipartFile.transferTo(dest); // 파일 저장
-                }else {
-                    File file = new File(board.getImage()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
-                    if(file.exists()) { // file이 존재한다면
-                        file.delete(); // 삭제
-                    }
-                    board.setImage("C://images/board/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
-                    boardService.updateImageAddress(board); // Entity 업데이트
-                    multipartFile.transferTo(dest); // 파일 저장
-                }
-            } catch (IllegalStateException e) {
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok(commonResult);
+    }
+
+    //게시판 이미지 등록기능>>
+
+    @ApiOperation(value = "게시판 이미지 등록" ,notes = "게시판을 작성할 떄 동작")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
+    })
+    @PostMapping("/boardimages")
+    public ResponseEntity<CommonResult> uploadBoardImage(@RequestParam Long id, @RequestPart MultipartFile file){
+        Date date = new Date(); //파일명 겹치기 방지
+        StringBuilder sb = new StringBuilder();
+        Board board;
+        CommonResult commonResult;
+
+        if(file.isEmpty()){
+            sb.append("none");
+        }else{
+            sb.append(date.getTime());
+            sb.append(file.getOriginalFilename());
+
+            File dest = new File(localfilepath + sb.toString());
+            try{
+                board = boardService.findById(id).get(); //id로 이미지 주소를 저장할 board 찾아오기
+                board.setImage(dest.getPath());
+                boardService.updateImageAddress(board); //주소를 업데이트 후 저장
+                file.transferTo(dest);
+            }catch(IllegalStateException e){
                 e.printStackTrace();
-            } catch (IOException e) {
+                commonResult = responseService.getFailResult();
+                return ResponseEntity.ok(commonResult);
+            }
+            catch (IOException e) {
                 e.printStackTrace();
+                commonResult = responseService.getFailResult();
+                return ResponseEntity.ok(commonResult);
             }
         }
 
-
-
+        commonResult = responseService.getSuccessResult();
+        return ResponseEntity.ok(commonResult);
     }
+
 
     // 좋아요한 게시물 스크랩하기
     @ApiOperation(value = "board scrapping")

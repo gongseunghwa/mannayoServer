@@ -2,6 +2,7 @@ package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
+import hansung.mannayo.mannayoserverapplication.dto.BoardRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +27,7 @@ public interface BoardService {
     Optional<List<Board>> findBoardByType(BoardType boardType);
 
     void updateImageAddress(Board board);
+
+    //게시판 작성 시 dto를 저장하기
+    public Board insert(BoardRequest dto);
 }
