@@ -13,8 +13,7 @@ public class MenuResponse {
 
     private Integer price;
 
-    private boolean isbest;
+    private Boolean isbest;
 
     private String image;
-
 }
