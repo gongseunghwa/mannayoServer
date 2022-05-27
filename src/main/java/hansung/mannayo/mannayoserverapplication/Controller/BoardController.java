@@ -246,34 +246,37 @@ public class BoardController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
     })
     @PostMapping("/boardimages")
-    public ResponseEntity<CommonResult> uploadBoardImage(@RequestParam Long id, @RequestPart MultipartFile file){
+    public ResponseEntity<CommonResult> uploadBoardImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile){
         Date date = new Date(); //파일명 겹치기 방지
         StringBuilder sb = new StringBuilder();
         Board board;
         CommonResult commonResult;
 
-        if(file.isEmpty()){
+        if(multipartFile.isEmpty()){
             sb.append("none");
         }else{
             sb.append(date.getTime());
-            sb.append(file.getOriginalFilename());
+            sb.append(multipartFile.getOriginalFilename());
 
             File dest = new File(localfilepath + sb.toString());
             try{
                 board = boardService.findById(id).get(); //id로 이미지 주소를 저장할 board 찾아오기
                 board.setImage(dest.getPath());
                 boardService.updateImageAddress(board); //주소를 업데이트 후 저장
-                file.transferTo(dest);
-            }catch(IllegalStateException e){
+                multipartFile.transferTo(dest);
+            }
+            catch(IllegalStateException e){
                 e.printStackTrace();
-                commonResult = responseService.getFailResult();
-                return ResponseEntity.ok(commonResult);
+//                commonResult = responseService.getFailResult();
+//                return ResponseEntity.ok(commonResult);
             }
             catch (IOException e) {
                 e.printStackTrace();
-                commonResult = responseService.getFailResult();
-                return ResponseEntity.ok(commonResult);
+//                commonResult = responseService.getFailResult();
+//                return ResponseEntity.ok(commonResult);
             }
+
+
         }
 
         commonResult = responseService.getSuccessResult();

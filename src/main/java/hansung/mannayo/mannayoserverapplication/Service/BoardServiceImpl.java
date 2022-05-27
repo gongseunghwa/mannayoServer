@@ -71,14 +71,14 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board insert(BoardRequest dto) {
-        Member member = memberRepository.findById(dto.getMemberid()).get();
+        Member member = memberRepository.findById(dto.getMemberId()).get();
         Board board = dtoToEntity(dto);
         member.addBoard(board);
         return boardRepository.save(board);
     }
 
     private Board dtoToEntity(BoardRequest dto){
-        Member member = memberRepository.findById(dto.getMemberid()).get();
+        Member member = memberRepository.findById(dto.getMemberId()).get();
 
         Board board = Board.builder()
                 .member(member)

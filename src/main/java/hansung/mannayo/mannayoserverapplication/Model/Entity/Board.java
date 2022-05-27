@@ -35,7 +35,6 @@ public class Board {
     @ManyToOne @JsonManagedReference
     private Member member;
 
-    @NotNull
     private String title;
 
     @NotNull

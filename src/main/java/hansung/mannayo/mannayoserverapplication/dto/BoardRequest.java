@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class BoardRequest {
 
-    private Long Memberid;
+    private Long memberId;
 
     private String title;
 
