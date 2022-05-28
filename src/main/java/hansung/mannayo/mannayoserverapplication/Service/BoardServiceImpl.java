@@ -1,9 +1,11 @@
 package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Board;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Type.BoardType;
 import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
+import hansung.mannayo.mannayoserverapplication.dto.BoardRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,16 +39,6 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Optional<List<Board>> findByTitle(String title) {
-
-        Optional<List<Board>> boardList  = boardRepository.findByTitleOrderByCreatedDateDesc(title);
-        if(boardList.isPresent()){
-            return boardList;
-        }
-        throw new EntityNotFoundException("Cannot find any board given title");
-    }
-
-    @Override
     public Optional<List<Board>> findByMember(String nickName) {
         Optional<List<Board>> boardList = boardRepository.findByMember_NickName(nickName);
         if(boardList.isPresent()) {
@@ -65,5 +57,25 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void updateImageAddress(Board board) {
         boardRepository.save(board);
+    }
+
+    @Override
+    public Board insert(BoardRequest dto) {
+        Member member = memberRepository.findById(dto.getMemberId()).get();
+        Board board = dtoToEntity(dto);
+        member.addBoard(board);
+        return boardRepository.save(board);
+    }
+
+    private Board dtoToEntity(BoardRequest dto){
+        Member member = memberRepository.findById(dto.getMemberId()).get();
+
+        Board board = Board.builder()
+                .member(member)
+                .contents(dto.getContents())
+                .isVote(dto.getIsVote())
+                .type(dto.getType())
+                .build();
+        return board;
     }
 }

@@ -36,9 +36,6 @@ public class Board {
     private Member member;
 
     @NotNull
-    private String title;
-
-    @NotNull
     private String contents;
 
     private String image;

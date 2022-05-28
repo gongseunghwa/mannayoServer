@@ -41,7 +41,6 @@ class VoteTest {
 
         Board board = Board.builder()
                 .member(member)
-                .title("title")
                 .contents("hi")
                 .isVote(true)
                 .type(BoardType.TODAT_EAT_BOARD)

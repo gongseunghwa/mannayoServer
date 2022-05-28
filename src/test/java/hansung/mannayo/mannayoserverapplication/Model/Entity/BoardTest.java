@@ -33,7 +33,6 @@ class BoardTest {
 
         Board board = Board.builder()
                 .member(member)
-                .title("title")
                 .contents("hi")
                 .type(BoardType.ADVERTISE_BOARD)
                 .build();

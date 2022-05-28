@@ -16,8 +16,6 @@ public class BoardDetailResponse {
 
     private String nickName;
 
-    private String title;
-
     private String contents;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
@@ -26,4 +24,8 @@ public class BoardDetailResponse {
     private String image;
 
     private BoardType boardType;
+
+    private Long likeCount;
+
+    private Long commentCount;
 }

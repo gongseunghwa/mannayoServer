@@ -25,6 +25,12 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
+    public Long getCountLike(Long id) {
+        return likeRepository.countLikeByBoardId(id);
+    }
+
+
+    @Override
     public void insertLike(Member member, Board board) {
         Like like = Like.builder()
                 .member(member)

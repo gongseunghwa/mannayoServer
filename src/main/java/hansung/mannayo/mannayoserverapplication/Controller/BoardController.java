@@ -7,13 +7,15 @@ import hansung.mannayo.mannayoserverapplication.Repository.BoardRepository;
 import hansung.mannayo.mannayoserverapplication.Repository.MemberRepository;
 import hansung.mannayo.mannayoserverapplication.Service.*;
 
-import hansung.mannayo.mannayoserverapplication.dto.BoardDetailResponse;
-import hansung.mannayo.mannayoserverapplication.dto.BoardListResponse;
-import hansung.mannayo.mannayoserverapplication.dto.BoardWriteDto;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantListResponse;
+import hansung.mannayo.mannayoserverapplication.dto.*;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,8 +34,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+
+    private final ResponseService responseService;
 
     @Autowired
     BoardService boardService;
@@ -54,6 +61,17 @@ public class BoardController {
     @Autowired
     BoardRepository boardRepository;
 
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    CommentToCommentService commentToCommentService;
+
+
+    String AWSfilepath = "/home/ec2-user/images/";
+
+    String localfilepath = "C://images/board/";
+
 
     @ApiOperation(value = "response board", notes = "게시판 타입 별 호출")
     @GetMapping
@@ -61,72 +79,36 @@ public class BoardController {
         List<Board> boards = boardService.findBoardByType(boardType).get();
         BoardDetailResponse boardDto = new BoardDetailResponse();
         List<BoardDetailResponse> boardDtos = new ArrayList<>();
+        Long TotalCommentCount = 0L;
+        Long TotalLikeCount = 0L;
 
-        for(int i = 0; i<boards.size(); i++) {
-            boardDto.setBoardId(boards.get(i).getId());
-            boardDto.setBoardType(boards.get(i).getType());
-            boardDto.setContents(boards.get(i).getContents());
-            boardDto.setDate(boards.get(i).getCreatedDate());
-            boardDto.setImage(boards.get(i).getImage());
-            boardDto.setMemberId(boards.get(i).getMember().getId());
-            boardDto.setNickName(boards.get(i).getMember().getNickName());
-            boardDto.setTitle(boards.get(i).getTitle());
+        for(Board board : boards){
+            List<Comment> comments = commentService.getCommentByBoardId(board.getId()).get();
+            TotalCommentCount += commentService.getCountCommentByBoardId(board.getId());
+            TotalLikeCount += likeService.getCountLike(board.getId());
+            for(Comment comment : comments) {
+                TotalCommentCount += commentToCommentService.countByCommentId(comment.getId());
+            }
+
+            boardDto.setBoardId(board.getId());
+            boardDto.setBoardType(board.getType());
+            boardDto.setContents(board.getContents());
+            boardDto.setDate(board.getCreatedDate());
+            boardDto.setImage(board.getImage());
+            boardDto.setMemberId(board.getMember().getId());
+            boardDto.setNickName(board.getMember().getNickName());
+            boardDto.setLikeCount(TotalLikeCount);
+            boardDto.setCommentCount(TotalCommentCount);
             boardDtos.add(boardDto);
+
         }
+
+
+
 
         return ResponseEntity.ok().body(boardDtos);
     }
-    //게시글list 모두 불러오기
-    //제목으로 검색
-    //닉네임으로 검색
-    //RequestParam의 인자에 따라 결과값 다르게 출력
-    @ApiOperation(value = "board", notes = "전체검색/닉네임검색/제목검색")
-    @GetMapping("/search")
-    public ResponseEntity<List<BoardListResponse>> findBoard(
-            @ApiParam(value = "제목으로 검색",required = false) @RequestParam(required = false)String title,
-            @ApiParam(value = "닉네임으로 검색",required = false) @RequestParam(required = false)String nickName)
-    {
 
-        if(title == null && nickName ==null) {
-            List<Board> boardList = boardService.findAll();
-            List<BoardListResponse> boardListRequest = new ArrayList<>();
-            toDto(boardList, boardListRequest);
-            return ResponseEntity.ok().body(boardListRequest);
-        }
-
-        if(title != null && nickName ==null){
-            Optional<List<Board>> boardList = boardService.findByTitle(title);
-            if(boardList.isPresent()) {
-                List<Board> boards = boardList.get();
-                List<BoardListResponse> boardListRequest = new ArrayList<>();
-                toDto(boards, boardListRequest);
-                return ResponseEntity.ok().body(boardListRequest);
-            }
-        }
-
-        Optional<List<Board>> boardList = boardService.findByMember(nickName);
-        if(boardList.isPresent()) {
-            List<Board> boards = boardList.get();
-            List<BoardListResponse> boardListRequest = new ArrayList<>();
-            toDto(boards, boardListRequest);
-            return ResponseEntity.ok().body(boardListRequest);
-        }
-
-        throw new EntityNotFoundException("No Boards by given nickName");
-    }
-
-
-    //게시글 상세정보 불러오기
-
-
-//    //제목으로 검색하기
-//    @GetMapping("/title/{title}")
-//    public ResponseEntity<List<BoardListRequest>> findByTitle(@PathVariable String title){
-//        List<Board> boardList = boardService.findByTitle(title);
-//        List<BoardListRequest> boardListRequest = new ArrayList<>();
-//        toDto(boardList,boardListRequest);
-//        return ResponseEntity.ok().body(boardListRequest);
-//    }
 //
 //    //작성자로 검색하기
 //    @GetMapping("/member/{nickName}")
@@ -149,65 +131,79 @@ public class BoardController {
             BoardListResponse list = BoardListResponse.builder()
                     .id(boards.get(i).getId())
                     .writeDate(boards.get(i).getCreatedDate())
-                    .title(boards.get(i).getTitle())
                     .writer(boards.get(i).getMember().getNickName())
                     .build();
             dtoList.add(list);
         }
     }
 
-    // 게시판 글쓰기 기능
-    @ApiOperation(value = "board write", notes = "글쓰기 기능, 타입은 GOOD_RESTAURANT_BOARD, ADVERTISE_BOARD, TODAT_EAT_BOARD 만 입력")
-    @PostMapping(value = "/write")
-    public void writeInsertBoard(@RequestPart(value = "file") MultipartFile multipartFile,
-                                 @RequestPart(value = "request", required = false) BoardWriteDto boardWriteDto)
 
-    {
-        Date date = new Date();
+    // "/board"로 post 요청이 올 시 동작
+    //게시판 글쓰기기능>>
+
+    @ApiOperation(value = "게시판 글쓰기 기능" ,notes = "게시판을 작성할 떄 동작 (이미지는 다른 컨트롤러에서 따로 처리한다)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
+    })
+    @PostMapping
+    public ResponseEntity<CommonResult> insert(@RequestBody BoardRequest dto){
+        CommonResult commonResult = new CommonResult();
+        Board board = boardService.insert(dto);
+
+        if(board != null){
+            commonResult = responseService.getSuccessResult();
+            commonResult.setMsg(board.getId().toString());
+            return ResponseEntity.ok(commonResult);
+        }
+
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok(commonResult);
+    }
+
+    //게시판 이미지 등록기능>>
+
+    @ApiOperation(value = "게시판 이미지 등록" ,notes = "게시판을 작성할 떄 동작")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
+    })
+    @PostMapping("/boardimages")
+    public ResponseEntity<CommonResult> uploadBoardImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile){
+        Date date = new Date(); //파일명 겹치기 방지
         StringBuilder sb = new StringBuilder();
-        Board board = Board.builder()
-                .member(memberService.findbyNickname(boardWriteDto.getNickName()))
-                .title(boardWriteDto.getTitle())
-                .contents(boardWriteDto.getContents())
-                .type(boardWriteDto.getBoardType())
-                .createdDate(LocalDateTime.now())
-                .build();
-        boardRepository.save(board);
+        Board board;
+        CommonResult commonResult;
 
-        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
+        if(multipartFile.isEmpty()){
             sb.append("none");
-        } else {
+        }else{
             sb.append(date.getTime());
             sb.append(multipartFile.getOriginalFilename());
-        }
 
-        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
-            File dest = new File("C://images/board/" + sb.toString()); // 파일 생성
-            try {
-                board = boardService.findById(board.getId()).get(); // id로 Entity 찾아옴
-                if(board.getImage() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
-                    board.setImage("C://images/board/" + sb.toString()); // member Entity에 이미지주소 저장
-                    boardService.updateImageAddress(board); // 업데이트
-                    multipartFile.transferTo(dest); // 파일 저장
-                }else {
-                    File file = new File(board.getImage()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
-                    if(file.exists()) { // file이 존재한다면
-                        file.delete(); // 삭제
-                    }
-                    board.setImage("C://images/board/" + sb.toString()); // 새로운 이미지 주소 DB에 저장
-                    boardService.updateImageAddress(board); // Entity 업데이트
-                    multipartFile.transferTo(dest); // 파일 저장
-                }
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            File dest = new File(localfilepath + sb.toString());
+            try{
+                board = boardService.findById(id).get(); //id로 이미지 주소를 저장할 board 찾아오기
+                board.setImage(dest.getPath());
+                boardService.updateImageAddress(board); //주소를 업데이트 후 저장
+                multipartFile.transferTo(dest);
             }
+            catch(IllegalStateException e){
+                e.printStackTrace();
+//                commonResult = responseService.getFailResult();
+//                return ResponseEntity.ok(commonResult);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+//                commonResult = responseService.getFailResult();
+//                return ResponseEntity.ok(commonResult);
+            }
+
+
         }
 
-
-
+        commonResult = responseService.getSuccessResult();
+        return ResponseEntity.ok(commonResult);
     }
+
 
     // 좋아요한 게시물 스크랩하기
     @ApiOperation(value = "board scrapping")
@@ -257,6 +253,17 @@ public class BoardController {
                     .build();
             dtoList.add(list);
         }
+    }
+
+    @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
+    @GetMapping(value = "/image/{boardId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getBoardImage(@PathVariable("boardId") Long boardId) throws IOException {
+        Board board = boardService.findById(boardId).get();
+        String imagename = board.getImage();
+        InputStream imageStream = new FileInputStream(imagename);
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
 

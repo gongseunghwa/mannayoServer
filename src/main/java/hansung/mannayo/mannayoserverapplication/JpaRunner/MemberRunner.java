@@ -58,6 +58,9 @@ public class MemberRunner implements ApplicationRunner {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    ReviewRepository reviewRepository;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -178,47 +181,13 @@ public class MemberRunner implements ApplicationRunner {
                 .build();
 
 
-        Board board = Board.builder()
-                .member(member)
-                .title("title")
-                .contents("hi")
-                .isVote(true)
-                .type(BoardType.TODAT_EAT_BOARD)
-                .build();
-
-        Board board2 = Board.builder()
-                .member(member)
-                .title("aaa")
-                .contents("hi")
-                .isVote(true)
-                .type(BoardType.TODAT_EAT_BOARD)
-                .build();
-
-        Vote vote = Vote.builder()
-                .Contents("hi")
-                .build();
-
-//        Like like = Like.builder()
-//                .member(member)
-//                .board(board)
-//                .build();
-
-//        Jjim jjim = Jjim.builder()
-//                .member(member)
-//                .restaurant(restaurant)
-//                .build();
-
         memberRepository.save(member);
         memberRepository.save(member2);
         memberRepository.save(member3);
         memberRepository.save(member4);
-        boardRepository.save(board);
-        boardRepository.save(board2);
         restaurantRepository.save(restaurant);
         restaurantRepository.save(restaurant2);
         restaurantRepository.save(restaurant3);
-//        likeRepository.save(like);
-//        jjimRepository.save(jjim);
 
     }
 }

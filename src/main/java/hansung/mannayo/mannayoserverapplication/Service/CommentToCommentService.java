@@ -1,13 +1,14 @@
-package hansung.mannayo.mannayoserverapplication.Repository;
+package hansung.mannayo.mannayoserverapplication.Service;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.CommentToComment;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CommentToCommentRepository extends JpaRepository<CommentToComment,Long> {
+public interface CommentToCommentService {
+
     Long countByCommentId(Long id);
 
     Optional<List<CommentToComment>> findByCommentId(Long id);
+
 }

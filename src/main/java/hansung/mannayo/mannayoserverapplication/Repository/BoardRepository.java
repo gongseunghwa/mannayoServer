@@ -13,8 +13,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<List<Board>> findByMemberOrderByCreatedDateDesc(Long id); //이름으로 검색할 때 사용하기 위한 함수(내림차순)
 
-    Optional<List<Board>> findByTitleOrderByCreatedDateDesc(String title); //제목으로 검색할 때 사용하기 위한 함수(내림차순) // Contains 포함 필요
-
     Optional<List<Board>> findByMember_NickName(String nickName);
 
     Optional<List<Board>> findByMember_Id(Long id);

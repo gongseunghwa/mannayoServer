@@ -15,5 +15,5 @@ public interface LikeService {
 
     public void insertLike(Member member, Board board);
 
-
+    Long getCountLike(Long id);
 }
