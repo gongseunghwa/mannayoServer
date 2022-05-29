@@ -106,6 +106,10 @@ public class Member implements Serializable , UserDetails {
     @JsonBackReference
     private List<Report> reportList;
 
+    @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<member_vote> member_votes;
+
 
     public void addReview(Review review){
         this.reviewList.add(review);

@@ -28,4 +28,8 @@ public class BoardDetailResponse {
     private Long likeCount;
 
     private Long commentCount;
+
+    private Boolean isVote;
+
+    private Boolean isProfile;
 }

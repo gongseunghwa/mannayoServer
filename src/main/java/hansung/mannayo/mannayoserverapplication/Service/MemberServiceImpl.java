@@ -75,6 +75,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Optional<String> getImageAddress(Long writerId) {
+        return memberRepository.findImageAddress(writerId);
+    }
+
+    @Override
     public boolean updateNickname(Long id, String nickname) {
         Optional<Member> member = memberRepository.findById(id);
         if(member.isPresent()) {

@@ -12,8 +12,6 @@ public class BoardRequest {
 
     private Long memberId;
 
-    private String title;
-
     private String contents;
 
     private Boolean isVote;

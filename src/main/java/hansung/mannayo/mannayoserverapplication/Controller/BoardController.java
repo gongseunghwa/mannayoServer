@@ -75,38 +75,81 @@ public class BoardController {
 
     @ApiOperation(value = "response board", notes = "게시판 타입 별 호출")
     @GetMapping
-    public ResponseEntity<List<BoardDetailResponse>> findBoardByType(@ApiParam(value = "타입 별 게시판 찾기", required = false) @RequestParam(required = false)BoardType boardType) {
+    public ResponseEntity<List<BoardDetailResponse>> findBoardByType(@ApiParam(value = "타입 별 게시판 찾기", required = false) @RequestParam(required = false) BoardType boardType) {
         List<Board> boards = boardService.findBoardByType(boardType).get();
-        BoardDetailResponse boardDto = new BoardDetailResponse();
         List<BoardDetailResponse> boardDtos = new ArrayList<>();
         Long TotalCommentCount = 0L;
         Long TotalLikeCount = 0L;
 
-        for(Board board : boards){
+
+        for (Board board : boards) {
             List<Comment> comments = commentService.getCommentByBoardId(board.getId()).get();
             TotalCommentCount += commentService.getCountCommentByBoardId(board.getId());
             TotalLikeCount += likeService.getCountLike(board.getId());
-            for(Comment comment : comments) {
+            Member member = memberService.findbyId(board.getMember().getId());
+
+            for (Comment comment : comments) {
                 TotalCommentCount += commentToCommentService.countByCommentId(comment.getId());
             }
 
-            boardDto.setBoardId(board.getId());
-            boardDto.setBoardType(board.getType());
-            boardDto.setContents(board.getContents());
-            boardDto.setDate(board.getCreatedDate());
-            boardDto.setImage(board.getImage());
-            boardDto.setMemberId(board.getMember().getId());
-            boardDto.setNickName(board.getMember().getNickName());
-            boardDto.setLikeCount(TotalLikeCount);
-            boardDto.setCommentCount(TotalCommentCount);
-            boardDtos.add(boardDto);
+            BoardDetailResponse boardDetailResponse = BoardDetailResponse.builder()
+                    .boardId(board.getId())
+                    .boardType(board.getType())
+                    .contents(board.getContents())
+                    .date(board.getCreatedDate())
+                    .image(board.getImage())
+                    .memberId(board.getMember().getId())
+                    .nickName(board.getMember().getNickName())
+                    .likeCount(TotalLikeCount)
+                    .commentCount(TotalCommentCount)
+                    .isVote(board.getIsVote())
+                    .build();
 
+            boardDtos.add(boardDetailResponse);
         }
 
 
-
-
+        System.out.println(boardDtos);
         return ResponseEntity.ok().body(boardDtos);
+    }
+
+    @ApiOperation(value = "response board by Id", notes = "게시판 id로 호출")
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardDetailResponse> findBoardById(@ApiParam(value = "Id 별 게시판 찾기", required = false) @PathVariable(required = false) Long id) {
+        Board board = boardService.findById(id).get();
+        BoardDetailResponse boardDto = new BoardDetailResponse();
+        Long TotalCommentCount = 0L;
+        Long TotalLikeCount = 0L;
+
+
+        Optional<List<Comment>> comments = commentService.getCommentByBoardId(board.getId());
+        TotalCommentCount += commentService.getCountCommentByBoardId(board.getId());
+        TotalLikeCount += likeService.getCountLike(board.getId());
+        Optional<String> image = memberService.getImageAddress(board.getMember().getId());
+        if(image.isPresent()) {
+            boardDto.setIsProfile(true);
+        }else {
+            boardDto.setIsProfile(false);
+        }
+        if(comments.isPresent()) {
+            List<Comment> commentList = comments.get();
+            for (Comment comment : commentList) {
+                TotalCommentCount += commentToCommentService.countByCommentId(comment.getId());
+            }
+        }
+
+        boardDto.setBoardId(board.getId());
+        boardDto.setBoardType(board.getType());
+        boardDto.setContents(board.getContents());
+        boardDto.setDate(board.getCreatedDate());
+        boardDto.setImage(board.getImage());
+        boardDto.setMemberId(board.getMember().getId());
+        boardDto.setNickName(board.getMember().getNickName());
+        boardDto.setLikeCount(TotalLikeCount);
+        boardDto.setCommentCount(TotalCommentCount);
+        boardDto.setIsVote(board.getIsVote());
+
+        return ResponseEntity.ok().body(boardDto);
     }
 
 //
@@ -126,8 +169,8 @@ public class BoardController {
 
 
     //BoardListRequest로 정보옮기기
-    public void toDto(List<Board> boards, List<BoardListResponse> dtoList){
-        for(int i=0 ;i<boards.size();i++){
+    public void toDto(List<Board> boards, List<BoardListResponse> dtoList) {
+        for (int i = 0; i < boards.size(); i++) {
             BoardListResponse list = BoardListResponse.builder()
                     .id(boards.get(i).getId())
                     .writeDate(boards.get(i).getCreatedDate())
@@ -141,16 +184,16 @@ public class BoardController {
     // "/board"로 post 요청이 올 시 동작
     //게시판 글쓰기기능>>
 
-    @ApiOperation(value = "게시판 글쓰기 기능" ,notes = "게시판을 작성할 떄 동작 (이미지는 다른 컨트롤러에서 따로 처리한다)")
+    @ApiOperation(value = "게시판 글쓰기 기능", notes = "게시판을 작성할 떄 동작 (이미지는 다른 컨트롤러에서 따로 처리한다)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰", required = false, dataType = "String", paramType = "header")
     })
     @PostMapping
-    public ResponseEntity<CommonResult> insert(@RequestBody BoardRequest dto){
+    public ResponseEntity<CommonResult> insert(@RequestBody BoardRequest dto) {
         CommonResult commonResult = new CommonResult();
         Board board = boardService.insert(dto);
 
-        if(board != null){
+        if (board != null) {
             commonResult = responseService.getSuccessResult();
             commonResult.setMsg(board.getId().toString());
             return ResponseEntity.ok(commonResult);
@@ -162,36 +205,34 @@ public class BoardController {
 
     //게시판 이미지 등록기능>>
 
-    @ApiOperation(value = "게시판 이미지 등록" ,notes = "게시판을 작성할 떄 동작")
+    @ApiOperation(value = "게시판 이미지 등록", notes = "게시판을 작성할 떄 동작")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰",required = false,dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 때 받은 토큰", required = false, dataType = "String", paramType = "header")
     })
     @PostMapping("/boardimages")
-    public ResponseEntity<CommonResult> uploadBoardImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile){
+    public ResponseEntity<CommonResult> uploadBoardImage(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
         Date date = new Date(); //파일명 겹치기 방지
         StringBuilder sb = new StringBuilder();
         Board board;
         CommonResult commonResult;
 
-        if(multipartFile.isEmpty()){
+        if (multipartFile.isEmpty()) {
             sb.append("none");
-        }else{
+        } else {
             sb.append(date.getTime());
             sb.append(multipartFile.getOriginalFilename());
 
             File dest = new File(localfilepath + sb.toString());
-            try{
+            try {
                 board = boardService.findById(id).get(); //id로 이미지 주소를 저장할 board 찾아오기
                 board.setImage(dest.getPath());
                 boardService.updateImageAddress(board); //주소를 업데이트 후 저장
                 multipartFile.transferTo(dest);
-            }
-            catch(IllegalStateException e){
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
 //                commonResult = responseService.getFailResult();
 //                return ResponseEntity.ok(commonResult);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
 //                commonResult = responseService.getFailResult();
 //                return ResponseEntity.ok(commonResult);
@@ -211,8 +252,8 @@ public class BoardController {
     public ResponseEntity<List<BoardListResponse>> scrappingBoard(@PathVariable Long id) {
         List<Like> likeList = likeService.findListByMemberId(id).get();
         List<Board> boards = new ArrayList<>();
-        if(!likeList.isEmpty()) {
-            for(int i =0; i<likeList.size(); i++) {
+        if (!likeList.isEmpty()) {
+            for (int i = 0; i < likeList.size(); i++) {
                 boards.add(boardService.findById(likeList.get(i).getBoard().getId()).get());
             }
             List<BoardListResponse> boardListRequests = new ArrayList<>();
@@ -230,8 +271,8 @@ public class BoardController {
     public ResponseEntity<List<RestaurantListResponse>> scrappingRestaurant(@PathVariable Long id) {
         List<Jjim> jjims = jjimService.findByMemberId(id).get();
         List<Restaurant> restaurants = new ArrayList<>();
-        if(!jjims.isEmpty()) {
-            for(int i = 0; i<jjims.size(); i++) {
+        if (!jjims.isEmpty()) {
+            for (int i = 0; i < jjims.size(); i++) {
                 restaurants.add(restaurantService.findbyId(jjims.get(i).getRestaurant().getId()).get());
             }
             List<RestaurantListResponse> restaurantListRequest = new ArrayList<>();
@@ -243,8 +284,8 @@ public class BoardController {
     }
 
     //RestaurantListRequest로 정보옮기기
-    public void toRestaurantDto(List<Restaurant> restaurants, List<RestaurantListResponse> dtoList){
-        for(int i=0 ;i<restaurants.size();i++){
+    public void toRestaurantDto(List<Restaurant> restaurants, List<RestaurantListResponse> dtoList) {
+        for (int i = 0; i < restaurants.size(); i++) {
             RestaurantListResponse list = RestaurantListResponse.builder()
                     .id(restaurants.get(i).getId())
                     .name(restaurants.get(i).getName())
@@ -265,8 +306,6 @@ public class BoardController {
         imageStream.close();
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
-
-
 
 
 }

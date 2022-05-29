@@ -4,6 +4,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.dto.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberService {
 
@@ -35,6 +36,8 @@ public interface MemberService {
     public void updateImageAddress(Member member);
 
     public boolean updateNickname(Long id, String nickname);
+
+    Optional<String> getImageAddress(Long writerId);
 
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()

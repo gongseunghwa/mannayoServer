@@ -50,7 +50,7 @@ class VoteTest {
         Vote vote = Vote.builder()
                 .board(board)
                 .Contents("chickenchicken")
-                .Count(0)
+                .Count(0L)
                 .build();
 
 
