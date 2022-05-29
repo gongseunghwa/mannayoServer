@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
-    Optional<List<Review>> findByRestaurantId(Long id);
+    Optional<List<Review>> findByRestaurantIdOrderByWriteDateDesc(Long id);
 
     Long countReviewsByRestaurantId(Long id);
 

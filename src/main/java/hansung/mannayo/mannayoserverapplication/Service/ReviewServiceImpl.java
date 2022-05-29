@@ -54,7 +54,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ReviewDto> findByRestaurantId(Long id) {
-        List<Review> reviews = reviewRepository.findByRestaurantId(id).get();
+        List<Review> reviews = reviewRepository.findByRestaurantIdOrderByWriteDateDesc(id).get();
         List<ReviewDto> obj = new ArrayList<>();
         for(Review review : reviews) {
             ReviewDto reviewDto = ReviewDto.builder()
