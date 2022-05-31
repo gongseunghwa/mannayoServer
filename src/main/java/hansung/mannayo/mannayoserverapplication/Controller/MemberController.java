@@ -212,6 +212,28 @@ public class MemberController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "FCM Token 입력")
+    @PostMapping(value = "/FCMtoken")
+    public ResponseEntity<CommonResult> setFCMtoken(@RequestParam Long id, @RequestParam String token) {
+        Boolean set = memberService.updateFCMtoken(id, token);
+        CommonResult commonResult;
+        if(set) {
+            commonResult = responseService.getSuccessResult();
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
+
+    }
+
+    @ApiOperation(value = "Test")
+    @GetMapping("/TokenTest")
+    public ResponseEntity<List<String>> getToken() {
+        List<String> token = memberService.getToken();
+        System.out.println(token.get(0));
+        return ResponseEntity.ok().body(token);
+    }
+
 
 
 

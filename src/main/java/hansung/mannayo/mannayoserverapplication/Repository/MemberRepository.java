@@ -26,4 +26,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m.imageAddress from Member m where m.id = :writerId")
     Optional<String> findImageAddress(@Param("writerId") Long writerId);
+
+    @Query("select m.token from Member m")
+    Optional<List<String>> findToken();
 }
