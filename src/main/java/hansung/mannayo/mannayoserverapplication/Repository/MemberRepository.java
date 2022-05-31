@@ -29,4 +29,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m.token from Member m")
     Optional<List<String>> findToken();
+
+    Optional<Member> findByToken(String token);
 }

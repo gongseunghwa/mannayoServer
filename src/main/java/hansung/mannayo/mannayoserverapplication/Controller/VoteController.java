@@ -35,14 +35,20 @@ public class VoteController {
     public ResponseEntity<List<VoteResponseDto>> getVote(@PathVariable("boardid") Long id, @RequestParam Long memberId) {
         List<Vote> voteList = voteService.getVoteByBoardId(id).get();
         List<VoteResponseDto> voteResponseDtos = new ArrayList<>();
-        VoteResponseDto voteResponseDto = new VoteResponseDto();
+        VoteResponseDto voteResponseDto;
         for (Vote v : voteList) {
-            voteResponseDto.setContents(v.getContents());
-            voteResponseDto.setCount(v.getCount());
             if (member_voteService.findMemberVoteByVoteIdAndMemberId(v.getId(), memberId).isPresent()) {
-                voteResponseDto.setAmIVote(true);
-            } else {
-                voteResponseDto.setAmIVote(false);
+               voteResponseDto = VoteResponseDto.builder()
+                        .contents(v.getContents())
+                        .Count(v.getCount())
+                        .amIVote(true)
+                        .build();
+            }else {
+                voteResponseDto = VoteResponseDto.builder()
+                        .contents(v.getContents())
+                        .Count(v.getCount())
+                        .amIVote(false)
+                        .build();
             }
             voteResponseDtos.add(voteResponseDto);
         }

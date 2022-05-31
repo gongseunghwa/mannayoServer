@@ -43,6 +43,8 @@ public interface MemberService {
 
     Optional<String> getImageAddress(Long writerId);
 
+    Optional<Member> findByToken(String token);
+
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()
                 .realName(memberDto.getRealname())

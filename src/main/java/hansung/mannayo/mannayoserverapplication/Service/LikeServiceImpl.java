@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 @Service
 @RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService{
@@ -29,14 +31,35 @@ public class LikeServiceImpl implements LikeService{
         return likeRepository.countLikeByBoardId(id);
     }
 
+    @Override
+    public Boolean isLikeExistAlready(Long memberId, Long boardId) {
+        Optional<Like> like = likeRepository.findByMemberIdAndBoardId(memberId, boardId);
+        if(like.isPresent()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     @Override
-    public void insertLike(Member member, Board board) {
+    public void deleteLike(Long memberId, Long boardId) {
+        Like like = likeRepository.findByMemberIdAndBoardId(memberId, boardId).get();
+        likeRepository.delete(like);
+    }
+
+    @Override
+    public Boolean insertLike(Member member, Board board) {
         Like like = Like.builder()
                 .member(member)
                 .board(board)
                 .build();
-        likeRepository.save(like);
+        Like save = likeRepository.save(like);
 
+        if(isEmpty(save)) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

@@ -12,4 +12,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
 
     Long countLikeByBoardId(Long id);
 
+    Optional<Like> findByMemberIdAndBoardId(Long memberId, Long boardId);
+
 }

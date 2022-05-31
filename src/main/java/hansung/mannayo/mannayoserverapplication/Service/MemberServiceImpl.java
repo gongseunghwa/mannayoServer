@@ -166,6 +166,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Optional<Member> findByToken(String token) {
+        return memberRepository.findByToken(token);
+    }
+
+    @Override
     public void updateData(Member entity, MemberDto obj) {
         entity.setNickName(obj.getNickName());
         entity.setEmail(obj.getEmail());
