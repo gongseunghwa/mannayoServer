@@ -65,70 +65,6 @@ public class MemberRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        Restaurant restaurant = Restaurant.builder()
-                .address("서울특별시 송파구 송파대로34길 35")
-                .name("맥시카나")
-                .type(Restaurant_Type.HANSIK)
-                .number("0234331857")
-                .owner("김철수")
-                .menuList(new ArrayList<Menu>())
-                .businessStartHours(LocalTime.of(10,00))
-                .businessEndHours(LocalTime.of(22,00))
-                .businessDayOff(LocalDate.of(2022,03,31))
-                .reviewList(new ArrayList<>())
-                .imageAddress("C://images/restaurant/mexicana_new.jpg")
-                .starPointInfo(0f)
-                .build();
-
-        Restaurant restaurant2 = Restaurant.builder()
-                .address("서울특별시 서초구 동광로11길 25")
-                .name("페리카나")
-                .type(Restaurant_Type.HANSIK)
-                .number("025227878")
-                .owner("이호성")
-                .menuList(new ArrayList<Menu>())
-                .businessStartHours(LocalTime.of(10,00))
-                .businessEndHours(LocalTime.of(22,00))
-                .businessDayOff(LocalDate.of(2022,03,31))
-                .reviewList(new ArrayList<>())
-                .imageAddress("C://images/restaurant/pericana_new.png")
-                .starPointInfo(0f)
-                .build();
-
-        Restaurant restaurant3 = Restaurant.builder()
-                .address("경기도 오산시 동부대로 436번길 55-18")
-                .name("교촌")
-                .type(Restaurant_Type.HANSIK)
-                .number("0313713501")
-                .owner("여맹구")
-                .menuList(new ArrayList<Menu>())
-                .businessStartHours(LocalTime.of(10,00))
-                .businessEndHours(LocalTime.of(22,00))
-                .businessDayOff(LocalDate.of(2022,03,31))
-                .reviewList(new ArrayList<>())
-                .imageAddress("C://images/restaurant/gyochon_new.png")
-                .starPointInfo(0f)
-                .build();
-        Menu menu1 = Menu.builder()
-                .Name("어향요리치킨")
-                .Price(19800)
-                .Image("C://images/menu/어향요리치킨.png")
-                .isBest(false)
-                .restaurant(restaurant)
-                .build();
-
-        Menu menu2 = Menu.builder()
-                .Name("깐풍요리치킨")
-                .Price(29800)
-                .Image("C://images/menu/깐풍요리치킨.png")
-                .isBest(true)
-                .restaurant(restaurant)
-                .build();
-        ArrayList<Menu> maxicana_menu = new ArrayList<Menu>();
-        maxicana_menu.add(menu1);
-        maxicana_menu.add(menu2);
-        restaurant.setMenuList(maxicana_menu);
-
         Member member = Member.builder()
                 .realName("맛나요2")
                 .nickName("null")
@@ -185,9 +121,6 @@ public class MemberRunner implements ApplicationRunner {
         memberRepository.save(member2);
         memberRepository.save(member3);
         memberRepository.save(member4);
-        restaurantRepository.save(restaurant);
-        restaurantRepository.save(restaurant2);
-        restaurantRepository.save(restaurant3);
 
     }
 }
