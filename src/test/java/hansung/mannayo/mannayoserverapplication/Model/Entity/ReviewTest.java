@@ -60,7 +60,6 @@ class ReviewTest {
                 .jjimcount(10)
                 .businessStartHours(LocalTime.now())
                 .businessEndHours(LocalTime.now())
-                .businessDayOff(LocalDate.now())
                 .build();
 
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);

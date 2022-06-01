@@ -33,7 +33,6 @@ class JjimTest {
         Restaurant restaurant = new Restaurant.RestaurantBuilder()
                 .id(1L)
                 .address("123")
-                .businessDayOff(LocalDate.of(2022,03,31))
                 .businessEndHours(LocalTime.of(22,10,00))
                 .businessStartHours(LocalTime.of(10,10,0))
                 .name("Maxicana")
