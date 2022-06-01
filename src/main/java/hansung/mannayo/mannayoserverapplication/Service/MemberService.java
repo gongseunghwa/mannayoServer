@@ -35,9 +35,15 @@ public interface MemberService {
 
     public void updateImageAddress(Member member);
 
-    public boolean updateNickname(Long id, String nickname);
+    public Boolean updateFCMtoken(Long id, String token);
+
+    public Boolean updateNickname(Long id, String nickname);
+
+    List<String> getToken();
 
     Optional<String> getImageAddress(Long writerId);
+
+    Optional<Member> findByToken(String token);
 
     default Member dtoToEntity(MemberDto memberDto) {
         Member entity = Member.builder()

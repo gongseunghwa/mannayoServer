@@ -4,10 +4,8 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Jjim;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
-import hansung.mannayo.mannayoserverapplication.Service.JjimService;
-import hansung.mannayo.mannayoserverapplication.Service.MemberService;
-import hansung.mannayo.mannayoserverapplication.Service.RestaurantService;
-import hansung.mannayo.mannayoserverapplication.Service.ReviewService;
+import hansung.mannayo.mannayoserverapplication.Service.*;
+import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import hansung.mannayo.mannayoserverapplication.dto.ImageDto;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantDetailResponse;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantListResponse;
@@ -15,17 +13,25 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.models.Response;
 import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +39,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/restaurant")
 public class RestaurantController {
+
+    String AWSfilepath = "/home/ec2-user/images/";
 
     @Autowired
     RestaurantService restaurantService;
@@ -45,6 +53,9 @@ public class RestaurantController {
 
     @Autowired
     ReviewService reviewService;
+
+    @Autowired
+    ResponseService responseService;
 
     // 메인화면에서 일식 중식 등.. type을 버튼을 통해 주소로 전달하면 그 type으로 쿼리를 돌려서 list를 리턴
     @ApiOperation(value = "메인화면에서 일식 중식 등.. type을 버튼을 통해 주소로 전달하면 그 type으로 쿼리를 돌려서 list를 리턴")
@@ -116,6 +127,65 @@ public class RestaurantController {
             return ResponseEntity.ok().body(imageByteArray);
         }
         throw new EntityNotFoundException("Entity not found by given type");
+    }
+
+    @ApiOperation(value = "restaurant data 입력")
+    @PostMapping(value = "/input")
+    public ResponseEntity<CommonResult> setRestaurantImage(@RequestParam String Address, @RequestParam Restaurant_Type restaurant_type
+    , @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endHours, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)LocalTime startHours, @RequestParam String name, @RequestParam String number
+    , @RequestParam String owner, @RequestPart MultipartFile multipartFile) {
+        Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
+        StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
+        CommonResult commonResult = new CommonResult();
+
+        Restaurant restaurant = Restaurant.builder()
+                .businessStartHours(startHours)
+                .businessEndHours(endHours)
+                .owner(owner)
+                .type(restaurant_type)
+                .name(name)
+                .number(number)
+                .address(Address)
+                .build();
+
+        Long restId = restaurantService.insert(restaurant);
+
+        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
+            sb.append("none");
+            commonResult = responseService.getFailResult();
+        } else {
+            sb.append(date.getTime());
+            sb.append(multipartFile.getOriginalFilename());
+        }
+
+        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
+
+            File dest = new File(AWSfilepath + sb.toString()); // 파일 생성
+            try {
+                restaurant = restaurantService.findbyId(restId).get(); // id로 Entity 찾아옴
+                if(restaurant.getImageAddress() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
+                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // member Entity에 이미지주소 저장
+                    restaurantService.updateImageAddress(restaurant); // 업데이트
+                    multipartFile.transferTo(dest); // 파일 저장
+                }else {
+                    File file = new File(restaurant.getImageAddress()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
+                    if(file.exists()) { // file이 존재한다면
+                        file.delete(); // 삭제
+                    }
+
+                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
+                    restaurantService.updateImageAddress(restaurant); // Entity 업데이트
+                    multipartFile.transferTo(dest); // 파일 저장
+                }
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        commonResult = responseService.getSuccessResult();
+        return ResponseEntity.ok().body(commonResult);
     }
 
     public void toDto(List<Restaurant> restaurant, List<RestaurantListResponse> dto){

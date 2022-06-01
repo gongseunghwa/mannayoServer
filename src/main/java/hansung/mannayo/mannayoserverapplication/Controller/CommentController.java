@@ -4,15 +4,14 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Comment;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.CommentToComment;
 import hansung.mannayo.mannayoserverapplication.Service.CommentService;
 import hansung.mannayo.mannayoserverapplication.Service.CommentToCommentService;
+import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
 import hansung.mannayo.mannayoserverapplication.dto.CommentDto;
+import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,9 @@ public class CommentController {
     @Autowired
     CommentToCommentService commentToCommentService;
 
+    @Autowired
+    ResponseService responseService;
+
 
     @ApiOperation("comment 호출하기")
     @GetMapping
@@ -37,24 +39,40 @@ public class CommentController {
         List<Comment> comments = commentService.getCommentByBoardId(boardId).get();
 
         for(Comment c : comments) {
-            commentDto.setNickname(c.getNickName());
-            commentDto.setDate(c.getTime());
-            commentDto.setContents(c.getContents());
-            commentDto.setDepth(c.getDepth());
+            commentDto = CommentDto.builder()
+                    .nickname(c.getNickName())
+                    .date(c.getTime())
+                    .contents(c.getContents())
+                    .depth(c.getDepth())
+                    .build();
             commentDtos.add(commentDto);
             if(commentToCommentService.findByCommentId(c.getId()).isPresent()) {
                 List<CommentToComment> commentToCommentList = commentToCommentService.findByCommentId(c.getId()).get();
                 for(CommentToComment ctc : commentToCommentList) {
-                    commentDto.setNickname(ctc.getNickName());
-                    commentDto.setDate(ctc.getCreatedDate());
-                    commentDto.setContents(ctc.getContents());
-                    commentDto.setDepth(ctc.getDepth());
+                    commentDto = CommentDto.builder()
+                            .nickname(c.getNickName())
+                            .date(c.getTime())
+                            .contents(c.getContents())
+                            .depth(c.getDepth())
+                            .build();
                     commentDtos.add(commentDto);
                 }
 
             }
         }
         return ResponseEntity.ok().body(commentDtos);
+    }
+
+    @ApiOperation(value = "댓글 작성")
+    @PostMapping(value = "/inputReply")
+    public ResponseEntity<CommonResult> setBoardReply(@RequestParam Long memberid, @RequestParam Long boardid, @RequestParam String contents) {
+        CommonResult commonResult = new CommonResult();
+        if(commentService.setComment(memberid, boardid, contents)) {
+            commonResult = responseService.getSuccessResult();
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
     }
 
 }

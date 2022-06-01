@@ -37,5 +37,17 @@ public class RestaurantServiceImpl implements RestaurantService{
         }
         throw new EntityNotFoundException("Cannot found anything by given id");
     }
+
+    @Override
+    public Long insert(Restaurant restaurant) {
+        Restaurant restaurant1 = restaurantRepository.save(restaurant);
+
+        return restaurant1.getId();
+    }
+
+    @Override
+    public void updateImageAddress(Restaurant restaurant) {
+        restaurantRepository.save(restaurant);
+    }
 }
 

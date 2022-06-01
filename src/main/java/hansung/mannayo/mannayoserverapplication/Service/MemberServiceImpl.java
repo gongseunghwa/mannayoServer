@@ -21,8 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.thymeleaf.util.StringUtils.isEmpty;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +83,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean updateNickname(Long id, String nickname) {
+    public Boolean updateNickname(Long id, String nickname) {
         Optional<Member> member = memberRepository.findById(id);
         if(member.isPresent()) {
             member.get().setNickName(nickname);
@@ -89,6 +92,17 @@ public class MemberServiceImpl implements MemberService {
         }else {
             return false;
         }
+    }
+
+    @Override
+    public Boolean updateFCMtoken(Long id, String token) {
+        Optional<Member> member = memberRepository.findById(id);
+        if(member.isPresent()) {
+            member.get().setToken(token);
+            memberRepository.save(member.get());
+            return true;
+        }
+        return false;
     }
 
     //save member
@@ -136,6 +150,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updateImageAddress(Member member) {
         memberRepository.save(member);
+    }
+
+    @Override
+    public List<String> getToken() {
+        List<String> tokens = memberRepository.findToken().get();
+        List<String> deviceToken = new ArrayList<>();
+        for(String s : tokens) {
+            if(!isEmpty(s)) {
+                System.out.println(s);
+                deviceToken.add(s);
+            }
+        }
+        return deviceToken;
+    }
+
+    @Override
+    public Optional<Member> findByToken(String token) {
+        return memberRepository.findByToken(token);
     }
 
     @Override

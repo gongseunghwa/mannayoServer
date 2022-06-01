@@ -13,7 +13,11 @@ public interface LikeService {
 
     Optional<List<Like>> findListByMemberId(Long id);
 
-    public void insertLike(Member member, Board board);
+    public Boolean insertLike(Member member, Board board);
 
     Long getCountLike(Long id);
+
+    Boolean isLikeExistAlready(Long memberId, Long boardId);
+
+    void deleteLike(Long memberId, Long boardId);
 }

@@ -9,4 +9,6 @@ public interface CommentService {
     Long getCountCommentByBoardId(Long id);
 
     Optional<List<Comment>> getCommentByBoardId(Long id);
+
+    Boolean setComment(Long memberid, Long boardid, String contents);
 }

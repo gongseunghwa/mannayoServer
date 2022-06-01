@@ -52,8 +52,7 @@ public class Restaurant {
     @JsonBackReference
     private List<Review> reviewList;
 
-    @NotNull
-    private LocalDate businessDayOff;
+//    private LocalDate businessDayOff;
 
     @ColumnDefault("0")
     private Integer reviewCount;
@@ -81,6 +80,12 @@ public class Restaurant {
     public void addMenu(Menu menu){
         this.menuList.add(menu);
         menu.setRestaurant(this);
+    }
+
+    @PrePersist
+    public void save(){
+        this.jjimcount = 0;
+        this.reviewCount = 0;
     }
 
 

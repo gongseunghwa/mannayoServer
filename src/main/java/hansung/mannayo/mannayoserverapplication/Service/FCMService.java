@@ -54,7 +54,6 @@ public class FCMService {
                 .build();
 
         Response response = client.newCall(request).execute();
-
         log.info(response.body().string());
     }
 
