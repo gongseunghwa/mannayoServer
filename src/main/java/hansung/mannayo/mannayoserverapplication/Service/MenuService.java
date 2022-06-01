@@ -11,5 +11,6 @@ public interface MenuService {
 
     Optional<Menu> findById(Long id);
 
+    Long insert(Menu menu);
 
 }

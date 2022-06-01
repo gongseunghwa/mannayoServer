@@ -6,6 +6,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.MenuRepository;
 import hansung.mannayo.mannayoserverapplication.Service.MenuService;
+import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
 import hansung.mannayo.mannayoserverapplication.Service.RestaurantService;
 import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import hansung.mannayo.mannayoserverapplication.dto.MenuResponse;
@@ -49,6 +50,9 @@ public class menuController {
 
     @Autowired
     RestaurantService restaurantService;
+
+    @Autowired
+    ResponseService responseService;
 
     String AWSfilepath = "/home/ec2-user/images/";
 
@@ -98,7 +102,7 @@ public class menuController {
 //                .isBest(isBest)
 //                .build();
 //
-//        Long restId = restaurantService.insert(restaurant);
+//        Long menuId = menuService.insert(menu);
 //
 //        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
 //            sb.append("none");
@@ -112,7 +116,7 @@ public class menuController {
 //
 //            File dest = new File(AWSfilepath + sb.toString()); // 파일 생성
 //            try {
-//                restaurant = restaurantService.findbyId(restId).get(); // id로 Entity 찾아옴
+//                menu = menuService.findbyId(menuId).get(); // id로 Entity 찾아옴
 //                if(restaurant.getImageAddress() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
 //                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // member Entity에 이미지주소 저장
 //                    restaurantService.updateImageAddress(restaurant); // 업데이트

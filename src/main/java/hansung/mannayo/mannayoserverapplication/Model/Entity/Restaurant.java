@@ -52,7 +52,7 @@ public class Restaurant {
     @JsonBackReference
     private List<Review> reviewList;
 
-    private LocalDate businessDayOff;
+//    private LocalDate businessDayOff;
 
     @ColumnDefault("0")
     private Integer reviewCount;

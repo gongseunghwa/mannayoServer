@@ -24,4 +24,10 @@ public class MenuServiceImpl implements MenuService{
     public Optional<Menu> findById(Long id) {
         return menuRepository.findById(id);
     }
+
+    @Override
+    public Long insert(Menu menu) {
+        Menu menu1 = menuRepository.save(menu);
+        return menu1.getIdMenu();
+    }
 }
