@@ -6,6 +6,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.MenuRepository;
 import hansung.mannayo.mannayoserverapplication.Service.MenuService;
+import hansung.mannayo.mannayoserverapplication.Service.RestaurantService;
 import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
 import hansung.mannayo.mannayoserverapplication.dto.MenuResponse;
 import hansung.mannayo.mannayoserverapplication.exceptions.NotFoundImageException;
@@ -46,6 +47,9 @@ public class menuController {
     @Autowired
     MenuService menuService;
 
+    @Autowired
+    RestaurantService restaurantService;
+
     String AWSfilepath = "/home/ec2-user/images/";
 
     String localfilepath = "C://images/review/";
@@ -79,62 +83,59 @@ public class menuController {
         return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "menu data 입력")
-    @PostMapping(value = "/input")
-    public ResponseEntity<CommonResult> setMenuImage(@Reque@RequestPart MultipartFile multipartFile) {
-        Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
-        StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
-        CommonResult commonResult = new CommonResult();
-
-        Restaurant restaurant = Restaurant.builder()
-                .businessDayOff(dayOff)
-                .businessStartHours(startHours)
-                .businessEndHours(endHours)
-                .owner(owner)
-                .type(restaurant_type)
-                .name(name)
-                .number(number)
-                .address(Address)
-                .build();
-
-        Long restId = restaurantService.insert(restaurant);
-
-        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
-            sb.append("none");
-            commonResult = responseService.getFailResult();
-        } else {
-            sb.append(date.getTime());
-            sb.append(multipartFile.getOriginalFilename());
-        }
-
-        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
-
-            File dest = new File(AWSfilepath + sb.toString()); // 파일 생성
-            try {
-                restaurant = restaurantService.findbyId(restId).get(); // id로 Entity 찾아옴
-                if(restaurant.getImageAddress() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
-                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // member Entity에 이미지주소 저장
-                    restaurantService.updateImageAddress(restaurant); // 업데이트
-                    multipartFile.transferTo(dest); // 파일 저장
-                }else {
-                    File file = new File(restaurant.getImageAddress()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
-                    if(file.exists()) { // file이 존재한다면
-                        file.delete(); // 삭제
-                    }
-
-                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
-                    restaurantService.updateImageAddress(restaurant); // Entity 업데이트
-                    multipartFile.transferTo(dest); // 파일 저장
-                }
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        commonResult = responseService.getSuccessResult();
-        return ResponseEntity.ok().body(commonResult);
-    }
+//    @ApiOperation(value = "menu data 입력")
+//    @PostMapping(value = "/input")
+//    public ResponseEntity<CommonResult> setMenuImage(@RequestParam String name, @RequestParam Integer price, @RequestParam Boolean isBest,
+//                                                     @RequestParam Long restaurantId,@RequestPart MultipartFile multipartFile) {
+//        Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
+//        StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
+//        CommonResult commonResult = new CommonResult();
+//
+//        Menu menu = Menu.builder()
+//                .Name(name)
+//                .Price(price)
+//                .restaurant(restaurantService.findbyId(restaurantId).get())
+//                .isBest(isBest)
+//                .build();
+//
+//        Long restId = restaurantService.insert(restaurant);
+//
+//        if(multipartFile.isEmpty()) { // request된 파일의 존재여부 확인
+//            sb.append("none");
+//            commonResult = responseService.getFailResult();
+//        } else {
+//            sb.append(date.getTime());
+//            sb.append(multipartFile.getOriginalFilename());
+//        }
+//
+//        if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
+//
+//            File dest = new File(AWSfilepath + sb.toString()); // 파일 생성
+//            try {
+//                restaurant = restaurantService.findbyId(restId).get(); // id로 Entity 찾아옴
+//                if(restaurant.getImageAddress() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
+//                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // member Entity에 이미지주소 저장
+//                    restaurantService.updateImageAddress(restaurant); // 업데이트
+//                    multipartFile.transferTo(dest); // 파일 저장
+//                }else {
+//                    File file = new File(restaurant.getImageAddress()); // 기존에 저장된 파일 경로 DB에서 가져온 후 파일 인스턴스 생성
+//                    if(file.exists()) { // file이 존재한다면
+//                        file.delete(); // 삭제
+//                    }
+//
+//                    restaurant.setImageAddress(AWSfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
+//                    restaurantService.updateImageAddress(restaurant); // Entity 업데이트
+//                    multipartFile.transferTo(dest); // 파일 저장
+//                }
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        commonResult = responseService.getSuccessResult();
+//        return ResponseEntity.ok().body(commonResult);
+//    }
 
 }
