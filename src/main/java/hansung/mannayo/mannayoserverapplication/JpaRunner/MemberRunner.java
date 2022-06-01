@@ -122,5 +122,6 @@ public class MemberRunner implements ApplicationRunner {
         memberRepository.save(member3);
         memberRepository.save(member4);
 
+
     }
 }
