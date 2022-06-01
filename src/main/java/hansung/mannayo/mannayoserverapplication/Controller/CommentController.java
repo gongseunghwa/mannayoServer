@@ -35,7 +35,6 @@ public class CommentController {
     @GetMapping
     public ResponseEntity<List<CommentDto>> getComment(@RequestParam Long boardId) {
         CommentDto commentDto = new CommentDto();
-        CommentDto commentDto1 = new CommentDto();
         List<CommentDto> commentDtos = new ArrayList<>();
         List<Comment> comments = commentService.getCommentByBoardId(boardId).get();
 
@@ -52,14 +51,14 @@ public class CommentController {
                 List<CommentToComment> commentToCommentList = commentToCommentService.findByCommentId(c.getId()).get();
                 System.out.println(commentToCommentList);
                 for(CommentToComment ctc : commentToCommentList) {
-                    commentDto1 = CommentDto.builder()
-                            .id(c.getId())
-                            .nickname(c.getNickName())
-                            .date(c.getTime())
-                            .contents(c.getContents())
-                            .depth(c.getDepth())
+                    commentDto = CommentDto.builder()
+                            .id(ctc.getId())
+                            .nickname(ctc.getNickName())
+                            .date(ctc.getCreatedDate())
+                            .contents(ctc.getContents())
+                            .depth(ctc.getDepth())
                             .build();
-                    commentDtos.add(commentDto1);
+                    commentDtos.add(commentDto);
                 }
 
 
