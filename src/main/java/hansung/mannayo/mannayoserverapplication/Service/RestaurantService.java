@@ -15,6 +15,10 @@ public interface RestaurantService {
 
     Optional<Restaurant> findbyId(Long id);
 
+    Long insert(Restaurant restaurant);
+
+    void updateImageAddress(Restaurant restaurant);
+
     default RestaurantDetailResponse EntitytoDto(Restaurant restaurant) {
         RestaurantDetailResponse entity = RestaurantDetailResponse.builder()
                 .address(restaurant.getAddress())
