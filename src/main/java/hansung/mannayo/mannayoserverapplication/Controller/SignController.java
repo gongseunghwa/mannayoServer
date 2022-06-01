@@ -73,4 +73,17 @@ public class SignController {
             throw new EntityNotFoundException(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "로그아웃")
+    @PostMapping("/signout")
+    public ResponseEntity<CommonResult> signout(@RequestParam Long id) {
+        CommonResult commonResult;
+        if(memberService.updateFCMtoken(id,"")) {
+            commonResult = responseService.getSuccessResult();
+            commonResult.setMsg("로그아웃 되었습니다.");
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
+    }
 }
