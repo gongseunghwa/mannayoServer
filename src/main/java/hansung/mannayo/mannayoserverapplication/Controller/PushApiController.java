@@ -51,12 +51,14 @@ public class PushApiController {
         String sender = "ADMINSTRATOR";
         NoticeType noticeType = NoticeType.Notice;
         try {
+
             List<String> tokens = memberService.getToken();
             for(String token : tokens) {
                 fcmService.sendMessageTo(token,title,body);
                 Member member = memberService.findByToken(token).get();
                 noticeService.insert(memberService.findByToken(token).get().getId().toString(), sender, title, body,noticeType);
             }
+
             res = responseService.getSuccessResult();
         } catch(Exception e) {
             res = responseService.getFailResult();
