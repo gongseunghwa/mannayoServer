@@ -44,22 +44,22 @@ jobs:
           dockername: ${{secrets.DOCKERHUB_USERNAME}}
           dockerpass: ${{secrets.DOCKERHUB_TOKEN}}
           
-  deploy:
-    needs: build  # build 후에 실행되도록 정의
-    name: Deploy
-    runs-on: [ self-hosted, label-go ] # AWS ./configure에서 사용할 label명
-    steps:
-      - name: Login to ghcr
-        uses: docker/login-action@v1
-        with:
-         registry: ghcr.io
-         username: ${{ github.actor }}
-         password: ${{ secrets.GHCR_TOKEN }}
+#   deploy:
+#     needs: build  # build 후에 실행되도록 정의
+#     name: Deploy
+#     runs-on: [ self-hosted, label-go ] # AWS ./configure에서 사용할 label명
+#     steps:
+#       - name: Login to ghcr
+#         uses: docker/login-action@v1
+#         with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GHCR_TOKEN }}
         
-      - name: Docker run
-        run: |
-         docker stop myserver && docker rm myserver && docker rmi hjkwon0814/docker-repo:second
-         docker run -d -p 8080:8080 --name myserver -v mannayo-vol:/home/ec2-user/images --restart always hjkwon0814/docker-repo:second
+#       - name: Docker run
+#         run: |
+#          docker stop myserver && docker rm myserver && docker rmi hjkwon0814/docker-repo:second
+#          docker run -d -p 8080:8080 --name myserver -v mannayo-vol:/home/ec2-user/images --restart always hjkwon0814/docker-repo:second
 
 
 # jobs:
