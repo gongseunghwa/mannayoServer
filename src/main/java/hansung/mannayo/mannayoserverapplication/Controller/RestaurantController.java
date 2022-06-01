@@ -15,6 +15,7 @@ import io.swagger.models.Response;
 import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -131,7 +132,7 @@ public class RestaurantController {
     @ApiOperation(value = "restaurant data 입력")
     @PostMapping(value = "/input")
     public ResponseEntity<CommonResult> setRestaurantImage(@RequestParam String Address, @RequestParam Restaurant_Type restaurant_type
-    , @RequestParam LocalTime endHours, @RequestParam LocalTime startHours, @RequestParam String name, @RequestParam String number
+    , @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endHours, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)LocalTime startHours, @RequestParam String name, @RequestParam String number
     , @RequestParam String owner, @RequestParam LocalDate dayOff, @RequestPart MultipartFile multipartFile) {
         Date date = new Date(); // 파일명이 겹치는것을 방지 하기 위해 파일명에 시간변수를 추가
         StringBuilder sb = new StringBuilder(); // 파일명 스트링 빌더
