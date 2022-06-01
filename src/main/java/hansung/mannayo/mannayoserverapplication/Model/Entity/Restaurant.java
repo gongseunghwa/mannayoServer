@@ -83,6 +83,12 @@ public class Restaurant {
         menu.setRestaurant(this);
     }
 
+    @PrePersist
+    public void save(){
+        this.jjimcount = 0;
+        this.reviewCount = 0;
+    }
+
 
 }
 //CREATE TABLE Restaurant (
