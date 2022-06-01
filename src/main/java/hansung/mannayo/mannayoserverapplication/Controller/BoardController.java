@@ -222,7 +222,7 @@ public class BoardController {
             sb.append(date.getTime());
             sb.append(multipartFile.getOriginalFilename());
 
-            File dest = new File(localfilepath + sb.toString());
+            File dest = new File(AWSfilepath + sb.toString());
             try {
                 board = boardService.findById(id).get(); //id로 이미지 주소를 저장할 board 찾아오기
                 board.setImage(dest.getPath());
