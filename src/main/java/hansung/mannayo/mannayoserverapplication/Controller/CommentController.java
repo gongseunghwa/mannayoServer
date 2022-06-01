@@ -41,6 +41,7 @@ public class CommentController {
         for(Comment c : comments) {
             commentDto = CommentDto.builder()
                     .id(c.getId())
+                    .writerid(c.getWriterid())
                     .nickname(c.getNickName())
                     .date(c.getTime())
                     .contents(c.getContents())
@@ -53,6 +54,7 @@ public class CommentController {
                 for(CommentToComment ctc : commentToCommentList) {
                     commentDto = CommentDto.builder()
                             .id(ctc.getId())
+                            .writerid(ctc.getWriterid())
                             .nickname(ctc.getNickName())
                             .date(ctc.getCreatedDate())
                             .contents(ctc.getContents())

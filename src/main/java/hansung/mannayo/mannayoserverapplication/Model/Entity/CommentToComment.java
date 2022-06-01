@@ -20,6 +20,8 @@ public class CommentToComment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long writerid;
+
     @ManyToOne @JsonManagedReference
     @JoinColumn(name = "comment_id")
     private Comment comment;

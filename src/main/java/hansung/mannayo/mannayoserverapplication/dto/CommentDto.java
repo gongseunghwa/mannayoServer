@@ -10,7 +10,11 @@ import java.time.LocalDateTime;
 public class CommentDto {
     private Long id;
 
+    private Long writerid;
+
     private String nickname;
+
+    private Long memberid;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime date;

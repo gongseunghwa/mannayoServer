@@ -24,6 +24,9 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
 
+    @NotNull
+    private Long writerid;
+
     @ManyToOne(targetEntity = Board.class) @JsonManagedReference
     private Board board;
 

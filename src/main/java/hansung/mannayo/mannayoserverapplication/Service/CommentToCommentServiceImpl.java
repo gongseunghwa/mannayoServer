@@ -37,6 +37,7 @@ public class CommentToCommentServiceImpl implements CommentToCommentService{
                     .nickName(memberService.findbyId(memberid).getNickName())
                     .comment(commentService.findCommentById(commentid).get())
                     .contents(contents)
+                    .writerid(memberid)
                     .build();
             commentToCommentRepository.save(commentToComment);
             return true;

@@ -45,6 +45,7 @@ public class CommentServiceImpl implements CommentService{
                     .contents(contents)
                     .nickName(member.get().getNickName())
                     .board(board.get())
+                    .writerid(memberid)
                     .build();
             commentRepository.save(comment);
             return true;
