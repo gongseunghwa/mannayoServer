@@ -40,6 +40,7 @@ public class CommentController {
 
         for(Comment c : comments) {
             commentDto = CommentDto.builder()
+                    .id(c.getId())
                     .nickname(c.getNickName())
                     .date(c.getTime())
                     .contents(c.getContents())
@@ -50,6 +51,7 @@ public class CommentController {
                 List<CommentToComment> commentToCommentList = commentToCommentService.findByCommentId(c.getId()).get();
                 for(CommentToComment ctc : commentToCommentList) {
                     commentDto = CommentDto.builder()
+                            .id(c.getId())
                             .nickname(c.getNickName())
                             .date(c.getTime())
                             .contents(c.getContents())
@@ -68,6 +70,18 @@ public class CommentController {
     public ResponseEntity<CommonResult> setBoardReply(@RequestParam Long memberid, @RequestParam Long boardid, @RequestParam String contents) {
         CommonResult commonResult = new CommonResult();
         if(commentService.setComment(memberid, boardid, contents)) {
+            commonResult = responseService.getSuccessResult();
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
+    }
+
+    @ApiOperation(value = "eo댓글 작성")
+    @PostMapping(value = "/inputReplyOfReply")
+    public ResponseEntity<CommonResult> setBoardReply2(@RequestParam Long memberid, @RequestParam Long commentid, @RequestParam String contents) {
+        CommonResult commonResult = new CommonResult();
+        if(commentToCommentService.setCommentToComment(memberid, commentid, contents)) {
             commonResult = responseService.getSuccessResult();
             return ResponseEntity.ok().body(commonResult);
         }

@@ -51,4 +51,9 @@ public class CommentServiceImpl implements CommentService{
         }
         return false;
     }
+
+    @Override
+    public Optional<Comment> findCommentById(Long id) {
+        return commentRepository.findCommentById(id);
+    }
 }

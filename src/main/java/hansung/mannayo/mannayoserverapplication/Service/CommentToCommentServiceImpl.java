@@ -12,7 +12,13 @@ import java.util.Optional;
 public class CommentToCommentServiceImpl implements CommentToCommentService{
 
     @Autowired
+    CommentService commentService;
+
+    @Autowired
     CommentToCommentRepository commentToCommentRepository;
+
+    @Autowired
+    MemberService memberService;
 
     @Override
     public Long countByCommentId(Long id) {
@@ -22,5 +28,19 @@ public class CommentToCommentServiceImpl implements CommentToCommentService{
     @Override
     public Optional<List<CommentToComment>> findByCommentId(Long id) {
         return commentToCommentRepository.findByCommentId(id);
+    }
+
+    @Override
+    public Boolean setCommentToComment(Long memberid, Long commentid, String contents) {
+        if(commentService.findCommentById(commentid).isPresent()) {
+            CommentToComment commentToComment = CommentToComment.builder()
+                    .nickName(memberService.findbyId(memberid).getNickName())
+                    .comment(commentService.findCommentById(commentid).get())
+                    .contents(contents)
+                    .build();
+            commentToCommentRepository.save(commentToComment);
+            return true;
+        }
+        return false;
     }
 }
