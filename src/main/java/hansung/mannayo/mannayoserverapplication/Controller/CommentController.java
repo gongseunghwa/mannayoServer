@@ -61,8 +61,10 @@ public class CommentController {
                     commentDtos.add(commentDto1);
                 }
 
+
             }
         }
+        System.out.println(commentDtos);
         return ResponseEntity.ok().body(commentDtos);
     }
 
