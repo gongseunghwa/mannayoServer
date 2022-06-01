@@ -34,7 +34,8 @@ public class PushApiController {
         CommonResult res;
 
         try {
-            String token = fcmService.getAccessToken();
+//            String token = fcmService.getAccessToken();
+            String token = "cUp46AMORSSeYImQ7GmXrk:APA91bHPl4mFHSwl_Mufilaj63_XMYKN6ewEFh5vF3F8nvUDsH5Z7XpDb-GNHnU_fv7WxD5-0bF8RvmKQqvt8_43g1HT8abDc3F0iAphli00wp73tbG8fGoGqGdHgCmy9s3aQAPe-5xY";
             fcmService.sendMessageTo(token,title,body);
             res = responseService.getSuccessResult();
 
