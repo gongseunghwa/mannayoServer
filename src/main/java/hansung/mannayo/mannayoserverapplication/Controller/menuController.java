@@ -114,11 +114,11 @@ public class menuController {
 
         if(!multipartFile.isEmpty()) { // request된 파일이 존재한다면
 
-            File dest = new File(localfilepath + sb.toString()); // 파일 생성
+            File dest = new File(AWSfilepath + sb.toString()); // 파일 생성
             try {
                 menu = menuService.findById(menuId).get(); // id로 Entity 찾아옴
                 if(menu.getImage() == null) { // 이미 이미지 주소가 없다면 (기존에 프로필을 올린적이 없다면)
-                    menu.setImage(localfilepath + sb.toString()); // member Entity에 이미지주소 저장
+                    menu.setImage(AWSfilepath + sb.toString()); // member Entity에 이미지주소 저장
                     menuService.updateImageAddress(menu); // 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
                 }else {
@@ -127,7 +127,7 @@ public class menuController {
                         file.delete(); // 삭제
                     }
 
-                    menu.setImage(localfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
+                    menu.setImage(AWSfilepath + sb.toString()); // 새로운 이미지 주소 DB에 저장
                     menuService.updateImageAddress(menu); // Entity 업데이트
                     multipartFile.transferTo(dest); // 파일 저장
                 }
