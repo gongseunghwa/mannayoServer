@@ -50,6 +50,7 @@ public class CommentController {
             commentDtos.add(commentDto);
             if(commentToCommentService.findByCommentId(c.getId()).isPresent()) {
                 List<CommentToComment> commentToCommentList = commentToCommentService.findByCommentId(c.getId()).get();
+                System.out.println(commentToCommentList);
                 for(CommentToComment ctc : commentToCommentList) {
                     commentDto1 = CommentDto.builder()
                             .id(c.getId())
