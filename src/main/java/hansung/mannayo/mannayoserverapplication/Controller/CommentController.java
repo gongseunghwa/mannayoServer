@@ -35,6 +35,7 @@ public class CommentController {
     @GetMapping
     public ResponseEntity<List<CommentDto>> getComment(@RequestParam Long boardId) {
         CommentDto commentDto = new CommentDto();
+        CommentDto commentDto1 = new CommentDto();
         List<CommentDto> commentDtos = new ArrayList<>();
         List<Comment> comments = commentService.getCommentByBoardId(boardId).get();
 
@@ -50,14 +51,14 @@ public class CommentController {
             if(commentToCommentService.findByCommentId(c.getId()).isPresent()) {
                 List<CommentToComment> commentToCommentList = commentToCommentService.findByCommentId(c.getId()).get();
                 for(CommentToComment ctc : commentToCommentList) {
-                    commentDto = CommentDto.builder()
+                    commentDto1 = CommentDto.builder()
                             .id(c.getId())
                             .nickname(c.getNickName())
                             .date(c.getTime())
                             .contents(c.getContents())
                             .depth(c.getDepth())
                             .build();
-                    commentDtos.add(commentDto);
+                    commentDtos.add(commentDto1);
                 }
 
             }
@@ -77,7 +78,7 @@ public class CommentController {
         return ResponseEntity.ok().body(commonResult);
     }
 
-    @ApiOperation(value = "eo댓글 작성")
+    @ApiOperation(value = "대댓글 작성")
     @PostMapping(value = "/inputReplyOfReply")
     public ResponseEntity<CommonResult> setBoardReply2(@RequestParam Long memberid, @RequestParam Long commentid, @RequestParam String contents) {
         CommonResult commonResult = new CommonResult();
