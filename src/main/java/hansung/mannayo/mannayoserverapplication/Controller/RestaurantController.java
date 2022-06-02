@@ -116,6 +116,15 @@ public class RestaurantController {
         return ResponseEntity.ok().body(dto);
     }
 
+    //상세정보 페이지
+    // fragment를 변경 시켰을 때 다른 query를 돌려서 리뷰리스트 혹은 메뉴를 받을예정
+    @ApiOperation(value = "음식점 목록 중 하나를 누르면 게시판 상세정보 페이지로 이동한다")
+    @GetMapping("/detailmap/{name}")
+    ResponseEntity<RestaurantDetailResponse> findRestaurantDetailByMap(@ApiParam(value = "레스토랑 이름을 입력") @PathVariable String name){
+        RestaurantDetailResponse dto = restaurantService.findByName(name);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
     @GetMapping(value = "/profileimage", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfileImage2(@RequestParam("id") Long id) throws IOException {
