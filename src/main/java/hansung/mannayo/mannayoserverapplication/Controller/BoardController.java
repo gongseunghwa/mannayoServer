@@ -83,6 +83,8 @@ public class BoardController {
 
 
         for (Board board : boards) {
+            TotalCommentCount = 0L;
+            TotalLikeCount = 0L;
             List<Comment> comments = commentService.getCommentByBoardId(board.getId()).get();
             TotalCommentCount += commentService.getCountCommentByBoardId(board.getId());
             TotalLikeCount += likeService.getCountLike(board.getId());
