@@ -4,6 +4,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Jjim;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
+import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
 import hansung.mannayo.mannayoserverapplication.Service.*;
 import hansung.mannayo.mannayoserverapplication.dto.*;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,9 @@ public class RestaurantController {
 
     String localfilepath = "C://images/restaurant/";
 
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
     @Autowired
     RestaurantService restaurantService;
 
@@ -142,6 +146,16 @@ public class RestaurantController {
             return ResponseEntity.ok().body(imageByteArray);
         }
         throw new EntityNotFoundException("Entity not found by given type");
+    }
+
+    @GetMapping(value="/getbyname")
+    public String getByName(@RequestParam("name") String name){
+        Optional<Restaurant> restaurant =  restaurantRepository.findByName(name);
+
+        if(restaurant.isPresent()){
+            return "duplicate value";
+        }
+        else return "not duplicate value";
     }
 
     @ApiOperation(value = "restaurant data 입력")
