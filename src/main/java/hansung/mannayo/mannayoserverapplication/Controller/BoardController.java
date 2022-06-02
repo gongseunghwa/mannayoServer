@@ -83,6 +83,8 @@ public class BoardController {
 
 
         for (Board board : boards) {
+            TotalCommentCount = 0L;
+            TotalLikeCount = 0L;
             List<Comment> comments = commentService.getCommentByBoardId(board.getId()).get();
             TotalCommentCount += commentService.getCountCommentByBoardId(board.getId());
             TotalLikeCount += likeService.getCountLike(board.getId());
@@ -222,7 +224,7 @@ public class BoardController {
             sb.append(date.getTime());
             sb.append(multipartFile.getOriginalFilename());
 
-            File dest = new File(localfilepath + sb.toString());
+            File dest = new File(AWSfilepath + sb.toString());
             try {
                 board = boardService.findById(id).get(); //id로 이미지 주소를 저장할 board 찾아오기
                 board.setImage(dest.getPath());

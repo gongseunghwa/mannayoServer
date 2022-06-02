@@ -86,6 +86,7 @@ public class Restaurant {
     public void save(){
         this.jjimcount = 0;
         this.reviewCount = 0;
+        this.starPointInfo = 0F;
     }
 
 

@@ -40,6 +40,8 @@ public class CommentController {
 
         for(Comment c : comments) {
             commentDto = CommentDto.builder()
+                    .id(c.getId())
+                    .writerid(c.getWriterid())
                     .nickname(c.getNickName())
                     .date(c.getTime())
                     .contents(c.getContents())
@@ -48,18 +50,23 @@ public class CommentController {
             commentDtos.add(commentDto);
             if(commentToCommentService.findByCommentId(c.getId()).isPresent()) {
                 List<CommentToComment> commentToCommentList = commentToCommentService.findByCommentId(c.getId()).get();
+                System.out.println(commentToCommentList);
                 for(CommentToComment ctc : commentToCommentList) {
                     commentDto = CommentDto.builder()
-                            .nickname(c.getNickName())
-                            .date(c.getTime())
-                            .contents(c.getContents())
-                            .depth(c.getDepth())
+                            .id(ctc.getId())
+                            .writerid(ctc.getWriterid())
+                            .nickname(ctc.getNickName())
+                            .date(ctc.getCreatedDate())
+                            .contents(ctc.getContents())
+                            .depth(ctc.getDepth())
                             .build();
                     commentDtos.add(commentDto);
                 }
 
+
             }
         }
+        System.out.println(commentDtos);
         return ResponseEntity.ok().body(commentDtos);
     }
 
@@ -68,6 +75,18 @@ public class CommentController {
     public ResponseEntity<CommonResult> setBoardReply(@RequestParam Long memberid, @RequestParam Long boardid, @RequestParam String contents) {
         CommonResult commonResult = new CommonResult();
         if(commentService.setComment(memberid, boardid, contents)) {
+            commonResult = responseService.getSuccessResult();
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
+    }
+
+    @ApiOperation(value = "대댓글 작성")
+    @PostMapping(value = "/inputReplyOfReply")
+    public ResponseEntity<CommonResult> setBoardReply2(@RequestParam Long memberid, @RequestParam Long commentid, @RequestParam String contents) {
+        CommonResult commonResult = new CommonResult();
+        if(commentToCommentService.setCommentToComment(memberid, commentid, contents)) {
             commonResult = responseService.getSuccessResult();
             return ResponseEntity.ok().body(commonResult);
         }

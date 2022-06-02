@@ -31,7 +31,6 @@ class RestaurantTest {
                 .address("seoul gwangjin")
                 .businessStartHours(LocalTime.of(9,30))
                 .businessEndHours(LocalTime.of(11,0))
-                .businessDayOff(LocalDate.of(2022,04,01))
                 .build();
 
         restaurantRepository.save(restaurant);

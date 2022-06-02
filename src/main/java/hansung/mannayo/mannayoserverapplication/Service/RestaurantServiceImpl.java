@@ -31,7 +31,18 @@ public class RestaurantServiceImpl implements RestaurantService{
     public RestaurantDetailResponse findById(Long id) {
         Optional<Restaurant> restaurant= restaurantRepository.findById(id);
         if(restaurant.isPresent()) {
-            RestaurantDetailResponse response = new RestaurantDetailResponse();
+            RestaurantDetailResponse response;
+            response = EntitytoDto(restaurant.get());
+            return response;
+        }
+        throw new EntityNotFoundException("Cannot found anything by given id");
+    }
+
+    @Override
+    public RestaurantDetailResponse findByName(String name) {
+        Optional<Restaurant> restaurant= restaurantRepository.findByName(name);
+        if(restaurant.isPresent()) {
+            RestaurantDetailResponse response;
             response = EntitytoDto(restaurant.get());
             return response;
         }

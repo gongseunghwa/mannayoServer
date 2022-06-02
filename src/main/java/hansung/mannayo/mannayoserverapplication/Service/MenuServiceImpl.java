@@ -30,4 +30,9 @@ public class MenuServiceImpl implements MenuService{
         Menu menu1 = menuRepository.save(menu);
         return menu1.getIdMenu();
     }
+
+    @Override
+    public void updateImageAddress(Menu menu) {
+        menuRepository.save(menu);
+    }
 }

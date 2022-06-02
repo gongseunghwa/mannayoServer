@@ -65,62 +65,62 @@ public class MemberRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        Member member = Member.builder()
-                .realName("맛나요2")
-                .nickName("null")
-                .email("mannayo2@hansung.ac.kr")
-                .password(passwordEncoder.encode("1234"))
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .phoneNumber("01012341234")
-                .loginTypeEnum(LoginType.EMAIL)
-                .birth(LocalDate.now())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .build();
-
-        Member member2 = Member.builder()
-                .realName("맛나요")
-                .nickName("null")
-                .email("mannayo@hansung.ac.kr")
-                .password(passwordEncoder.encode("1234"))
-                .reviewList(new ArrayList<>())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .phoneNumber("01012341234")
-                .loginTypeEnum(LoginType.EMAIL)
-                .birth(LocalDate.now())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .build();
-
-        Member member3 = Member.builder()
-                .realName("맛나요3")
-                .nickName("null")
-                .email("mannayo3@hansung.ac.kr")
-                .password(passwordEncoder.encode("1234"))
-                .reviewList(new ArrayList<>())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .phoneNumber("01012341234")
-                .loginTypeEnum(LoginType.EMAIL)
-                .birth(LocalDate.now())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .build();
-
-        Member member4 = Member.builder()
-                .realName("맛나요4")
-                .nickName("null")
-                .email("mannayo4@hansung.ac.kr")
-                .password(passwordEncoder.encode("1234"))
-                .reviewList(new ArrayList<>())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .phoneNumber("01012341234")
-                .loginTypeEnum(LoginType.EMAIL)
-                .birth(LocalDate.now())
-                .accountTypeEnum(AccountType.ADMISTRATOR)
-                .build();
-
-
-        memberRepository.save(member);
-        memberRepository.save(member2);
-        memberRepository.save(member3);
-        memberRepository.save(member4);
+//        Member member = Member.builder()
+//                .realName("맛나요2")
+//                .nickName("null")
+//                .email("mannayo2@hansung.ac.kr")
+//                .password(passwordEncoder.encode("1234"))
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .phoneNumber("01012341234")
+//                .loginTypeEnum(LoginType.EMAIL)
+//                .birth(LocalDate.now())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .build();
+//
+//        Member member2 = Member.builder()
+//                .realName("맛나요")
+//                .nickName("null")
+//                .email("mannayo@hansung.ac.kr")
+//                .password(passwordEncoder.encode("1234"))
+//                .reviewList(new ArrayList<>())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .phoneNumber("01012341234")
+//                .loginTypeEnum(LoginType.EMAIL)
+//                .birth(LocalDate.now())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .build();
+//
+//        Member member3 = Member.builder()
+//                .realName("맛나요3")
+//                .nickName("null")
+//                .email("mannayo3@hansung.ac.kr")
+//                .password(passwordEncoder.encode("1234"))
+//                .reviewList(new ArrayList<>())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .phoneNumber("01012341234")
+//                .loginTypeEnum(LoginType.EMAIL)
+//                .birth(LocalDate.now())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .build();
+//
+//        Member member4 = Member.builder()
+//                .realName("맛나요4")
+//                .nickName("null")
+//                .email("mannayo4@hansung.ac.kr")
+//                .password(passwordEncoder.encode("1234"))
+//                .reviewList(new ArrayList<>())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .phoneNumber("01012341234")
+//                .loginTypeEnum(LoginType.EMAIL)
+//                .birth(LocalDate.now())
+//                .accountTypeEnum(AccountType.ADMISTRATOR)
+//                .build();
+//
+//
+//        memberRepository.save(member);
+//        memberRepository.save(member2);
+//        memberRepository.save(member3);
+//        memberRepository.save(member4);
 
 
     }

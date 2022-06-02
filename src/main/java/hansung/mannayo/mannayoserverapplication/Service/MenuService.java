@@ -13,4 +13,6 @@ public interface MenuService {
 
     Long insert(Menu menu);
 
+    void updateImageAddress(Menu menu);
+
 }

@@ -11,4 +11,5 @@ public interface CommentToCommentService {
 
     Optional<List<CommentToComment>> findByCommentId(Long id);
 
+    Boolean setCommentToComment(Long memberid, Long commentid, String contents);
 }

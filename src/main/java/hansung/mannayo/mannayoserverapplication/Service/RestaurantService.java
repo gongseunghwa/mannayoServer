@@ -13,6 +13,8 @@ public interface RestaurantService {
 
     RestaurantDetailResponse findById(Long id);
 
+    RestaurantDetailResponse findByName(String name);
+
     Optional<Restaurant> findbyId(Long id);
 
     Long insert(Restaurant restaurant);

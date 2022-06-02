@@ -11,4 +11,6 @@ public interface CommentService {
     Optional<List<Comment>> getCommentByBoardId(Long id);
 
     Boolean setComment(Long memberid, Long boardid, String contents);
+
+    Optional<Comment> findCommentById(Long id);
 }
