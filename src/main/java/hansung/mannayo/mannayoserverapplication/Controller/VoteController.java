@@ -1,6 +1,8 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
 
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Vote;
+import hansung.mannayo.mannayoserverapplication.Model.Entity.member_vote;
+import hansung.mannayo.mannayoserverapplication.Service.MemberService;
 import hansung.mannayo.mannayoserverapplication.Service.Member_VoteService;
 import hansung.mannayo.mannayoserverapplication.Service.ResponseService;
 import hansung.mannayo.mannayoserverapplication.Service.VoteService;
@@ -30,6 +32,9 @@ public class VoteController {
     @Autowired
     ResponseService responseService;
 
+    @Autowired
+    MemberService memberService;
+
     @ApiOperation(value = "response vote", notes = "게시판 별 투표 호출")
     @GetMapping("/{boardid}")
     public ResponseEntity<List<VoteResponseDto>> getVote(@PathVariable("boardid") Long id, @RequestParam Long memberId) {
@@ -42,12 +47,14 @@ public class VoteController {
                         .contents(v.getContents())
                         .Count(v.getCount())
                         .amIVote(true)
+                        .id(v.getId())
                         .build();
             }else {
                 voteResponseDto = VoteResponseDto.builder()
                         .contents(v.getContents())
                         .Count(v.getCount())
                         .amIVote(false)
+                        .id(v.getId())
                         .build();
             }
             voteResponseDtos.add(voteResponseDto);
@@ -69,6 +76,25 @@ public class VoteController {
         }
 
         CommonResult commonResult = responseService.getFailResult();
+        return ResponseEntity.ok().body(commonResult);
+    }
+
+    @ApiOperation(value = "투표 하기")
+    @PostMapping("/tovote")
+    public ResponseEntity<CommonResult> setToVote(@RequestParam Long memberid, @RequestParam Long voteid) {
+        CommonResult commonResult = new CommonResult();
+        member_vote Member_vote = member_vote.builder()
+                .member(memberService.findbyId(memberid))
+                .vote(voteService.findById(voteid))
+                .build();
+
+        member_voteService.insert(Member_vote);
+
+        if(member_voteService.findMemberVoteByVoteIdAndMemberId(memberid,voteid).isPresent()) {
+            commonResult = responseService.getSuccessResult();
+            return ResponseEntity.ok().body(commonResult);
+        }
+        commonResult = responseService.getFailResult();
         return ResponseEntity.ok().body(commonResult);
     }
 

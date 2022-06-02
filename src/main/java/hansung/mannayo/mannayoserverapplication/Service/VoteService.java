@@ -9,4 +9,6 @@ public interface VoteService {
     Optional<List<Vote>> getVoteByBoardId(Long id);
 
     Vote insertVote(Long id, String contents);
+
+    Vote findById(Long id);
 }

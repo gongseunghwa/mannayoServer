@@ -8,4 +8,6 @@ public interface Member_VoteService {
 
     Optional<member_vote> findMemberVoteByVoteIdAndMemberId(Long voteId, Long memberId);
 
+    void insert(member_vote member_vote);
+
 }

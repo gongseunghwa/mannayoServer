@@ -10,4 +10,6 @@ public class VoteResponseDto {
     private Long Count;
 
     private Boolean amIVote;
+
+    private Long id;
 }

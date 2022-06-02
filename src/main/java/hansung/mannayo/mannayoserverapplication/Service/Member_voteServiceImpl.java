@@ -16,4 +16,9 @@ public class Member_voteServiceImpl implements Member_VoteService{
     public Optional<member_vote> findMemberVoteByVoteIdAndMemberId(Long voteId, Long memberId) {
         return member_voteRepository.findByVoteIdAndMemberId(voteId, memberId);
     }
+
+    @Override
+    public void insert(member_vote member_vote) {
+        member_voteRepository.save(member_vote);
+    }
 }

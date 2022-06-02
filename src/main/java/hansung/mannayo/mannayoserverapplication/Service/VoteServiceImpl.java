@@ -30,4 +30,9 @@ public class VoteServiceImpl implements VoteService{
 
         return voteRepository.save(obj);
     }
+
+    @Override
+    public Vote findById(Long id) {
+        return voteRepository.findById(id).get();
+    }
 }
