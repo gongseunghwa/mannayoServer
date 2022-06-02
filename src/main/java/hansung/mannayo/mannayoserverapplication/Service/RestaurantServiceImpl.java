@@ -4,6 +4,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Repository.RestaurantRepository;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantDetailResponse;
+import hansung.mannayo.mannayoserverapplication.dto.RestaurantMapDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,30 @@ public class RestaurantServiceImpl implements RestaurantService{
         Restaurant restaurant1 = restaurantRepository.save(restaurant);
 
         return restaurant1.getId();
+    }
+
+    @Override
+    public RestaurantMapDto findsummaryByName(String name) {
+        Optional<Restaurant> restaurant= restaurantRepository.findByName(name);
+        if(restaurant.isPresent()) {
+            RestaurantMapDto response = RestaurantMapDto.builder()
+                    .address(restaurant.get().getAddress())
+                    .open(restaurant.get().getBusinessStartHours())
+                    .close(restaurant.get().getBusinessEndHours())
+                    .isExist(true)
+                    .name(restaurant.get().getName())
+                    .build();
+            return response;
+        }else {
+            RestaurantMapDto response = RestaurantMapDto.builder()
+                    .address("등록정보 없음.")
+                    .open(null)
+                    .close(null)
+                    .isExist(false)
+                    .name("등록정보 없음.")
+                    .build();
+            return response;
+        }
     }
 
     @Override

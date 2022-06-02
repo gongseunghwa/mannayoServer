@@ -3,6 +3,7 @@ package hansung.mannayo.mannayoserverapplication.Service;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.dto.RestaurantDetailResponse;
+import hansung.mannayo.mannayoserverapplication.dto.RestaurantMapDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,8 @@ public interface RestaurantService {
     RestaurantDetailResponse findById(Long id);
 
     RestaurantDetailResponse findByName(String name);
+
+    RestaurantMapDto findsummaryByName(String name);
 
     Optional<Restaurant> findbyId(Long id);
 

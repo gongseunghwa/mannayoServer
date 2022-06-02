@@ -5,10 +5,7 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Restaurant;
 import hansung.mannayo.mannayoserverapplication.Model.Type.Restaurant_Type;
 import hansung.mannayo.mannayoserverapplication.Service.*;
-import hansung.mannayo.mannayoserverapplication.dto.CommonResult;
-import hansung.mannayo.mannayoserverapplication.dto.ImageDto;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantDetailResponse;
-import hansung.mannayo.mannayoserverapplication.dto.RestaurantListResponse;
+import hansung.mannayo.mannayoserverapplication.dto.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.models.Response;
@@ -123,6 +120,13 @@ public class RestaurantController {
     ResponseEntity<RestaurantDetailResponse> findRestaurantDetailByMap(@ApiParam(value = "레스토랑 이름을 입력") @PathVariable String name){
         RestaurantDetailResponse dto = restaurantService.findByName(name);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @ApiOperation(value = "음식점이 존재하면 return")
+    @GetMapping("/summarymap/{name}")
+    ResponseEntity<RestaurantMapDto> findRestaurantMapDto(@ApiParam(value = "레스토랑 이름을 입력") @PathVariable String name) {
+        RestaurantMapDto restaurantMapDto = restaurantService.findsummaryByName(name);
+        return ResponseEntity.ok().body(restaurantMapDto);
     }
 
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
