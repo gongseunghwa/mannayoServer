@@ -21,4 +21,6 @@ public class RestaurantMapDto {
 
     private Boolean isExist;
 
+    private Long id;
+
 }

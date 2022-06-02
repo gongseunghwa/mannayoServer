@@ -67,6 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService{
                     .close(restaurant.get().getBusinessEndHours())
                     .isExist(true)
                     .name(restaurant.get().getName())
+                    .id(restaurant.get().getId())
                     .build();
             return response;
         }else {
@@ -76,6 +77,7 @@ public class RestaurantServiceImpl implements RestaurantService{
                     .close(null)
                     .isExist(false)
                     .name("등록정보 없음.")
+                    .id(null)
                     .build();
             return response;
         }
