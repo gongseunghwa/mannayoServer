@@ -10,4 +10,6 @@ public interface Member_VoteService {
 
     void insert(member_vote member_vote);
 
+    Long getCount(Long voteid);
+
 }

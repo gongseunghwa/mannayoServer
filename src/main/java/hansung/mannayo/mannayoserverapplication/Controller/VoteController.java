@@ -41,18 +41,21 @@ public class VoteController {
         List<Vote> voteList = voteService.getVoteByBoardId(id).get();
         List<VoteResponseDto> voteResponseDtos = new ArrayList<>();
         VoteResponseDto voteResponseDto;
+
         for (Vote v : voteList) {
+            Long count = 0L;
+            count = member_voteService.getCount(v.getId());
             if (member_voteService.findMemberVoteByVoteIdAndMemberId(v.getId(), memberId).isPresent()) {
                voteResponseDto = VoteResponseDto.builder()
                         .contents(v.getContents())
-                        .Count(v.getCount())
+                        .Count(count)
                         .amIVote(true)
                         .id(v.getId())
                         .build();
             }else {
                 voteResponseDto = VoteResponseDto.builder()
                         .contents(v.getContents())
-                        .Count(v.getCount())
+                        .Count(count)
                         .amIVote(false)
                         .id(v.getId())
                         .build();

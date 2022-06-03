@@ -9,4 +9,6 @@ public interface member_voteRepository extends JpaRepository<member_vote, Long> 
 
     Optional<member_vote> findByVoteIdAndMemberId(Long voteId, Long memberId);
 
+    Long countByVoteId(Long voteid);
+
 }

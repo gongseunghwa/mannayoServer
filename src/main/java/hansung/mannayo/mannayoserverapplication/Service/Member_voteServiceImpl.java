@@ -21,4 +21,9 @@ public class Member_voteServiceImpl implements Member_VoteService{
     public void insert(member_vote member_vote) {
         member_voteRepository.save(member_vote);
     }
+
+    @Override
+    public Long getCount(Long voteid) {
+        return member_voteRepository.countByVoteId(voteid);
+    }
 }
