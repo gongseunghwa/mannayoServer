@@ -72,12 +72,12 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<CommonResult> insert(@RequestBody ReviewRequestDto reviewRequestDto){
         CommonResult commonResult = new CommonResult();
-        Review review = reviewService.insert(reviewRequestDto);
+        Review review = reviewService.insert(reviewRequestDto); // 리뷰등록
         Restaurant restaurant = restaurantRepository.findById(reviewRequestDto.getRestaurantId()).get();
-        Long count = reviewService.getCountReviews();
+        Long count = reviewService.getCountReviewsByRestaurantId(restaurant.getId());
         String c = count.toString();
-        Float fc = Float.parseFloat(c);
-        Float starpoint = restaurant.getStarPointInfo();
+        Float fc = Float.parseFloat(c); //리뷰 갯수
+        Float starpoint = restaurant.getStarPointInfo(); // 별점
 
         System.out.println(starpoint + " before");
         System.out.println("count = " + fc);
