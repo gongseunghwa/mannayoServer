@@ -14,19 +14,28 @@ import hansung.mannayo.mannayoserverapplication.exceptions.ResourceNotFoundExcep
 import hansung.mannayo.mannayoserverapplication.dto.*;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.thymeleaf.util.StringUtils.isEmpty;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     //find all members
@@ -40,6 +49,12 @@ public class MemberServiceImpl implements MemberService {
     public Member findbyId(Long id){
         Optional<Member> obj = memberRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    @Override
+    public Member findbyNickname(String nickname){
+        Optional<Member> obj = memberRepository.findByNickName(nickname);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(nickname));
     }
 
     @Override
@@ -62,11 +77,50 @@ public class MemberServiceImpl implements MemberService {
         return (memberRepository.findByRealNameAndPhoneNumber(dto.getName(), dto.getPhoneNumber()) != null);
     }
 
+    @Override
+    public Optional<String> getImageAddress(Long writerId) {
+        return memberRepository.findImageAddress(writerId);
+    }
+
+    @Override
+    public Boolean updateNickname(Long id, String nickname) {
+        Optional<Member> member = memberRepository.findById(id);
+        if(member.isPresent()) {
+            member.get().setNickName(nickname);
+            memberRepository.save(member.get());
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateFCMtoken(Long id, String token) {
+        Optional<Member> member = memberRepository.findById(id);
+        if(member.isPresent()) {
+            member.get().setToken(token);
+            memberRepository.save(member.get());
+            return true;
+        }
+        return false;
+    }
+
     //save member
     @Override
-    public Member insert(MemberDto obj){
-        Member member = dtoToEntity(obj);
-        return memberRepository.save(member);
+    public void insert(signUpDto obj){
+        Member member = Member.builder()
+                .realName(obj.getRealname())
+                .accountStatus(obj.getAccountStatus())
+                .loginTypeEnum(obj.getLoginTypeEnum())
+                .accountTypeEnum(obj.getAccountTypeEnum())
+                .nickName("null")
+                .password(passwordEncoder.encode(obj.getPassword()))
+                .email(obj.getEmail())
+                .phoneNumber(obj.getPhoneNumber())
+                .imageAddress(obj.getImageAddress())
+                .birth(obj.getBirth())
+                .build();
+        member = memberRepository.save(member);
     }
 
     //delete member by pk(nickname)
@@ -93,6 +147,28 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public void updateImageAddress(Member member) {
+        memberRepository.save(member);
+    }
+
+    @Override
+    public List<String> getToken() {
+        List<String> tokens = memberRepository.findToken().get();
+        List<String> deviceToken = new ArrayList<>();
+        for(String s : tokens) {
+            if(!isEmpty(s)) {
+                System.out.println(s);
+                deviceToken.add(s);
+            }
+        }
+        return deviceToken;
+    }
+
+    @Override
+    public Optional<Member> findByToken(String token) {
+        return memberRepository.findByToken(token);
+    }
 
     @Override
     public void updateData(Member entity, MemberDto obj) {

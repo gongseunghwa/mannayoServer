@@ -39,7 +39,6 @@ public class Member implements Serializable , UserDetails {
 
     private String realName;
 
-    @Column(nullable = false, unique = true)
     private String nickName;
 
     @NotNull
@@ -62,6 +61,8 @@ public class Member implements Serializable , UserDetails {
     @NotNull
     private LocalDate birth;
 
+    private String token;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -83,7 +84,7 @@ public class Member implements Serializable , UserDetails {
     @ColumnDefault("0")
     private Integer ReportCount;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL )
     @JsonBackReference
     private List<Review> reviewList;
 
@@ -106,6 +107,10 @@ public class Member implements Serializable , UserDetails {
     @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Report> reportList;
+
+    @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<member_vote> member_votes;
 
 
     public void addReview(Review review){

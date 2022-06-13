@@ -52,15 +52,14 @@ class ReviewTest {
 
 
         Restaurant restaurant = Restaurant.builder()
-                .Name("dsd")
-                .restaurant_type(Restaurant_Type.BUNSIK)
+                .name("dsd")
+                .type(Restaurant_Type.BUNSIK)
                 .number("000000010")
                 .owner("owner")
-                .Address("assdsa")
-                .JJIMcount(10)
-                .BusinessStartHours(LocalTime.now())
-                .BusinessEndHours(LocalTime.now())
-                .BusinessDayOff(LocalDate.now())
+                .address("assdsa")
+                .jjimcount(10)
+                .businessStartHours(LocalTime.now())
+                .businessEndHours(LocalTime.now())
                 .build();
 
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
@@ -71,7 +70,7 @@ class ReviewTest {
 
         Review savedReview = reviewRepository.save(review);
 
-        assertThat(savedReview.getRestaurant().getIdRestaurant()).isEqualTo(savedRestaurant.getIdRestaurant());
+        assertThat(savedReview.getRestaurant().getId()).isEqualTo(savedRestaurant.getId());
         assertThat(savedReview.getMember().getNickName()).isEqualTo(savedMember.getNickName());
 
 

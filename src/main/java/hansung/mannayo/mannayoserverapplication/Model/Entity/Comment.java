@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,11 +17,15 @@ import java.util.List;
 @Entity @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 @Builder
 @Table(name = "comments")
+@EntityListeners(AuditingEntityListener.class) //현재 Entity에 Auditing 기능을 포함시키기 위한 어노테이션
 public class Comment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
+
+    @NotNull
+    private Long writerid;
 
     @ManyToOne(targetEntity = Board.class) @JsonManagedReference
     private Board board;

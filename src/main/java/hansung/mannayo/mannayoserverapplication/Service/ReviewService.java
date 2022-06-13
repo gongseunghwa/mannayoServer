@@ -5,19 +5,27 @@ import hansung.mannayo.mannayoserverapplication.Model.Entity.Review;
 import hansung.mannayo.mannayoserverapplication.Repository.ReviewRepository;
 import hansung.mannayo.mannayoserverapplication.dto.MemberDto;
 import hansung.mannayo.mannayoserverapplication.dto.ReviewDto;
+import hansung.mannayo.mannayoserverapplication.dto.ReviewRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewService {
     public List<Review> findAll();
 
-    //find member by pk(nickname)
-    public Review findbyId(Long id);
+    //find review by Id
+    public Optional<Review> findById(Long id);
+
+    public List<ReviewDto> findByRestaurantId(Long id);
+
+    public Optional<Review> findimagebyId(Long id);
 
     //save member
-    public Review insert(ReviewDto obj);
+    public Review insert(ReviewRequestDto obj);
+
+    public void updateImageAddress(Review review);
 
     //delete member by pk(nickname)
     public void delete(Long id);
@@ -26,19 +34,12 @@ public interface ReviewService {
     public Review update(Long id, ReviewDto obj);
 
 
+    public Long getCountReviewsByRestaurantId(Long id);
+
     public void updateData(Review entity, ReviewDto obj);
 
-    default Review dtoToEntity(ReviewDto reviewDto) {
-        Review entity = Review.builder()
-                .title(reviewDto.getTitle())
-                .content(reviewDto.getContent())
-                .writeDate(reviewDto.getWriteDate())
-                .image(reviewDto.getImage())
-                .starPoint(reviewDto.getStarPoint())
-                .isDeleted(reviewDto.getIsDeleted())
-                .isModified(reviewDto.getIsModifoed())
-                .build();
-        return entity;
-    }
+    public Long getCountReviews();
+
+
 
 }

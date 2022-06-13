@@ -1,0 +1,29 @@
+version: "4.0"
+
+services:
+  database:
+    image: mysql:5.7
+    container_name: database
+    environment:
+       MYSQL_ROOT_HOST: '%'
+       MYSQL_DATABASE: mannayodb
+       MYSQL_ROOT_PASSWORD: rnjs8895
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    ports:
+      - 3306:3306
+    networks:
+      - springboot-mysql-net
+
+  application:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    container_name: app
+    networks:
+      - springboot-mysql-net
+
+networks:
+  springboot-mysql-net:
+    driver: bridge

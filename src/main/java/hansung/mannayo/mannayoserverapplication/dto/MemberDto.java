@@ -1,6 +1,7 @@
 package hansung.mannayo.mannayoserverapplication.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hansung.mannayo.mannayoserverapplication.Model.Type.AccountStatus;
 import hansung.mannayo.mannayoserverapplication.Model.Type.AccountType;
 import hansung.mannayo.mannayoserverapplication.Model.Type.LoginType;
 import lombok.Data;
@@ -17,6 +18,8 @@ public class MemberDto {
 
     private Long id;
 
+    private String realname;
+
     private String NickName;
 
     private String Email;
@@ -24,6 +27,8 @@ public class MemberDto {
     private String Password;
 
     private AccountType accountTypeEnum;
+
+    private AccountStatus accountStatus;
 
     private String PhoneNumber;
 

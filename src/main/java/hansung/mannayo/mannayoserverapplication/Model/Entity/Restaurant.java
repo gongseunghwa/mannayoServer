@@ -18,16 +18,15 @@ import java.util.List;
 @Table(name = "restaurant")
 public class Restaurant {
 
-
     @Id @GeneratedValue
-    private Long idRestaurant;
+    private Long id;
 
     @NotNull
-    private String Name;
+    private String name;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Restaurant_Type restaurant_type;
+    private Restaurant_Type type;
 
     @NotNull
     private String number;
@@ -36,37 +35,58 @@ public class Restaurant {
     private String owner;
 
     @NotNull
-    private String Address;
+    private String address;
 
     @ColumnDefault("0")
-    private Integer JJIMcount;
+    private Integer jjimcount;
+
+    private String imageAddress;
 
     @NotNull
-    private LocalTime BusinessStartHours;
+    private LocalTime businessStartHours;
 
     @NotNull
-    private LocalTime BusinessEndHours;
+    private LocalTime businessEndHours;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Review> reviewList;
 
-    @NotNull
-    private LocalDate BusinessDayOff;
+//    private LocalDate businessDayOff;
 
     @ColumnDefault("0")
     private Integer reviewCount;
 
     @ColumnDefault("0")
-    private Integer StarPointInfo;
+    private Float starPointInfo;
 
     @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Jjim> jjimList = new ArrayList<>();
+    private List<Menu> menuList;
+
+    @OneToMany(mappedBy = "restaurant",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Jjim> jjimList;
 
     public void addJjim(Jjim jjim){
         this.jjimList.add(jjim);
         jjim.setRestaurant(this);
+    }
+
+    public void addReview(Review review){
+        this.reviewList.add(review);
+        review.setRestaurant(this);
+    }
+    public void addMenu(Menu menu){
+        this.menuList.add(menu);
+        menu.setRestaurant(this);
+    }
+
+    @PrePersist
+    public void save(){
+        this.jjimcount = 0;
+        this.reviewCount = 0;
+        this.starPointInfo = 0F;
     }
 
 

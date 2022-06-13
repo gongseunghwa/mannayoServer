@@ -40,7 +40,6 @@ class ReportTest {
 
         Board board = Board.builder()
                 .member(member)
-                .title("title")
                 .contents("hi")
                 .type(BoardType.ADVERTISE_BOARD)
                 .build();
@@ -63,7 +62,6 @@ class ReportTest {
 
         assertEquals(report.getBoard().getId(),board.getId());
         assertEquals(report.getMember().getNickName(), member.getNickName());
-        System.out.println(report.getBoard().getTitle());
         System.out.println(report.getBoard().getContents());
 
 
