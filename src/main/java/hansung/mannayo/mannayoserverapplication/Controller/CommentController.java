@@ -38,6 +38,7 @@ public class CommentController {
         List<CommentDto> commentDtos = new ArrayList<>();
         List<Comment> comments = commentService.getCommentByBoardId(boardId).get();
 
+
         for(Comment c : comments) {
             commentDto = CommentDto.builder()
                     .id(c.getId())
