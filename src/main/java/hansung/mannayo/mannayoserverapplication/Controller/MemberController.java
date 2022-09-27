@@ -201,6 +201,12 @@ public class MemberController {
         return ResponseEntity.ok().body(commonResult);
     }
 
+    @ApiOperation(value = "프로필 사진 S3 업로드")
+    @PostMapping("/profileimage/S3")
+    public ResponseEntity<CommonResult> registerProfileImageToS3(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
+
+    }
+
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
     @GetMapping(value = "profileimage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {

@@ -19,6 +19,7 @@ import java.util.Set;
 
 @Configuration
 @EnableWebMvc
+@EnableSwagger2
 public class SwaggerConfig {
 
     private ApiInfo swaggerInfo() {
