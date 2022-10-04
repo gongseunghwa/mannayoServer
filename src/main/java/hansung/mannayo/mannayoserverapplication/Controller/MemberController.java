@@ -51,10 +51,6 @@ public class MemberController {
 
 //    String localfilepath = "C://images/profile/";
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
-
-    private final AmazonS3 amazonS3;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token",
