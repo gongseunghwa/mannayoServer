@@ -1,6 +1,4 @@
 package hansung.mannayo.mannayoserverapplication.Controller;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Block;
 import hansung.mannayo.mannayoserverapplication.Model.Entity.Member;
 import hansung.mannayo.mannayoserverapplication.Service.BlockService;
