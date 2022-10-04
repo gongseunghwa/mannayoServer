@@ -9,7 +9,7 @@ import com.google.api.client.util.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class AwsS3Config {
 
 //    @Value("${cloud.aws.credentials.accessKey}")
