@@ -229,7 +229,7 @@ public class MemberController {
 //    }
 
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
-    @GetMapping(value = "profileimage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/profileimage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {
         Member member = memberService.findbyId(id);
         String imagename = member.getImageAddress();
