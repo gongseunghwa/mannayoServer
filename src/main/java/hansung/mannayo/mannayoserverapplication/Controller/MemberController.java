@@ -16,6 +16,7 @@ import hansung.mannayo.mannayoserverapplication.dto.*;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -45,7 +47,8 @@ public class MemberController {
 
     String AWSfilepath = "/home/ec2-user/images/";
 
-    String localfilepath = "C://images/profile/";
+//    String localfilepath = "C://images/profile/";
+
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token",
@@ -201,8 +204,32 @@ public class MemberController {
         return ResponseEntity.ok().body(commonResult);
     }
 
+//    @ApiOperation(value = "프로필 사진 S3 업로드")
+//    @PostMapping("/profileimage/S3")
+//    public ResponseEntity<CommonResult> registerProfileImageToS3(@RequestParam Long id, @RequestPart MultipartFile multipartFile) {
+//
+//        CommonResult commonResult = new CommonResult();
+//
+//        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+//
+//        ObjectMetadata objMeta = new ObjectMetadata();
+//        try {
+//            objMeta.setContentLength(multipartFile.getInputStream().available());
+//            amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
+//            commonResult = responseService.getSuccessResult();
+//        } catch (IOException e) {
+//            commonResult = responseService.getFailResult();
+//            throw new RuntimeException(e);
+//        }
+//
+//        commonResult.setMsg(amazonS3.getUrl(bucket, s3FileName).toString());
+//
+//
+//        return ResponseEntity.ok().body(commonResult);
+//    }
+
     @ApiOperation(value = "feed image 조회 ", notes = "feed Image를 반환합니다. 못찾은경우 기본 image를 반환합니다.")
-    @GetMapping(value = "profileimage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/profileimage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getProfileImage(@PathVariable("id") Long id) throws IOException {
         Member member = memberService.findbyId(id);
         String imagename = member.getImageAddress();
